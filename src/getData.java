@@ -18,7 +18,7 @@ public class getData {
         InputStreamReader reader = new InputStreamReader(obj.openStream());
         System.out.println("Sending GET request to "+url);
         System.out.println("Response code: "+responseCode);
-        Response results = new Gson().fromJson(reader, Response.class);
+        Response results = (Response) new Gson().fromJson(reader, Response.class);
         return results;
     }
 }
