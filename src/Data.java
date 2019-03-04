@@ -18,18 +18,19 @@ public class Data {
 }
 
 // This is the second layer of the JSON structure, the actual data. Getters and Setters included.
-// There shouldn't be any use for the Setters yet.
+// There shouldn't be any use for the Setters yet, if at all.
 class Results {
-	String sunrise;
-	String sunset;
-	String solar_noon;
-	String day_length;
-	String civil_twilight_begin;
-	String civil_twilight_end;
-	String nautical_twilight_begin;
-	String nautical_twilight_end;
-	String astronomical_twilight_begin;
-	String astronomical_twilight_end;
+	private String sunrise;
+	private String sunset;
+	private String solar_noon;
+	private String day_length;
+	private String civil_twilight_begin;
+	private String civil_twilight_end;
+	private String nautical_twilight_begin;
+	private String nautical_twilight_end;
+	private String astronomical_twilight_begin;
+	private String astronomical_twilight_end;
+	
 	public String getSunrise() {
 		return sunrise;
 	}
