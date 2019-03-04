@@ -10,7 +10,7 @@ public class getData {
 //	the API's incoming JSON formatted data and it will be mapped to a new Data object. That Data object is returned.
     Data sendGET() throws Exception {
     	// This string will have to be updated to add string parameter values for lat and long and date
-        String url = "https://api.sunrise-sunset.org/json?lat=40.607009&lng=-74.000074"; // Example lat and long
+        String url = "https://api.sunrise-sunset.org/json?lat=40.607009&lng=-74.000074&date=today"; // Example lat and long
         URL obj = new URL(url); //
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
