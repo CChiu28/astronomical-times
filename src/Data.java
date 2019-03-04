@@ -1,6 +1,6 @@
 //This class emulates the structure of the API's JSON format.
 
-public class Response {
+public class Data {
 	// This is the first layer of the JSON structure: results. A getAll method is included to print all the data.
 	Results results = new Results();
 	void getAll() {
@@ -18,6 +18,7 @@ public class Response {
 }
 
 // This is the second layer of the JSON structure, the actual data. Getters and Setters included.
+// There shouldn't be any use for the Setters yet.
 class Results {
 	String sunrise;
 	String sunset;
