@@ -3,6 +3,7 @@
 public class Data {
 	// This is the first layer of the JSON structure: results. A getAll method is included to print all the data.
 	Results results = new Results();
+	
 	void getAll() {
 		System.out.println("Sunrise: "+results.getSunrise());
 		System.out.println("Sunset: "+results.getSunset());
