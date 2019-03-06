@@ -1,4 +1,9 @@
-//This class emulates the structure of the API's JSON format.
+// This class emulates the structure of the API's JSON format.
+// The API's JSON data has a nested structure so this class has an inner class
+// to reflect that.
+// Gson should map the JSON data from the API to an object of this class
+// through the sendGET() method in the getData class.
+// In order to use this, call objName.results.getWhatever();
 
 public class Data {
 	// This is the first layer of the JSON structure: results. A getAll method is included to print all the data.
