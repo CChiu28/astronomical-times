@@ -7,6 +7,7 @@ public class Main {
 		double lng = -74.000074;
 		String date = "today";
 		getData time = new getData();
+		gui.main(args);
 		try {
 			Data results = time.sendGET(lat,lng,date);
 			results.getAll();
