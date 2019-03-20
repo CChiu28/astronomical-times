@@ -6,6 +6,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 
 public class gui extends Application {
 
@@ -36,7 +39,7 @@ public class gui extends Application {
     lgtd.setTranslateY(lg);
     lttd.setTranslateY(lt);
     dte.setTranslateY(dt);
-
+    
     final TextField longitude = new TextField();
     longitude.setPromptText("Enter the Longitude");
     longitude.setPrefColumnCount(20);
@@ -61,7 +64,25 @@ public class gui extends Application {
     grid.getChildren().add(date);
     grid.getChildren().add(dte);
 
-
+    Button submit = new Button("Submit");
+    submit.setOnAction(new EventHandler<ActionEvent>() {
+    	@Override
+    	public void handle(ActionEvent e) {
+    		if (latitude.getText()!=null&&longitude.getText()!=null) {
+    			getData data = new getData();
+    			try {
+					Data results = data.sendGET(Double.parseDouble(latitude.getText()), Double.parseDouble(longitude.getText()), date.getText());
+					results.getAll();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+    		}
+    	}
+    });
+    GridPane.setConstraints(submit, 5, 18);
+    grid.getChildren().add(submit);
+    
     stage.show();
   }
 
