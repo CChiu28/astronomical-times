@@ -42,7 +42,7 @@ public class gui extends Application {
     lgtd.setTranslateY(lg);
     lttd.setTranslateY(lt);
     dte.setTranslateY(dt);
-
+    
     final TextField longitude = new TextField();
     longitude.setPromptText("Enter the Longitude");
     longitude.setPrefColumnCount(20);
@@ -66,12 +66,27 @@ public class gui extends Application {
     GridPane.setConstraints(date, 3, 13);
     grid.getChildren().add(date);
     grid.getChildren().add(dte);
+
     
     final Button submit = new Button ("Submit!");
     stage.setScene(scene);
     GridPane.setConstraints(submit, 5, 18);
     grid.getChildren().add(submit);
-
+    submit.setOnAction(new EventHandler<ActionEvent>() {
+    	@Override
+    	public void handle(ActionEvent e) {
+    		if (latitude.getText()!=null&&longitude.getText()!=null) {
+    			getData data = new getData();
+    			try {
+					Data results = data.sendGET(Double.parseDouble(latitude.getText()), Double.parseDouble(longitude.getText()), date.getText());
+					results.getAll();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+    		}
+    	}
+    });
     stage.show();
   }
 

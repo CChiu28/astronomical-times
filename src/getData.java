@@ -1,4 +1,4 @@
-import java.net.HttpURLConnection;
+//import java.net.HttpURLConnection;
 import java.net.URL;
 // This is google's JSON parser. It's included as a dependency through Maven so it can be used in this project.
 import com.google.gson.*;
