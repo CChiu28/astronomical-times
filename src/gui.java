@@ -71,12 +71,6 @@ public class gui extends Application {
     stage.setScene(scene);
     GridPane.setConstraints(submit, 5, 18);
     grid.getChildren().add(submit);
-    
-    
-    
-    DropShadow shadow = new DropShadow();
-    
-    
 
     stage.show();
   }
