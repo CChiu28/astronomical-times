@@ -3,9 +3,15 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 
 public class gui extends Application {
 
@@ -41,7 +47,7 @@ public class gui extends Application {
     longitude.setPromptText("Enter the Longitude");
     longitude.setPrefColumnCount(20);
     longitude.getText();
-    GridPane.setConstraints(longitude, 5, 3);
+    GridPane.setConstraints(longitude, 3, 3);
     grid.getChildren().add(longitude);
     grid.getChildren().add(lgtd);
     
@@ -49,7 +55,7 @@ public class gui extends Application {
     latitude.setPromptText("Enter the Latitude");
     latitude.setPrefColumnCount(20);
     latitude.getText();
-    GridPane.setConstraints(latitude, 5, 8);
+    GridPane.setConstraints(latitude, 3, 8);
     grid.getChildren().add(latitude);
     grid.getChildren().add(lttd);
     
@@ -57,10 +63,20 @@ public class gui extends Application {
     date.setPromptText("Enter the Date");
     date.setPrefColumnCount(20);
     date.getText();
-    GridPane.setConstraints(date, 5, 13);
+    GridPane.setConstraints(date, 3, 13);
     grid.getChildren().add(date);
     grid.getChildren().add(dte);
-
+    
+    final Button submit = new Button ("Submit!");
+    stage.setScene(scene);
+    GridPane.setConstraints(submit, 5, 18);
+    grid.getChildren().add(submit);
+    
+    
+    
+    DropShadow shadow = new DropShadow();
+    
+    
 
     stage.show();
   }
