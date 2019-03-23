@@ -13,11 +13,11 @@ public class getData {
     	// This string will concatenate lat, lng, and date to the url
         String url = "https://api.sunrise-sunset.org/json?lat="+lat+"&lng="+lng+"&date="+date;
         URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection(); // Cast URL obj to HttpUrlConnection
-        con.setRequestMethod("GET"); // Set request to GET
+//        HttpURLConnection con = (HttpURLConnection) obj.openConnection(); // Cast URL obj to HttpUrlConnection
+//        con.setRequestMethod("GET"); // Set request to GET
         InputStreamReader reader = new InputStreamReader(obj.openStream()); // Open a readable stream to the API
         System.out.println("Sending GET request to "+url);
-        System.out.println("Data code: "+con.getResponseCode());
+//        System.out.println("Data code: "+con.getResponseCode());
         Data results = (Data) new Gson().fromJson(reader, Data.class); // Gson parses the incoming JSON data and maps it to a Data obj.
         return results;
     }
