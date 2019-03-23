@@ -72,13 +72,26 @@ public class gui extends Application {
     stage.setScene(scene);
     GridPane.setConstraints(submit, 5, 18);
     grid.getChildren().add(submit);
+    /* This is the event handler for the submit button.
+     * Contains all the work when button is pressed.
+     */
     submit.setOnAction(new EventHandler<ActionEvent>() {
     	@Override
     	public void handle(ActionEvent e) {
+    		// If condition checks the input fields for any values. Only lat and lng are required.
+    		// May need to be reworked for better input validation (ie. numbers only, etc)
     		if (latitude.getText()!=null&&longitude.getText()!=null) {
-    			getData data = new getData();
+    			getData getdata = new getData(); // getData obj for API call
     			try {
-					Data results = data.sendGET(Double.parseDouble(latitude.getText()), Double.parseDouble(longitude.getText()), date.getText());
+    				/* Takes the inputs from gui and converts into doubles.
+    				 * These values are then passed into the getData obj to connect to API.
+    				 * Results are mapped into a Data obj and getAll() is called.
+    				 * This needs to be reworked so results are outputed into
+    				 * the gui instead of console. The getters in Data will have to be used here.
+    				 */
+					Data results = getdata.sendGET(Double.parseDouble(latitude.getText()), Double.parseDouble(longitude.getText()), date.getText());
+					System.out.println("Latitude: "+latitude.getText());
+					System.out.println("Longitude: "+longitude.getText());
 					results.getAll();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
