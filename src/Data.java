@@ -8,7 +8,9 @@
 public class Data {
 	// This is the first layer of the JSON structure: results. A getAll method is included to print all the data.
 	Results results = new Results();
-	
+
+
+	//Tester function to see results
 	void getAll() {
 		System.out.println("Sunrise: "+results.getSunrise());
 		System.out.println("Sunset: "+results.getSunset());
@@ -20,6 +22,22 @@ public class Data {
 		System.out.println("Nautical twilight ends: "+results.getNautical_twilight_end());
 		System.out.println("Astronomical twilight begins: "+results.getAstronomical_twilight_begin());
 		System.out.println("Astronomical twilight ends: "+results.getAstronomical_twilight_end());
+	}
+
+	String displayOutPut(){
+
+		String text = "Sunrise: "+results.getSunrise() +
+		"\nSunset: "+results.getSunset() +
+		"\nSolar noon: "+results.getSolar_noon() +
+		"\nDay length: "+results.getDay_length()+" hours" +
+		"\nCivil twilight begins: "+results.getCivil_twilight_begin() +
+		"\nCivil twilight ends: "+results.getCivil_twilight_end() +
+		"\nNautical twilight begins: "+results.getNautical_twilight_begin() +
+		"\nNautical twilight ends: "+results.getNautical_twilight_end() +
+		"\nAstronomical twilight begins: "+results.getAstronomical_twilight_begin() +
+		"\nAstronomical twilight ends: "+results.getAstronomical_twilight_end();
+
+		return text;
 	}
 }
 
