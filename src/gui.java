@@ -65,20 +65,19 @@ public class gui extends Application {
     grid.getChildren().add(date);
     grid.getChildren().add(dte);
 
-    //Text for output
-
-    Text output = new Text();
-    grid.getChildren().add(output);
-    output.setTranslateY(300);
-
     //Button to Submit input
 
     final Button submit = new Button ("Submit!");
-    window.setScene(scene);
     GridPane.setConstraints(submit, 5, 18);
     grid.getChildren().add(submit);
 
+  //Text for output
 
+    Text output = new Text();
+    GridPane.setConstraints(output, 3, 19);
+    grid.getChildren().add(output);
+    output.setTranslateY(20);
+    
     /* This is the event handler for the submit button.
      * Contains all the work when button is pressed.
      */
@@ -107,7 +106,7 @@ public class gui extends Application {
 					System.out.println("Longitude: "+longitude.getText());
 
 					//Displays Output to Gui
-					output.setText(results.displayOutPut());
+					output.setText("Longitude: "+longitude.getText()+"\n"+"Latitude: "+latitude.getText()+"\n"+results.displayOutPut());
 
 					} catch (Exception e1) {
 					// TODO Auto-generated catch block
