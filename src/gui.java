@@ -73,7 +73,7 @@ public class gui extends Application {
 
   //Text for output
 
-    Text output = new Text();
+    final Text output = new Text();
     GridPane.setConstraints(output, 3, 19);
     grid.getChildren().add(output);
     output.setTranslateY(20);
