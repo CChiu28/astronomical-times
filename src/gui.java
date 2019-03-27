@@ -58,7 +58,7 @@ public class gui extends Application {
     //Textbox input for date
 
     final TextField date = new TextField();
-    date.setPromptText("Enter the Date");
+    date.setPromptText("mm/dd/yyyy");
     date.setPrefColumnCount(20);
     date.getText();
     GridPane.setConstraints(date, 3, 13);
@@ -119,6 +119,7 @@ public class gui extends Application {
   }
 
   public static void execute(String[] args) {
-    launch(args);
+
+      launch(args);
   }
 }
