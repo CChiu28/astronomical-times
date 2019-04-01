@@ -16,8 +16,6 @@ public class getData {
 	 * @return results
 	 * @throws Exception
 	 * This method currently takes 3 parameters (will be changed) to take in latitude and longitude and optional date.
-	 * The three parameters will be changed to take a Map object from {@link #geoCode(String)}). The coordinate values from the Map
-	 * will be taken and passed into the url.
 	 * Gson is used to parse the data. It takes a BufferedReader from {@link #connectAPI(String)} to connect to the API
 	 * and maps it to a Data object. This Data object is returned.
 	 */
