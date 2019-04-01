@@ -119,7 +119,7 @@ public class gui extends Application {
   }
 
   public static void execute(String[] args) {
-
       launch(args);
+
   }
 }
