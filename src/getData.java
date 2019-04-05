@@ -121,4 +121,9 @@ public class getData {
     	}
     	return jo;
     }
+
+	public String sendGET(String string, String string2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
