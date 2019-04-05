@@ -71,18 +71,24 @@ public class gui extends Application {
         VBox submitLayout = new VBox(10);
 
         //LONGITUDE TEXTBOX
-
+        
         final TextField longitude = new TextField();
-        longitude.setPromptText("Enter the Longitude : 0 to 90");
+        longitude.setPromptText("Enter the Longitude : -180 to 180");
         longitude.setPrefColumnCount(5);
         longitude.getText();
-
+        final Text lonError = new Text();
+        lonError.setFill(Color.RED);
+        lonError.setStyle("-fx-font: 11 arial");
+        
         //LATTITUDE TEXTBOX
 
         final TextField latitude = new TextField();
-        latitude.setPromptText("Enter the Latitude : 0 to 180");
+        latitude.setPromptText("Enter the Latitude : -90 to 90");
         latitude.setPrefColumnCount(20);
         latitude.getText();
+        final Text latError = new Text();
+        latError.setFill(Color.RED);
+        latError.setStyle("-fx-font: 11 arial");
 
         //DATE TEXTBOX
 
@@ -114,7 +120,7 @@ public class gui extends Application {
         titleLayout.getChildren().addAll(title,summary,enter);
         titleLayout.setAlignment(Pos.CENTER);
 
-        submitLayout.getChildren().addAll(longitude, latitude, date, submit);
+        submitLayout.getChildren().addAll(longitude, lonError, latitude, latError, date, submit);
 
         resultsLayout.getChildren().addAll(returnButton, output);
         resultsLayout.setAlignment(Pos.CENTER);
@@ -139,10 +145,7 @@ public class gui extends Application {
             @Override
             public void handle(ActionEvent e) {
 
-                // If condition checks the input fields for any values. Only lat and lng are required.
-                // May need to be reworked for better input validation (ie. numbers only, etc)
-
-                if (latitude.getText()!= null && longitude.getText() !=null) {
+                if (inputValidate(longitude.getText(), latitude.getText())) {
 
                     getData getdata = new getData(); // getData obj for API call
 
@@ -162,18 +165,61 @@ public class gui extends Application {
 
                         //Displays Output to Gui
                         output.setText("Longitude: "+longitude.getText()+"\n"+"Latitude: "+latitude.getText()+"\n"+results.displayOutPut());
+                        lonError.setText("");
+                        latError.setText("");
 
                     } catch (Exception e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
+                } else {
+	                if (longitude.getText().isEmpty() || !isDouble(longitude.getText()) || Double.parseDouble(longitude.getText())>180 || Double.parseDouble(longitude.getText())<-180)
+	                	lonError.setText("Please enter a valid longitude value");
+	                if (latitude.getText().isEmpty() || !isDouble(latitude.getText()) || Double.parseDouble(latitude.getText())>90 || Double.parseDouble(latitude.getText())<-90) {
+	                	latError.setText("Please enter a valid latitude value");
                 }
+        }
             }
         });
 
         window.show();
     }
 
+    /** {@link #inputValidate(String, String)}
+     * @param lon, lat
+     * @return boolean
+     * This method is used as input validation for the longitude and latitude fields
+     * It contains a series of checks that will return false if they pass.
+     * These checks include checking if the longitude and latitude strings are empty,
+     * if they fail as Doubles via the {@link #isDouble(String)} method, 
+     * and if they exceed the longitude and latitude boundaries (-90 to 90, -180 to 180)
+     */
+    static boolean inputValidate(String lon, String lat) {
+    	if (lon.isEmpty() || lat.isEmpty())
+    		return false;
+    	if (!isDouble(lon) || !isDouble(lat))
+    		return false;
+    	if (Double.parseDouble(lon)>180 || Double.parseDouble(lon)<-180)
+    		return false;
+    	if (Double.parseDouble(lat)>90 || Double.parseDouble(lat)<-90)
+    		return false;
+    	return true;
+    }
+    
+    /** {@link #isDouble(String)}
+     * @param str
+     * @return boolean
+     * This method checks if the longitude and latitude fields are able to be parsed as Doubles
+     */
+    static boolean isDouble(String str) {
+    	try {
+    		Double.parseDouble(str);
+    		return true;
+    	} catch (NumberFormatException e) {
+    		return false;
+    	}
+    }
+    
     public static void execute(String[] args) {
         launch(args);
     }
