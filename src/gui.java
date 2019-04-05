@@ -124,7 +124,10 @@ public class gui extends Application {
         resultsScene = new Scene(resultsLayout, 600,450);
         window.setTitle("Astronomical Times");
         window.setScene(titleScene);
-        titleScene.getStylesheets().add("gStyle.css");
+        titleScene.getStylesheets().add("titleStyle.css");
+        displayScene.getStylesheets().add("displayStyle.css");
+        resultsScene.getStylesheets().add("resultsStyle.css");
+        
 
 
 
