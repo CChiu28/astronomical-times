@@ -26,6 +26,8 @@ public class gui extends Application {
     grid.setHgap(5);
 
     scene.setRoot(grid);
+    
+    scene.getStylesheets().add("gStyle.css");
 
     Label lgtd = new Label("*Longitude:");
     Label lttd = new Label("*Latitude:");
