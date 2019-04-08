@@ -5,12 +5,10 @@ import javafx.geometry.Insets;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.text.Text;
@@ -69,9 +67,10 @@ public class gui extends Application {
         //DISPLAY SCENE
 
         VBox submitLayout = new VBox(10);
-
-        //LONGITUDE TEXTBOX
         
+        TabInput tabpane = new TabInput();
+        //LONGITUDE TEXTBOX
+        /*
         final TextField longitude = new TextField();
         longitude.setPromptText("Enter the Longitude : -180 to 180");
         longitude.setPrefColumnCount(5);
@@ -88,7 +87,7 @@ public class gui extends Application {
         latitude.getText();
         final Text latError = new Text();
         latError.setFill(Color.RED);
-        latError.setStyle("-fx-font: 11 arial");
+        latError.setStyle("-fx-font: 11 arial");*/
 
         //DATE TEXTBOX
 
@@ -120,7 +119,8 @@ public class gui extends Application {
         titleLayout.getChildren().addAll(title,summary,enter);
         titleLayout.setAlignment(Pos.CENTER);
 
-        submitLayout.getChildren().addAll(longitude, lonError, latitude, latError, date, submit);
+//        submitLayout.getChildren().addAll(longitude, lonError, latitude, latError, date, submit);
+        submitLayout.getChildren().addAll(tabpane.tabpane(), date, submit);
 
         resultsLayout.getChildren().addAll(returnButton, output);
         resultsLayout.setAlignment(Pos.CENTER);
@@ -145,7 +145,7 @@ public class gui extends Application {
             @Override
             public void handle(ActionEvent e) {
 
-                if (inputValidate(longitude.getText(), latitude.getText())) {
+                if (inputValidate(tabpane.longitude.getText(), tabpane.latitude.getText())) {
 
                     getData getdata = new getData(); // getData obj for API call
 
@@ -159,24 +159,24 @@ public class gui extends Application {
 
                         window.setScene(resultsScene);
 
-                        Data results = getdata.sendGET(Double.parseDouble(latitude.getText()), Double.parseDouble(longitude.getText()), date.getText());
-                        System.out.println("Latitude: "+latitude.getText());
-                        System.out.println("Longitude: "+longitude.getText());
+                        Data results = getdata.sendGET(Double.parseDouble(tabpane.getLatitude()), Double.parseDouble(tabpane.getLongitude()), date.getText());
+                        System.out.println("Latitude: "+tabpane.getLatitude());
+                        System.out.println("Longitude: "+tabpane.getLongitude());
 
                         //Displays Output to Gui
-                        output.setText("Longitude: "+longitude.getText()+"\n"+"Latitude: "+latitude.getText()+"\n"+results.displayOutPut());
-                        lonError.setText("");
-                        latError.setText("");
+                        output.setText("Longitude: "+tabpane.getLongitude()+"\n"+"Latitude: "+tabpane.getLatitude()+"\n"+results.displayOutPut());
+                        tabpane.setLonError("");
+                        tabpane.setLatError("");
 
                     } catch (Exception e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
                 } else {
-	                if (longitude.getText().isEmpty() || !isDouble(longitude.getText()) || Double.parseDouble(longitude.getText())>180 || Double.parseDouble(longitude.getText())<-180)
-	                	lonError.setText("Please enter a valid longitude value");
-	                if (latitude.getText().isEmpty() || !isDouble(latitude.getText()) || Double.parseDouble(latitude.getText())>90 || Double.parseDouble(latitude.getText())<-90) {
-	                	latError.setText("Please enter a valid latitude value");
+	                if (tabpane.getLongitude().isEmpty() || !isDouble(tabpane.getLongitude()) || Double.parseDouble(tabpane.getLongitude())>180 || Double.parseDouble(tabpane.getLongitude())<-180)
+	                	tabpane.setLonError("Please enter a valid longitude value");
+	                if (tabpane.latitude.getText().isEmpty() || !isDouble(tabpane.getLatitude()) || Double.parseDouble(tabpane.getLatitude())>90 || Double.parseDouble(tabpane.getLatitude())<-90) {
+	                	tabpane.setLatError("Please enter a valid latitude value");
                 }
         }
             }
