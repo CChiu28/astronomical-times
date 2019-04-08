@@ -132,11 +132,9 @@ public class gui extends Application {
         window.setScene(titleScene);
 
         // ADD STYLES
-        titleScene.getStylesheets().add("/StyleSheets/titleStyle.css");
-        displayScene.getStylesheets().add("/StyleSheets/displayStyle.css");
-        resultsScene.getStylesheets().add("/StyleSheets/resultsStyle.css");
-        
-
+        titleScene.getStylesheets().add("titleStyle.css");
+        displayScene.getStylesheets().add("displayStyle.css");
+        resultsScene.getStylesheets().add("resultsStyle.css");
 
 
         /* This is the event handler for the submit button.
