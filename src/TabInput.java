@@ -14,6 +14,8 @@ public class TabInput {
 	protected final Text latError = new Text();
 	protected final TextField location = new TextField();
 	
+	// This method sets up the content in the tabs and returns the tabpane
+	// so it can be added to the main gui
 	public TabPane tabpane() {
 		tabpane.getTabs().add(tab1);
 		tabpane.getTabs().add(tab2);
@@ -43,6 +45,7 @@ public class TabInput {
 		return tabpane;
 	}
 
+	// Getters and setters
 	public String getLocation() {
 		return location.getText();
 	}

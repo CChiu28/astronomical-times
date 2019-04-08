@@ -68,26 +68,8 @@ public class gui extends Application {
 
         VBox submitLayout = new VBox(10);
         
+        // This sets up a tabpane for the location an coordinates input
         TabInput tabpane = new TabInput();
-        //LONGITUDE TEXTBOX
-        /*
-        final TextField longitude = new TextField();
-        longitude.setPromptText("Enter the Longitude : -180 to 180");
-        longitude.setPrefColumnCount(5);
-        longitude.getText();
-        final Text lonError = new Text();
-        lonError.setFill(Color.RED);
-        lonError.setStyle("-fx-font: 11 arial");
-        
-        //LATTITUDE TEXTBOX
-
-        final TextField latitude = new TextField();
-        latitude.setPromptText("Enter the Latitude : -90 to 90");
-        latitude.setPrefColumnCount(20);
-        latitude.getText();
-        final Text latError = new Text();
-        latError.setFill(Color.RED);
-        latError.setStyle("-fx-font: 11 arial");*/
 
         //DATE TEXTBOX
 
@@ -119,7 +101,7 @@ public class gui extends Application {
         titleLayout.getChildren().addAll(title,summary,enter);
         titleLayout.setAlignment(Pos.CENTER);
 
-//        submitLayout.getChildren().addAll(longitude, lonError, latitude, latError, date, submit);
+        // Adding the tabpane here will insert the tabs into the main layout
         submitLayout.getChildren().addAll(tabpane.tabpane(), date, submit);
 
         resultsLayout.getChildren().addAll(returnButton, output);
