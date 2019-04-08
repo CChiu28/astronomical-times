@@ -132,9 +132,9 @@ public class gui extends Application {
         window.setScene(titleScene);
 
         // ADD STYLES
-        titleScene.getStylesheets().add("/src/titleStyle.css");
-        displayScene.getStylesheets().add("/src/displayStyle.css");
-        resultsScene.getStylesheets().add("/src/resultsStyle.css");
+        titleScene.getStylesheets().add("/StyleSheets/titleStyle.css");
+        displayScene.getStylesheets().add("/StyleSheets/displayStyle.css");
+        resultsScene.getStylesheets().add("/StyleSheets/resultsStyle.css");
         
 
 
