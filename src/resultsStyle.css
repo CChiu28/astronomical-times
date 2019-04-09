@@ -1,13 +1,13 @@
 .root{
 	-fx-background-image: url("space.jpg");
-	-fx-font-family:"Futura";
-	-fx-font-size:20px;
+	-fx-font-family: "Futura";
+	-fx-font-size: 20px;
 	-fx-text-color: #ffffff; 
 }
 
 .button{
-	-fx-font-size:12px;
-	-fx-font-family:"Futura";
+	-fx-font-size: 12px;
+	-fx-font-family: "Futura";
 	-fx-font-weight: bold;
 	-fx-background-color: linear-gradient(#07082b, #ada2c1);
 	-fx-text-fill: #ffffff; 
