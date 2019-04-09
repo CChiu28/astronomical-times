@@ -5,12 +5,10 @@ import javafx.geometry.Insets;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.text.Text;
@@ -23,7 +21,7 @@ import javafx.scene.image.ImageView;
 
 public class gui extends Application {
 
-	Stage window;
+    Stage window;
     Scene titleScene, displayScene, resultsScene;
 
 
@@ -71,20 +69,9 @@ public class gui extends Application {
         //DISPLAY SCENE
 
         VBox submitLayout = new VBox(10);
-
-        //LONGITUDE TEXTBOX
-
-        final TextField longitude = new TextField();
-        longitude.setPromptText("Enter the Longitude : 0 to 90");
-        longitude.setPrefColumnCount(5);
-        longitude.getText();
-
-        //LATTITUDE TEXTBOX
-
-        final TextField latitude = new TextField();
-        latitude.setPromptText("Enter the Latitude : 0 to 180");
-        latitude.setPrefColumnCount(20);
-        latitude.getText();
+        
+        // This sets up a tabpane for the location an coordinates input
+        TabInput tabpane = new TabInput();
 
         //DATE TEXTBOX
 
@@ -117,7 +104,8 @@ public class gui extends Application {
         titleLayout.getChildren().addAll(title,summary,enter);
         titleLayout.setAlignment(Pos.CENTER);
 
-        submitLayout.getChildren().addAll(longitude, latitude, date, submit);
+        // Adding the tabpane here will insert the tabs into the main layout
+        submitLayout.getChildren().addAll(tabpane.tabpane(), date, submit);
 
         resultsLayout.getChildren().addAll(returnButton, output);
         resultsLayout.setAlignment(Pos.CENTER);
@@ -130,8 +118,6 @@ public class gui extends Application {
         titleScene.getStylesheets().add("titleStyle.css");
         displayScene.getStylesheets().add("displayStyle.css");
         resultsScene.getStylesheets().add("resultsStyle.css");
-        
-
 
 
         /* This is the event handler for the submit button.
@@ -142,10 +128,7 @@ public class gui extends Application {
             @Override
             public void handle(ActionEvent e) {
 
-                // If condition checks the input fields for any values. Only lat and lng are required.
-                // May need to be reworked for better input validation (ie. numbers only, etc)
-
-                if (latitude.getText()!= null && longitude.getText() !=null) {
+                if (inputValidate(tabpane.longitude.getText(), tabpane.latitude.getText())) {
 
                     getData getdata = new getData(); // getData obj for API call
 
@@ -159,17 +142,24 @@ public class gui extends Application {
 
                         window.setScene(resultsScene);
 
-                        Data results = getdata.sendGET(Double.parseDouble(latitude.getText()), Double.parseDouble(longitude.getText()), date.getText());
-                        System.out.println("Latitude: "+latitude.getText());
-                        System.out.println("Longitude: "+longitude.getText());
+                        Data results = getdata.sendGET(Double.parseDouble(tabpane.getLatitude()), Double.parseDouble(tabpane.getLongitude()), date.getText());
+                        System.out.println("Latitude: "+tabpane.getLatitude());
+                        System.out.println("Longitude: "+tabpane.getLongitude());
 
                         //Displays Output to Gui
-                        output.setText("Longitude: "+longitude.getText()+"\n"+"Latitude: "+latitude.getText()+"\n"+results.displayOutPut());
+                        output.setText("Longitude: "+tabpane.getLongitude()+"\n"+"Latitude: "+tabpane.getLatitude()+"\n"+results.displayOutPut());
+                        tabpane.setLonError("");
+                        tabpane.setLatError("");
 
                     } catch (Exception e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
                     }
+                } else {
+	                if (tabpane.getLongitude().isEmpty() || !isDouble(tabpane.getLongitude()) || Double.parseDouble(tabpane.getLongitude())>180 || Double.parseDouble(tabpane.getLongitude())<-180)
+	                	tabpane.setLonError("Please enter a valid longitude value");
+	                if (tabpane.latitude.getText().isEmpty() || !isDouble(tabpane.getLatitude()) || Double.parseDouble(tabpane.getLatitude())>90 || Double.parseDouble(tabpane.getLatitude())<-90)
+	                	tabpane.setLatError("Please enter a valid latitude value");
                 }
             }
         });
@@ -177,6 +167,41 @@ public class gui extends Application {
         window.show();
     }
 
+    /** {@link #inputValidate(String, String)}
+     * @param lon, lat
+     * @return boolean
+     * This method is used as input validation for the longitude and latitude fields
+     * It contains a series of checks that will return false if they pass.
+     * These checks include checking if the longitude and latitude strings are empty,
+     * if they fail as Doubles via the {@link #isDouble(String)} method, 
+     * and if they exceed the longitude and latitude boundaries (-90 to 90, -180 to 180)
+     */
+    static boolean inputValidate(String lon, String lat) {
+    	if (lon.isEmpty() || lat.isEmpty())
+    		return false;
+    	if (!isDouble(lon) || !isDouble(lat))
+    		return false;
+    	if (Double.parseDouble(lon)>180 || Double.parseDouble(lon)<-180)
+    		return false;
+    	if (Double.parseDouble(lat)>90 || Double.parseDouble(lat)<-90)
+    		return false;
+    	return true;
+    }
+    
+    /** {@link #isDouble(String)}
+     * @param str
+     * @return boolean
+     * This method checks if the longitude and latitude fields are able to be parsed as Doubles
+     */
+    static boolean isDouble(String str) {
+    	try {
+    		Double.parseDouble(str);
+    		return true;
+    	} catch (NumberFormatException e) {
+    		return false;
+    	}
+    }
+    
     public static void execute(String[] args) {
         launch(args);
     }
