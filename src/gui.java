@@ -23,8 +23,8 @@ import javafx.scene.image.ImageView;
 
 public class gui extends Application {
 
-		Stage window;
-		Scene titleScene, displayScene, resultsScene;
+	Stage window;
+    Scene titleScene, displayScene, resultsScene;
 
 
     public void start(Stage primaryStage) throws FileNotFoundException {
