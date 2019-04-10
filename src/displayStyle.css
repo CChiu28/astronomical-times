@@ -26,7 +26,9 @@
     -fx-background-color: transparent;
     -fx-background-radius: 0, 0, 0, 0;
     -fx-padding: 0.166667em;
-    -fx-border
+    -fx-text-box-border: white;
+    -fx-border-width: 1px;
+    -fx-border-color: white;
 }
  
 .text-field:hover{
