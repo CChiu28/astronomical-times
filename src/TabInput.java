@@ -8,11 +8,11 @@ public class TabInput {
 	Tab tab1 = new Tab("Location");
 	Tab tab2 = new Tab("Coords");
 	
-	protected final TextField longitude = new TextField();
-	protected final TextField latitude = new TextField();
-	protected final Text lonError = new Text();
-	protected final Text latError = new Text();
-	protected final TextField location = new TextField();
+	private final TextField longitude = new TextField();
+	private final TextField latitude = new TextField();
+	private final Text lonError = new Text();
+	private final Text latError = new Text();
+	private final TextField location = new TextField();
 	
 	// This method sets up the content in the tabs and returns the tabpane
 	// so it can be added to the main gui

@@ -55,6 +55,7 @@ public class gui extends Application {
         
         // This sets up a tabpane for the location an coordinates input
         TabInput tabpane = new TabInput();
+        Table table = new Table();
 
         //DATE TEXTBOX
 
@@ -90,7 +91,7 @@ public class gui extends Application {
         // Adding the tabpane here will insert the tabs into the main layout
         submitLayout.getChildren().addAll(tabpane.tabpane(), date, submit);
 
-        resultsLayout.getChildren().addAll(returnButton, output);
+        resultsLayout.getChildren().addAll(returnButton, table.table());
         resultsLayout.setAlignment(Pos.CENTER);
 
         titleScene = new Scene(titleLayout, 600,450);
@@ -111,7 +112,7 @@ public class gui extends Application {
             @Override
             public void handle(ActionEvent e) {
 
-                if (inputValidate(tabpane.longitude.getText(), tabpane.latitude.getText())) {
+                if (inputValidate(tabpane.getLongitude(), tabpane.getLatitude())) {
 
                     getData getdata = new getData(); // getData obj for API call
 
@@ -141,7 +142,7 @@ public class gui extends Application {
                 } else {
 	                if (tabpane.getLongitude().isEmpty() || !isDouble(tabpane.getLongitude()) || Double.parseDouble(tabpane.getLongitude())>180 || Double.parseDouble(tabpane.getLongitude())<-180)
 	                	tabpane.setLonError("Please enter a valid longitude value");
-	                if (tabpane.latitude.getText().isEmpty() || !isDouble(tabpane.getLatitude()) || Double.parseDouble(tabpane.getLatitude())>90 || Double.parseDouble(tabpane.getLatitude())<-90)
+	                if (tabpane.getLatitude().isEmpty() || !isDouble(tabpane.getLatitude()) || Double.parseDouble(tabpane.getLatitude())>90 || Double.parseDouble(tabpane.getLatitude())<-90)
 	                	tabpane.setLatError("Please enter a valid latitude value");
                 }
             }
