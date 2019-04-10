@@ -37,7 +37,7 @@ public class gui extends Application {
 
 
         //CENTER
-        Label summary = new Label("The Astronomical Time calculator can be used to find the sunrise, sunset, \nand astronomical twilight and much more information at any location.");
+        Label summary = new Label("The Astronomical Time calculator can be used to find the sunrise, sunset, \n      astronomical twilight and much more information at any location.");
         summary.setPadding(new Insets(10,10,10,10));
         BorderPane.setMargin(summary, new Insets(10,10,10,10));
         summary.setTextFill(Color.WHITE);
