@@ -1,8 +1,6 @@
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,10 +12,7 @@ import javafx.event.EventHandler;
 import javafx.scene.text.Text;
 import javafx.scene.paint.*;
 import javafx.scene.layout.*;
-import javafx.geometry.Insets;
-import javafx.scene.Group;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+
 
 public class gui extends Application {
 
@@ -29,18 +24,6 @@ public class gui extends Application {
 
         window = primaryStage;
         
-
-        //IMAGE Loader
-        /*
-        Image titleImage = new Image(new FileInputStream("assets/display_sun.jpg"));
-        ImageView imageView = new ImageView(titleImage);
-        // imageView.setX(50);
-        // imageView.setY(25);
-        imageView.setImage(titleImage);
-        imageView.setFitHeight(600);
-        imageView.setFitWidth(450);
-        */
-
         // TITLE SCENE
 
         VBox titleLayout = new VBox(20);
