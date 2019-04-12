@@ -91,7 +91,7 @@ public class gui extends Application {
         // Adding the tabpane here will insert the tabs into the main layout
         submitLayout.getChildren().addAll(tabpane.tabpane(), date, submit);
 
-        resultsLayout.getChildren().addAll(returnButton, table.table());
+        resultsLayout.getChildren().addAll(returnButton);
         resultsLayout.setAlignment(Pos.CENTER);
 
         titleScene = new Scene(titleLayout, 600,450);
@@ -124,7 +124,6 @@ public class gui extends Application {
                          * This needs to be reworked so results are outputed into
                          * the gui instead of console. The getters in Data will have to be used here.*/
 
-                        window.setScene(resultsScene);
 
                         Data results = getdata.sendGET(Double.parseDouble(tabpane.getLatitude()), Double.parseDouble(tabpane.getLongitude()), date.getText());
                         System.out.println("Latitude: "+tabpane.getLatitude());
@@ -132,9 +131,11 @@ public class gui extends Application {
 
                         //Displays Output to Gui
                         output.setText("Longitude: "+tabpane.getLongitude()+"\n"+"Latitude: "+tabpane.getLatitude()+"\n"+results.displayOutPut());
+                        table.setToTable(results);
                         tabpane.setLonError("");
                         tabpane.setLatError("");
-
+                        resultsLayout.getChildren().add(table.table());
+                        window.setScene(resultsScene);
                     } catch (Exception e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
