@@ -21,7 +21,7 @@ public class getData {
 	 */
     Data sendGET(double lat, double lng, String date) throws Exception {
     	// This string will concatenate lat, lng, and date to the url
-        String url = "https://api.sunrise-sunset.org/json?lat="+lat+"&lng="+lng+"&date="+date;
+        String url = "http://api.sunrise-sunset.org/json?lat="+lat+"&lng="+lng+"&date="+date+"&formatted=1";
         System.out.println("Sending GET request to "+url);
         Data results = (Data) new Gson().fromJson(connectAPI(url), Data.class); // Gson parses the incoming JSON data and maps it to a Data obj.
         return results;
@@ -129,4 +129,9 @@ public class getData {
     	}
     	return jo;
     }
+
+	public String sendGET(String string, String string2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
