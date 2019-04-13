@@ -1,3 +1,5 @@
+import com.jfoenix.controls.JFXTabPane;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -7,7 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class TabInput {
-	TabPane tabpane;
+	JFXTabPane tabpane;
 	Tab tab1 = new Tab("Location");
 	Tab tab2 = new Tab("Coords");
 	
@@ -20,8 +22,8 @@ public class TabInput {
 	
 	// This method sets up the content in the tabs and returns the tabpane
 	// so it can be added to the main gui
-	public TabPane tabpane() {
-		tabpane = new TabPane();
+	public JFXTabPane tabpane() {
+		tabpane = new JFXTabPane();
 		tabpane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 		Insets inset = new Insets(0,15,0,15);
 

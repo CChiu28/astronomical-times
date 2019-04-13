@@ -1,3 +1,5 @@
+import com.jfoenix.controls.JFXButton;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -22,7 +24,7 @@ public class TitleScene {
 		summary.setPadding(new Insets(10,10,10,10));
 		summary.setTextFill(Color.WHITE);
 		
-		Button enter = new Button("Enter");
+		JFXButton enter = new JFXButton("Enter");
 		enter.setPadding(new Insets(10,10,10,10));
 		enter.setOnAction(e -> stage.setScene(new MainScene().mainScene()));
 		
