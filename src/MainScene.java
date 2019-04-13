@@ -1,3 +1,6 @@
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTabPane;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -13,10 +16,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class MainScene {
-	TabPane mainTab;
+	JFXTabPane mainTab;
 	Scene mainscene;
 	public Scene mainScene() {
-		mainTab = new TabPane();
+		mainTab = new JFXTabPane();
 		mainTab.setVisible(false);
 		mainTab.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 		Tab mainOutput = new Tab("Output");
@@ -39,7 +42,7 @@ public class MainScene {
 		
 		//SUBMIT BUTTON
 		
-		final Button submit = new Button ("Submit");
+		final JFXButton submit = new JFXButton ("Submit");
 		GridPane.setConstraints(submit, 5, 18);
 		
 		//RESULTS SCENE
@@ -66,7 +69,7 @@ public class MainScene {
 		resultsLayout.setAlignment(Pos.CENTER);
 		
 		mainBox.getChildren().addAll(submitLayout,resultsLayout);
-		
+//		mainscene.getStylesheets().add("displayStyle.css");
 		mainscene = new Scene(mainBox);
 		mainscene.getStylesheets().add("displayStyle.css");
         

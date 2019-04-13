@@ -1,9 +1,11 @@
 .root{
 	-fx-background-image: url("space.jpg");
+	-fx-background-size: cover;
 	-fx-font-family:"Futura";
 }
 
-.button{
+.jfx-button{
+	-jfx-button-type: RAISED;
 	-fx-font-size:12px;
 	-fx-font-family:"Futura";
 	-fx-font-weight: bold;
@@ -14,12 +16,29 @@
 	-fx-border-width: 1px; 
 }
 
-.button:hover{
+.jfx-button:hover{
 	-fx-background-color: linear-gradient(#ada2c1, #8e1227);
 	-fx-text-fill: #07082b; 
 	-fx-border-color: #07082b;
 	-fx-border-radius: 2px;
 	-fx-border-width: 1px;
+}
+
+.jfx-tab-pane .tab-header-background {
+	-fx-background-color: transparent;
+}
+
+.jfx-tab-pane .headers-region {
+	-fx-background-color: transparent;
+}
+
+.jfx-tab-pane .tab:selected  {
+	-fx-background-color: #515151;
+	-fx-opacity: 0.5;
+}
+
+.jfx-tab-pane .tab-selected-line {
+	-fx-background-color: WHITE;
 }
 
 .text-field{
