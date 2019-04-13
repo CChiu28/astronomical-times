@@ -7,9 +7,11 @@
 
 public class Data {
 	// This is the first layer of the JSON structure: results. A getAll method is included to print all the data.
-	Results results = new Results();
+	private Results results = new Results();
 
-
+	public Results res() {
+		return this.results;
+	}
 	//Tester function to see results
 	void getAll() {
 		System.out.println("Sunrise: "+results.getSunrise());
@@ -42,46 +44,46 @@ public class Data {
 }
 
 // This is the second layer of the JSON structure, the actual data. Getters included.
-class Results {
-	private String sunrise;
-	private String sunset;
-	private String solar_noon;
-	private String day_length;
-	private String civil_twilight_begin;
-	private String civil_twilight_end;
-	private String nautical_twilight_begin;
-	private String nautical_twilight_end;
-	private String astronomical_twilight_begin;
-	private String astronomical_twilight_end;
-	
-	public String getSunrise() {
-		return sunrise;
-	}
-	public String getSunset() {
-		return sunset;
-	}
-	public String getSolar_noon() {
-		return solar_noon;
-	}
-	public String getDay_length() {
-		return day_length;
-	}
-	public String getCivil_twilight_begin() {
-		return civil_twilight_begin;
-	}
-	public String getCivil_twilight_end() {
-		return civil_twilight_end;
-	}
-	public String getNautical_twilight_begin() {
-		return nautical_twilight_begin;
-	}
-	public String getNautical_twilight_end() {
-		return nautical_twilight_end;
-	}
-	public String getAstronomical_twilight_begin() {
-		return astronomical_twilight_begin;
-	}
-	public String getAstronomical_twilight_end() {
-		return astronomical_twilight_end;
-	}
-}
+//class Results {
+//	private String sunrise;
+//	private String sunset;
+//	private String solar_noon;
+//	private String day_length;
+//	private String civil_twilight_begin;
+//	private String civil_twilight_end;
+//	private String nautical_twilight_begin;
+//	private String nautical_twilight_end;
+//	private String astronomical_twilight_begin;
+//	private String astronomical_twilight_end;
+//	
+//	public String getSunrise() {
+//		return sunrise;
+//	}
+//	public String getSunset() {
+//		return sunset;
+//	}
+//	public String getSolar_noon() {
+//		return solar_noon;
+//	}
+//	public String getDay_length() {
+//		return day_length;
+//	}
+//	public String getCivil_twilight_begin() {
+//		return civil_twilight_begin;
+//	}
+//	public String getCivil_twilight_end() {
+//		return civil_twilight_end;
+//	}
+//	public String getNautical_twilight_begin() {
+//		return nautical_twilight_begin;
+//	}
+//	public String getNautical_twilight_end() {
+//		return nautical_twilight_end;
+//	}
+//	public String getAstronomical_twilight_begin() {
+//		return astronomical_twilight_begin;
+//	}
+//	public String getAstronomical_twilight_end() {
+//		return astronomical_twilight_end;
+//	}
+//}
