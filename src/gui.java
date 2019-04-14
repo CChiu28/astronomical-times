@@ -21,7 +21,7 @@ public class gui extends Application {
     Scene titleScene;
 
     public void start(Stage primaryStage) throws FileNotFoundException {
-
+    	// Set Stage
         window = primaryStage;
         window.setHeight(720);
         window.setWidth(1280);
@@ -30,7 +30,7 @@ public class gui extends Application {
         VBox titleLayout = new VBox(20);
         TitleScene title = new TitleScene();
         
-
+        // Set the title scene
         titleLayout.getChildren().addAll(title.Title(window));
         titleLayout.setAlignment(Pos.CENTER);
 

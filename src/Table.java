@@ -12,6 +12,8 @@ public class Table {
 		view = new TableView<Results>();
 		view.setItems(tableList);
 		view.setEditable(false);
+		
+		// Create table columns
 		TableColumn<Results,String> sunriseCol = new TableColumn<Results,String>("Sunrise");
 		TableColumn<Results,String> sunsetCol = new TableColumn<Results,String>("Sunset");
 		TableColumn<Results,String> solCol = new TableColumn<Results,String>("Solar Noon");
@@ -23,6 +25,7 @@ public class Table {
 		TableColumn<Results,String> astbeginCol = new TableColumn<Results,String>("Astronomical Twilight Begins");
 		TableColumn<Results,String> astendCol = new TableColumn<Results,String>("Astronomoical Twilight Ends");
 		
+		// Set columns to read the specific values in Results class
 		sunriseCol.setCellValueFactory(new PropertyValueFactory<Results,String>("sunrise"));
 		sunsetCol.setCellValueFactory(new PropertyValueFactory<Results,String>("Sunset"));
 		solCol.setCellValueFactory(new PropertyValueFactory<Results,String>("solar_noon"));
@@ -34,12 +37,14 @@ public class Table {
 		astbeginCol.setCellValueFactory(new PropertyValueFactory<Results,String>("astronomical_twilight_begin"));
 		astendCol.setCellValueFactory(new PropertyValueFactory<Results,String>("astronomical_twilight_end"));
 		
+		// Add columns to table
 		view.getColumns().addAll(sunriseCol,sunsetCol,solCol,dayCol,twibeginCol,twiendCol,naubeginCol,nauendCol,astbeginCol,astendCol);
 		
 //		view.getItems().add(data.res());
 		return view;
 	}
 	
+	// Retrieve data from Results class
 	public void setToTable(Data results) {
 		data = results;
 		tableList = FXCollections.observableArrayList(data.res());

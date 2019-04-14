@@ -1,15 +1,21 @@
+import java.time.LocalDate;
+
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTabPane;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TabPane.TabClosingPolicy;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -22,54 +28,53 @@ public class MainScene {
 		mainTab = new JFXTabPane();
 		mainTab.setVisible(false);
 		mainTab.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
+		
 		Tab mainOutput = new Tab("Output");
 		Tab compareTab = new Tab("Compare");
 		Tab helpTab = new Tab("Definitions");
 		Tab aboutTab = new Tab("About");
+		mainTab.getTabs().addAll(mainOutput,compareTab, helpTab, aboutTab);
 		
 		VBox mainBox = new VBox(10);
-		GridPane submitLayout = new GridPane();
-		submitLayout.setGridLinesVisible(true);
-		submitLayout.setAlignment(Pos.TOP_CENTER);
+		VBox submitLayout = new VBox(10);
+		
+		GridPane mainOutPane = new GridPane();
 		
 		TabInput tabpane = new TabInput();
 		Table table = new Table();
+		About about = new About();
 		
 		final TextField date = new TextField();
 		date.setPromptText("Date");
 		date.setPrefColumnCount(20);
 		date.getText();
+		JFXDatePicker datepicker = new JFXDatePicker();
+		datepicker.setPromptText("Pick a date");
+		datepicker.setEditable(false);
 		
 		//SUBMIT BUTTON
 		
 		final JFXButton submit = new JFXButton ("Submit");
 		GridPane.setConstraints(submit, 5, 18);
 		
-		//RESULTS SCENE
-		
-		VBox resultsLayout = new VBox(10);
-		
-		//RETURN TO DISPLAY SCENE BUTTON
-		
-		//        Button returnButton = new Button("Back");
-		//        returnButton.setOnAction(e -> window.setScene(displayScene));
-		
 		//OUTPUT TEXT
 		
 		final Text output = new Text();
 		output.setFill(Color.WHITE);
+		mainOutPane.add(output, 0, 0);
 		
-		mainTab.getTabs().addAll(mainOutput,compareTab, helpTab, aboutTab);
+		// Set content for Main output and About tabs
+		mainOutput.setContent(mainOutPane);
+		aboutTab.setContent(about.about());
 		
-		submitLayout.add(tabpane.tabpane(), 1, 0);
-		submitLayout.add(date, 1, 1);
-		submitLayout.add(submit, 1,2);
+		// Set layout for the input Tabs
+		submitLayout.setAlignment(Pos.CENTER);
+		submitLayout.getChildren().addAll(tabpane.tabpane(),datepicker,submit);
+		submitLayout.setPadding(new Insets(0,300,0,300));
 		
-		resultsLayout.getChildren().add(mainTab);
-		resultsLayout.setAlignment(Pos.CENTER);
+		// Set input layout and output layout to main layout
+		mainBox.getChildren().addAll(submitLayout,mainTab);
 		
-		mainBox.getChildren().addAll(submitLayout,resultsLayout);
-//		mainscene.getStylesheets().add("displayStyle.css");
 		mainscene = new Scene(mainBox);
 		mainscene.getStylesheets().add("displayStyle.css");
         
@@ -91,22 +96,25 @@ public class MainScene {
 					     * Results are mapped into a Data obj and getAll() is called.
 					     * This needs to be reworked so results are outputed into
 					     * the gui instead of console. The getters in Data will have to be used here.*/
-					
-					
-					    Data results = getdata.sendGET(Double.parseDouble(tabpane.getLatitude()), Double.parseDouble(tabpane.getLongitude()), date.getText());
+						LocalDate dateval = LocalDate.now();
+						if (datepicker.getValue()!=null) {
+							dateval = datepicker.getValue();
+						}
+						System.out.println(dateval.toString());
+					    Data results = getdata.sendGET(Double.parseDouble(tabpane.getLatitude()), Double.parseDouble(tabpane.getLongitude()), dateval.toString());
 					    System.out.println("Latitude: "+tabpane.getLatitude());
 					    System.out.println("Longitude: "+tabpane.getLongitude());
 					
 					    //Displays Output to Gui
-					    output.setText("Longitude: "+tabpane.getLongitude()+"\n"+"Latitude: "+tabpane.getLatitude()+"\n"+results.displayOutPut());
+					    output.setText("Longitude: "+tabpane.getLongitude()+"\n"+"Latitude: "+tabpane.getLatitude()+"\n"+dateval+"\n"+results.displayOutPut());
+//					    mainOutPane.add(output, 0, 0);
+//					    mainOutput.setContent(mainOutPane);
 					    table.setToTable(results);
 					    tabpane.setLonError("");
 					    tabpane.setLatError("");
-					//                        submitLayout.getChildren().add(mainTab);
-					    mainOutput.setContent(table.table());
+					    compareTab.setContent(table.table());
 					    mainTab.requestLayout();
 					    mainTab.setVisible(true);
-					//                        window.setScene(resultsScene);
 					} catch (Exception e1) {
 					    // TODO Auto-generated catch block
 					    e1.printStackTrace();
@@ -121,6 +129,7 @@ public class MainScene {
 		});
         return mainscene;
 	}
+	
 	/** {@link #inputValidate(String, String)}
 	 * @param lon, lat
 	 * @return boolean

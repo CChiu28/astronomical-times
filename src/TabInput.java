@@ -33,26 +33,25 @@ public class TabInput {
 		location.setPromptText("Enter a location");
 		
         longitude.setPromptText("Enter the Longitude : -180 to 180");
-//        longitude.setPrefColumnCount(5);
-//        longitude.getText();
-
         lonError.setFill(Color.RED);
         lonError.setStyle("-fx-font: 11 arial");
-        
         latitude.setPromptText("Enter the Latitude : -90 to 90");
-//        latitude.setPrefColumnCount(20);
-//        latitude.getText();
         latError.setFill(Color.RED);
         latError.setStyle("-fx-font: 11 arial");
         
         date.setPromptText("Enter the date (optional)");
         
-        VBox tab1content = new VBox();
+        // Set the tab for Location input
+        VBox tab1content = new VBox(15);
+        tab1content.setAlignment(Pos.TOP_CENTER);
         tab1content.setMargin(location, inset);
         tab1content.getChildren().addAll(location);
         tab1.setContent(tab1content);
+        
+        // Set the tab for Coordinates input
         VBox tab2content = new VBox(15);
-        tab2content.setMargin(longitude, inset);
+        tab2content.setAlignment(Pos.TOP_CENTER);
+        tab2content.setMargin(longitude, new Insets(15,15,0,15));
         tab2content.setMargin(latitude, inset);
         tab2content.getChildren().addAll(longitude, lonError, latitude, latError);
 		tab2.setContent(tab2content);

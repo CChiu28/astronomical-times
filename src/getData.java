@@ -31,7 +31,7 @@ public class getData {
     	Map<String,String> result = new HashMap<String,String>();
 		// Using geoCode to generate a map that will be used in sendGet to retrieve the proper formatted information
 		result = geoCode(url);
-		String formatted_info = sendGET(result.get("lon"), result.get("lat"), /*date to be added*/);
+		String formatted_info = sendGET(result.get("lon"), result.get("lat") /*date to be added*/);
 		System.out.println(formatted_info);
     }
     

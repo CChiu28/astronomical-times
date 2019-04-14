@@ -62,3 +62,7 @@
     -fx-background-radius: 0, 0, 0, 0;
     -fx-padding: 0.166667em;
     }
+
+.jfx-date-picker .month-year-pane {
+	-fx-background-color: #515151;
+}
