@@ -139,6 +139,8 @@ public class MainScene {
 		        	tabpane.setLonError("Please enter a valid longitude value");
 		        if (tabpane.getLatitude().isEmpty() || !isDouble(tabpane.getLatitude()) || Double.parseDouble(tabpane.getLatitude())>90 || Double.parseDouble(tabpane.getLatitude())<-90)
 		        	tabpane.setLatError("Please enter a valid latitude value");
+		        if (tabpane.getLocation().isEmpty())
+		        	tabpane.setLocError("Invalid location");
 		        }
 		    }
 		});

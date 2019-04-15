@@ -29,17 +29,26 @@ class getDataTest {
 	}
 
 	@Test
-	void test() {
+	void testSendGET() {
 		Double first = 54.34223;
 		Double second = 42.65343;
 		String third = "";
+		Results res;
 		try {
 			results = testData.sendGET(first,second,third);
+			res = results.res();
+			assertFalse(res.getAstronomical_twilight_begin().isEmpty());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		try {
+			results = testData.sendGET("brooklyn college", third);
+			res = results.res();
+			assertFalse(res.getAstronomical_twilight_begin().isEmpty());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 	}
 
 }

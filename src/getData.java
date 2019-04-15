@@ -29,9 +29,10 @@ public class getData {
     
     Data sendGET(String location, String date) throws Exception {
     	Map<String,String> locate = geoCode(location);
+    	Data results = new Data();
 		String url = "http://api.sunrise-sunset.org/json?lat="+locate.get("lat")+"&lng="+locate.get("lon")+"&date="+date+"&formatted=1";
 		System.out.println("Sending GET request to "+url);
-		Data results = (Data) new Gson().fromJson(connectAPI(url), Data.class); // Gson parses the incoming JSON data and maps it to a Data obj.
+		results = (Data) new Gson().fromJson(connectAPI(url), Data.class); // Gson parses the incoming JSON data and maps it to a Data obj.
 		return results;
     }
     
@@ -59,6 +60,7 @@ public class getData {
     	StringBuffer url = new StringBuffer();
     	String[] address = input.split(" ");
     	url.append("https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=");
+    	System.out.println(address.length);
     	if (address.length==0)
     		return null;
     	for (int i=0; i<address.length; i++) {

@@ -12,7 +12,7 @@ public class Main {
 		
 		
 		try {
-			data.sendGET(url,date);
+//			data.sendGET(url,date);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

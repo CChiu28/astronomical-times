@@ -49,7 +49,7 @@ public class TabInput {
         // Set the tab for Location input
         VBox tab1content = new VBox(15);
         tab1content.setAlignment(Pos.TOP_CENTER);
-        tab1content.setMargin(location, inset);
+        tab1content.setMargin(location, new Insets(15,15,0,15));
         tab1content.getChildren().addAll(location, locError);
         tab1.setContent(tab1content);
         
