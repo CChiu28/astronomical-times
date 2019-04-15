@@ -22,10 +22,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class MainScene {
-	TabPane mainTab;
+//	TabPane mainTab;
+	JFXTabPane mainTab;
 	Scene mainscene;
 	public Scene mainScene() {
-		mainTab = new TabPane();
+//		mainTab = new TabPane();
+		mainTab = new JFXTabPane();
 		mainTab.setVisible(false);
 		mainTab.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 		
@@ -48,7 +50,8 @@ public class MainScene {
 		date.setPromptText("Date");
 		date.setPrefColumnCount(20);
 		date.getText();
-		DatePicker datepicker = new DatePicker();
+//		DatePicker datepicker = new DatePicker();
+		JFXDatePicker datepicker = new JFXDatePicker();
 		datepicker.setPromptText("Pick a date");
 		datepicker.setEditable(false);
 		
@@ -84,10 +87,13 @@ public class MainScene {
 		submit.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override
 		    public void handle(ActionEvent e) {
-		
-		        if (inputValidate(tabpane.getLongitude(), tabpane.getLatitude())) {
-		
-		            getData getdata = new getData(); // getData obj for API call
+		    	LocalDate dateval = LocalDate.now();
+		    	getData getdata = new getData();
+		    	Data results;
+		    	if (datepicker.getValue()!=null) {
+					dateval = datepicker.getValue();
+				}
+		        if (inputValidate(tabpane.getLongitude(), tabpane.getLatitude()) && tabpane.getLocation().isEmpty()) {
 		
 					try {
 					    /* Changes the scene to resultScene.
@@ -96,12 +102,9 @@ public class MainScene {
 					     * Results are mapped into a Data obj and getAll() is called.
 					     * This needs to be reworked so results are outputed into
 					     * the gui instead of console. The getters in Data will have to be used here.*/
-						LocalDate dateval = LocalDate.now();
-						if (datepicker.getValue()!=null) {
-							dateval = datepicker.getValue();
-						}
+//						LocalDate dateval = LocalDate.now();
 						System.out.println(dateval.toString());
-					    Data results = getdata.sendGET(Double.parseDouble(tabpane.getLatitude()), Double.parseDouble(tabpane.getLongitude()), dateval.toString());
+					    results = getdata.sendGET(Double.parseDouble(tabpane.getLatitude()), Double.parseDouble(tabpane.getLongitude()), dateval.toString());
 					    System.out.println("Latitude: "+tabpane.getLatitude());
 					    System.out.println("Longitude: "+tabpane.getLongitude());
 					
@@ -110,8 +113,7 @@ public class MainScene {
 //					    mainOutPane.add(output, 0, 0);
 //					    mainOutput.setContent(mainOutPane);
 					    table.setToTable(results);
-					    tabpane.setLonError("");
-					    tabpane.setLatError("");
+					    clearInput(tabpane);
 					    compareTab.setContent(table.table());
 					    mainTab.requestLayout();
 					    mainTab.setVisible(true);
@@ -119,7 +121,20 @@ public class MainScene {
 					    // TODO Auto-generated catch block
 					    e1.printStackTrace();
 					}
-		    } else {
+		    } else if ((tabpane.getLongitude().isEmpty()&&tabpane.getLatitude().isEmpty())&&!tabpane.getLocation().isEmpty()) {
+		    	try {
+		    		results = getdata.sendGET(tabpane.getLocation(), dateval.toString());
+		    		output.setText("Location: "+tabpane.getLocation()+"\n"+dateval+"\n"+results.displayOutPut());
+					table.setToTable(results);
+					clearInput(tabpane);
+					compareTab.setContent(table.table());
+					mainTab.requestLayout();
+					mainTab.setVisible(true);
+		    	} catch (Exception e2) {
+		    		tabpane.setLocError("Invalid location");
+		    	}
+		    }
+		        else {
 		        if (tabpane.getLongitude().isEmpty() || !isDouble(tabpane.getLongitude()) || Double.parseDouble(tabpane.getLongitude())>180 || Double.parseDouble(tabpane.getLongitude())<-180)
 		        	tabpane.setLonError("Please enter a valid longitude value");
 		        if (tabpane.getLatitude().isEmpty() || !isDouble(tabpane.getLatitude()) || Double.parseDouble(tabpane.getLatitude())>90 || Double.parseDouble(tabpane.getLatitude())<-90)
@@ -163,5 +178,14 @@ public class MainScene {
 		} catch (NumberFormatException e) {
 			return false;
 		}
+	}
+	
+	static void clearInput(TabInput input) {
+		input.setLocation("");
+		input.setLongitude("");
+		input.setLatitude("");
+		input.setLatError("");
+		input.setLonError("");
+		input.setLocError("");
 	}
 }

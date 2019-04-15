@@ -27,13 +27,21 @@ public class getData {
         return results;
     }
     
-    public void combo (String url) throws Exception {
-    	Map<String,String> result = new HashMap<String,String>();
-		// Using geoCode to generate a map that will be used in sendGet to retrieve the proper formatted information
-		result = geoCode(url);
-		String formatted_info = sendGET(result.get("lon"), result.get("lat") /*date to be added*/);
-		System.out.println(formatted_info);
+    Data sendGET(String location, String date) throws Exception {
+    	Map<String,String> locate = geoCode(location);
+		String url = "http://api.sunrise-sunset.org/json?lat="+locate.get("lat")+"&lng="+locate.get("lon")+"&date="+date+"&formatted=1";
+		System.out.println("Sending GET request to "+url);
+		Data results = (Data) new Gson().fromJson(connectAPI(url), Data.class); // Gson parses the incoming JSON data and maps it to a Data obj.
+		return results;
     }
+    
+//    public void combo (String url) throws Exception {
+//    	Map<String,String> result = new HashMap<String,String>();
+//		// Using geoCode to generate a map that will be used in sendGet to retrieve the proper formatted information
+//		result = geoCode(url);
+//		String formatted_info = sendGET(result.get("lon"), result.get("lat") /*date to be added*/);
+//		System.out.println(formatted_info);
+//    }
     
     /** {@link #geoCode(String)}
      * @param input
@@ -129,9 +137,4 @@ public class getData {
     	}
     	return jo;
     }
-
-	public String sendGET(String string, String string2) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }
