@@ -22,10 +22,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class MainScene {
-	JFXTabPane mainTab;
+	TabPane mainTab;
 	Scene mainscene;
 	public Scene mainScene() {
-		mainTab = new JFXTabPane();
+		mainTab = new TabPane();
 		mainTab.setVisible(false);
 		mainTab.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 		
@@ -48,13 +48,13 @@ public class MainScene {
 		date.setPromptText("Date");
 		date.setPrefColumnCount(20);
 		date.getText();
-		JFXDatePicker datepicker = new JFXDatePicker();
+		DatePicker datepicker = new DatePicker();
 		datepicker.setPromptText("Pick a date");
 		datepicker.setEditable(false);
 		
 		//SUBMIT BUTTON
 		
-		final JFXButton submit = new JFXButton ("Submit");
+		final Button submit = new Button ("Submit");
 		GridPane.setConstraints(submit, 5, 18);
 		
 		//OUTPUT TEXT
