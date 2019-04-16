@@ -57,7 +57,7 @@ public class MainScene {
 		
 		//SUBMIT BUTTON
 		
-		final Button submit = new Button ("Submit");
+		final JFXButton submit = new JFXButton ("Submit");
 		GridPane.setConstraints(submit, 5, 18);
 		
 		//OUTPUT TEXT
