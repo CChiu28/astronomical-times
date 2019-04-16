@@ -45,6 +45,7 @@ public class MainScene {
 		TabInput tabpane = new TabInput();
 		Table table = new Table();
 		About about = new About();
+		MainOutput mainoutput = new MainOutput();
 		
 		final TextField date = new TextField();
 		date.setPromptText("Date");
@@ -64,7 +65,7 @@ public class MainScene {
 		
 		final Text output = new Text();
 		output.setFill(Color.WHITE);
-		mainOutPane.add(output, 0, 0);
+		mainOutPane.add(mainoutput.Labels(), 0, 0);
 		
 		// Set content for Main output and About tabs
 		mainOutput.setContent(mainOutPane);
@@ -102,21 +103,15 @@ public class MainScene {
 					     * Results are mapped into a Data obj and getAll() is called.
 					     * This needs to be reworked so results are outputed into
 					     * the gui instead of console. The getters in Data will have to be used here.*/
-//						LocalDate dateval = LocalDate.now();
-						System.out.println(dateval.toString());
+//						System.out.println(dateval.toString());
 					    results = getdata.sendGET(Double.parseDouble(tabpane.getLatitude()), Double.parseDouble(tabpane.getLongitude()), dateval.toString());
 					    System.out.println("Latitude: "+tabpane.getLatitude());
 					    System.out.println("Longitude: "+tabpane.getLongitude());
 					
 					    //Displays Output to Gui
 					    output.setText("Longitude: "+tabpane.getLongitude()+"\n"+"Latitude: "+tabpane.getLatitude()+"\n"+dateval+"\n"+results.displayOutPut());
-//					    mainOutPane.add(output, 0, 0);
-//					    mainOutput.setContent(mainOutPane);
-					    table.setToTable(results);
-					    clearInput(tabpane);
-					    compareTab.setContent(table.table());
-					    mainTab.requestLayout();
-					    mainTab.setVisible(true);
+					    mainOutPane.add(mainoutput.Output(results.res()), 1, 0);
+					    setResults(results, table, compareTab, mainTab, tabpane);
 					} catch (Exception e1) {
 					    // TODO Auto-generated catch block
 					    e1.printStackTrace();
@@ -125,11 +120,8 @@ public class MainScene {
 		    	try {
 		    		results = getdata.sendGET(tabpane.getLocation(), dateval.toString());
 		    		output.setText("Location: "+tabpane.getLocation()+"\n"+dateval+"\n"+results.displayOutPut());
-					table.setToTable(results);
-					clearInput(tabpane);
-					compareTab.setContent(table.table());
-					mainTab.requestLayout();
-					mainTab.setVisible(true);
+		    		mainOutPane.add(mainoutput.Output(results.res()), 1, 0);
+		    		setResults(results, table, compareTab, mainTab, tabpane);
 		    	} catch (Exception e2) {
 		    		tabpane.setLocError("Invalid location");
 		    	}
@@ -182,12 +174,16 @@ public class MainScene {
 		}
 	}
 	
-	static void clearInput(TabInput input) {
-		input.setLocation("");
-		input.setLongitude("");
-		input.setLatitude("");
-		input.setLatError("");
-		input.setLonError("");
-		input.setLocError("");
+	static void setResults(Data data, Table table, Tab tab, JFXTabPane tabpane, TabInput tabinput) {
+		table.setToTable(data);
+		tab.setContent(table.table());
+		tabpane.requestLayout();
+		tabpane.setVisible(true);
+		tabinput.setLocation("");
+		tabinput.setLongitude("");
+		tabinput.setLatitude("");
+		tabinput.setLatError("");
+		tabinput.setLonError("");
+		tabinput.setLocError("");
 	}
 }
