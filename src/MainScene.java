@@ -94,6 +94,8 @@ public class MainScene {
 		    	if (datepicker.getValue()!=null) {
 					dateval = datepicker.getValue();
 				}
+		    	mainOutPane.getChildren().clear();
+		    	mainOutPane.add(mainoutput.Labels(),0,0);
 		        if (inputValidate(tabpane.getLongitude(), tabpane.getLatitude()) && tabpane.getLocation().isEmpty()) {
 		
 					try {
@@ -109,6 +111,7 @@ public class MainScene {
 					    System.out.println("Longitude: "+tabpane.getLongitude());
 					
 					    //Displays Output to Gui
+					    output.setText("");
 					    output.setText("Longitude: "+tabpane.getLongitude()+"\n"+"Latitude: "+tabpane.getLatitude()+"\n"+dateval+"\n"+results.displayOutPut());
 					    mainOutPane.add(mainoutput.Output(results.res()), 1, 0);
 					    setResults(results, table, compareTab, mainTab, tabpane);
@@ -119,11 +122,13 @@ public class MainScene {
 		    } else if ((tabpane.getLongitude().isEmpty()&&tabpane.getLatitude().isEmpty())&&!tabpane.getLocation().isEmpty()) {
 		    	try {
 		    		results = getdata.sendGET(tabpane.getLocation(), dateval.toString());
+		    		mainoutput.clean();
 		    		output.setText("Location: "+tabpane.getLocation()+"\n"+dateval+"\n"+results.displayOutPut());
 		    		mainOutPane.add(mainoutput.Output(results.res()), 1, 0);
 		    		setResults(results, table, compareTab, mainTab, tabpane);
 		    	} catch (Exception e2) {
-		    		tabpane.setLocError("Invalid location");
+//		    		tabpane.setLocError("Error");
+		    		e2.printStackTrace();
 		    	}
 		    }
 		        else {

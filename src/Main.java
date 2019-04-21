@@ -5,19 +5,20 @@ public class Main {
 
 	public static void main(String[] args) {
 		gui.execute(args);
-		String url = "wefwefwe";
-		String date = "";
-		getData data = new getData();
-		
-		
-		
-		try {
-//			data.sendGET(url,date);
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println("error");
-		} 
+//		String url = "new york, ny";
+//		String date = "";
+//		getData data = new getData();
+//		Data results;
+//		Double lat = 40.7308619;
+//		Double lng = -73.9871558;
+//		
+//		try {
+//			results = data.sendGET(url,date);
+//			System.out.println(results.displayOutPut());
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} 
 		
 		
 	}

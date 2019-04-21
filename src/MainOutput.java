@@ -10,7 +10,7 @@ public class MainOutput {
 	TilePane layout;
 	TilePane layout2;
 	Label[] labels;
-	Label[] output;
+	Label[] output = new Label[10];
 	public TilePane Labels() {
 		layout = new TilePane();
 		layout.setOrientation(Orientation.VERTICAL);
@@ -48,18 +48,17 @@ public class MainOutput {
 		layout2.setTileAlignment(Pos.CENTER);
 		layout2.setVgap(5);
 		
-		output = new Label[] {
-				new Label(res.getSunrise()),
-				new Label(res.getSunset()),
-				new Label(res.getSolar_noon()),
-				new Label(res.getDay_length()+" hours"),
-				new Label(res.getCivil_twilight_begin()),
-				new Label(res.getCivil_twilight_end()),
-				new Label(res.getAstronomical_twilight_begin()),
-				new Label(res.getAstronomical_twilight_end()),
-				new Label(res.getNautical_twilight_begin()),
-				new Label(res.getNautical_twilight_end())
-		};
+		output[0].setText(res.getSunrise());
+		output[1].setText(res.getSunset());
+		output[2].setText(res.getSolar_noon());
+		output[3].setText(res.getDay_length()+" hours");
+		output[4].setText(res.getCivil_twilight_begin());
+		output[5].setText(res.getCivil_twilight_end());
+		output[6].setText(res.getAstronomical_twilight_begin());
+		output[7].setText(res.getAstronomical_twilight_end());
+		output[8].setText(res.getNautical_twilight_begin());
+		output[9].setText(res.getNautical_twilight_end());
+				
 		for (int i=0; i<output.length; i++) {
 			output[i].setStyle("-fx-font-size: 18px");
 			output[i].setTextFill(Color.GREEN);
@@ -69,5 +68,11 @@ public class MainOutput {
 		list.addAll(output);
 		
 		return layout2;
+	}
+	
+	public void clean() {
+		for (int i=0; i<output.length; i++)
+			output[i] = new Label("");
+			
 	}
 }

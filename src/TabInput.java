@@ -1,5 +1,6 @@
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.RequiredFieldValidator;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,13 +16,14 @@ public class TabInput {
 	Tab tab1 = new Tab("Location");
 	Tab tab2 = new Tab("Coords");
 	
-	private final TextField longitude = new TextField();
-	private final TextField latitude = new TextField();
+	private final JFXTextField longitude = new JFXTextField();
+	private final JFXTextField latitude = new JFXTextField();
 	private final Text lonError = new Text();
 	private final Text latError = new Text();
-	private final TextField location = new TextField();
+	private final JFXTextField location = new JFXTextField();
 	private final Text locError = new Text();
 	private final TextField date = new TextField();
+	private RequiredFieldValidator validate = new RequiredFieldValidator();
 	
 	// This method sets up the content in the tabs and returns the tabpane
 	// so it can be added to the main gui
@@ -44,8 +46,6 @@ public class TabInput {
         latitude.setPromptText("Enter the Latitude : -90 to 90");
         latError.setFill(Color.RED);
         latError.setStyle("-fx-font: 12 arial");
-        
-        date.setPromptText("Enter the date (optional)");
         
         // Set the tab for Location input
         VBox tab1content = new VBox(15);

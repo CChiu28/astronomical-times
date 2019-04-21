@@ -41,4 +41,34 @@ public class Results {
 	public String getAstronomical_twilight_end() {
 		return astronomical_twilight_end;
 	}
+	public void setSunrise(String sunrise) {
+		this.sunrise = sunrise;
+	}
+	public void setSunset(String sunset) {
+		this.sunset = sunset;
+	}
+	public void setSolar_noon(String solar_noon) {
+		this.solar_noon = solar_noon;
+	}
+	public void setDay_length(String day_length) {
+		this.day_length = day_length;
+	}
+	public void setCivil_twilight_begin(String civil_twilight_begin) {
+		this.civil_twilight_begin = civil_twilight_begin;
+	}
+	public void setCivil_twilight_end(String civil_twilight_end) {
+		this.civil_twilight_end = civil_twilight_end;
+	}
+	public void setNautical_twilight_begin(String nautical_twilight_begin) {
+		this.nautical_twilight_begin = nautical_twilight_begin;
+	}
+	public void setNautical_twilight_end(String nautical_twilight_end) {
+		this.nautical_twilight_end = nautical_twilight_end;
+	}
+	public void setAstronomical_twilight_begin(String astronomical_twilight_begin) {
+		this.astronomical_twilight_begin = astronomical_twilight_begin;
+	}
+	public void setAstronomical_twilight_end(String astronomical_twilight_end) {
+		this.astronomical_twilight_end = astronomical_twilight_end;
+	}
 }

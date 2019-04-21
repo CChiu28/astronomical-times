@@ -12,6 +12,10 @@ public class Data {
 	public Results res() {
 		return this.results;
 	}
+	
+	public void setRes(Results res) {
+		this.results = res;
+	}
 	//Tester function to see results
 	void getAll() {
 		System.out.println("Sunrise: "+results.getSunrise());
