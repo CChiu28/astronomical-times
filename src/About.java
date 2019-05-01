@@ -2,14 +2,17 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
+/*
+ * Credits tab
+ */
 public class About {
 	private Label about;
 	private VBox aboutTab;
-	Label link1;
-	Label link2;
-	Label link3;
-	Label link4;
+	private Label link1;
+	private Label link2;
+	private Label link3;
+	private Label link4;
+	
 	public VBox about() {
 		aboutTab = new VBox(20);
 		aboutTab.setAlignment(Pos.TOP_CENTER);
@@ -25,7 +28,6 @@ public class About {
 		link2.setTextFill(Color.ANTIQUEWHITE);
 		link3.setTextFill(Color.ANTIQUEWHITE);
 		link4.setTextFill(Color.ANTIQUEWHITE);
-
 		
 		aboutTab.getChildren().addAll(about,link1,link2, link3, link4);
 		return aboutTab;

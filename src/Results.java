@@ -1,4 +1,7 @@
-
+/*
+ * This class contains the json structure of the sunrisesunset API.
+ * It includes all the variables needed to map each json property.
+ */
 public class Results {
 	private String sunrise;
 	private String sunset;

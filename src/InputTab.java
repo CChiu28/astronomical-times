@@ -1,7 +1,5 @@
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.validation.RequiredFieldValidator;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -10,11 +8,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class TabInput {
-//	TabPane tabpane;
-	JFXTabPane tabpane;
-	Tab tab1 = new Tab("Location");
-	Tab tab2 = new Tab("Coords");
+/*
+ * This class is used to set up the user input section.
+ * It contains a tabpane that includes tabs for Location (used by user to input a string location ie. New York, NY)
+ * and a tab for specific coordinates
+ */
+public class InputTab {
+	//TabPane tabpane;
+	private JFXTabPane tabpane;
+	private Tab tab1 = new Tab("Location");
+	private Tab tab2 = new Tab("Coords");
 	
 	private final JFXTextField longitude = new JFXTextField();
 	private final JFXTextField latitude = new JFXTextField();
@@ -22,20 +25,18 @@ public class TabInput {
 	private final Text latError = new Text();
 	private final JFXTextField location = new JFXTextField();
 	private final Text locError = new Text();
-	private final TextField date = new TextField();
-	private RequiredFieldValidator validate = new RequiredFieldValidator();
 	
 	// This method sets up the content in the tabs and returns the tabpane
 	// so it can be added to the main gui
 	public TabPane tabpane() {
-//		tabpane = new TabPane();
+		//tabpane = new TabPane();
 		tabpane = new JFXTabPane();
 		tabpane.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-		Insets inset = new Insets(0,15,0,15);
 
 		tabpane.getTabs().add(tab1);
 		tabpane.getTabs().add(tab2);
 		
+		// Set up text fields for user input
 		location.setPromptText("Enter a location");
 		locError.setFill(Color.RED);
 		locError.setStyle("-fx-font: 12 arial");
@@ -43,6 +44,7 @@ public class TabInput {
         longitude.setPromptText("Enter the Longitude : -180 to 180");
         lonError.setFill(Color.RED);
         lonError.setStyle("-fx-font: 12 arial");
+        
         latitude.setPromptText("Enter the Latitude : -90 to 90");
         latError.setFill(Color.RED);
         latError.setStyle("-fx-font: 12 arial");
@@ -50,15 +52,15 @@ public class TabInput {
         // Set the tab for Location input
         VBox tab1content = new VBox(15);
         tab1content.setAlignment(Pos.TOP_CENTER);
-        tab1content.setMargin(location, new Insets(15,15,0,15));
+        tab1content.setMargin(location, new Insets(15, 15, 0, 15));
         tab1content.getChildren().addAll(location, locError);
         tab1.setContent(tab1content);
         
         // Set the tab for Coordinates input
         VBox tab2content = new VBox(15);
         tab2content.setAlignment(Pos.TOP_CENTER);
-        tab2content.setMargin(longitude, new Insets(15,15,0,15));
-        tab2content.setMargin(latitude, inset);
+        tab2content.setMargin(longitude, new Insets(15, 15, 0, 15));
+        tab2content.setMargin(latitude, new Insets(0, 15, 0, 15));
         tab2content.getChildren().addAll(longitude, lonError, latitude, latError);
 		tab2.setContent(tab2content);
 

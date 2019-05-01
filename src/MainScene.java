@@ -1,9 +1,7 @@
 import java.time.LocalDate;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTabPane;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -15,34 +13,46 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TabPane.TabClosingPolicy;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+/*
+ * This class sets up the main overall Scene layout of the app.
+ * It initializes and sets to different layouts multiple classes:
+ * InputTab: Sets up the user input section of the app
+ * About: Sets up the About tab in the results
+ * MainOutput: Sets up the main results tab to display the API's data
+ * Table: ?
+ */
 public class MainScene {
-//	TabPane mainTab;
-	JFXTabPane mainTab;
-	Scene mainscene;
+	//TabPane mainTab;
+	private JFXTabPane mainTab;
+	private Scene mainscene;
 	public Scene mainScene() {
-//		mainTab = new TabPane();
+		//mainTab = new TabPane();
 		mainTab = new JFXTabPane();
 		mainTab.setVisible(false);
 		mainTab.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
 		
+		// Create tabs for the results section
 		Tab mainOutput = new Tab("Output");
 		Tab compareTab = new Tab("Compare");
 		Tab helpTab = new Tab("Definitions");
 		Tab aboutTab = new Tab("About");
 		mainTab.getTabs().addAll(mainOutput,compareTab, helpTab, aboutTab);
 		
+		// Layouts for the main scene
+		// mainBox: contains the layout for all other layout panes
+		// submitLayout: contains the user input section
 		VBox mainBox = new VBox(10);
 		VBox submitLayout = new VBox(10);
 		
 		GridPane mainOutPane = new GridPane();
 		
-		TabInput tabpane = new TabInput();
+		// Initialize all other layout sections
+		InputTab tabpane = new InputTab();
 		Table table = new Table();
 		About about = new About();
 		MainOutput mainoutput = new MainOutput();
@@ -51,7 +61,7 @@ public class MainScene {
 		date.setPromptText("Date");
 		date.setPrefColumnCount(20);
 		date.getText();
-//		DatePicker datepicker = new DatePicker();
+		//DatePicker datepicker = new DatePicker();
 		JFXDatePicker datepicker = new JFXDatePicker();
 		datepicker.setPromptText("Pick a date");
 		datepicker.setEditable(false);
@@ -62,10 +72,10 @@ public class MainScene {
 		GridPane.setConstraints(submit, 5, 18);
 		
 		//OUTPUT TEXT
-		
+		/*
 		final Text output = new Text();
 		output.setFill(Color.WHITE);
-		mainOutPane.add(mainoutput.Labels(), 0, 0);
+		mainOutPane.add(mainoutput.Labels(), 0, 0);*/
 		
 		// Set content for Main output and About tabs
 		mainOutput.setContent(mainOutPane);
@@ -74,7 +84,7 @@ public class MainScene {
 		// Set layout for the input Tabs
 		submitLayout.setAlignment(Pos.CENTER);
 		submitLayout.getChildren().addAll(tabpane.tabpane(),datepicker,submit);
-		submitLayout.setPadding(new Insets(0,300,0,300));
+		submitLayout.setPadding(new Insets(0, 300, 0, 300));
 		
 		// Set input layout and output layout to main layout
 		mainBox.getChildren().addAll(submitLayout,mainTab);
@@ -95,7 +105,7 @@ public class MainScene {
 					dateval = datepicker.getValue();
 				}
 		    	mainOutPane.getChildren().clear();
-		    	mainOutPane.add(mainoutput.Labels(),0,0);
+		    	mainOutPane.add(mainoutput.Labels(), 0, 0);
 		        if (inputValidate(tabpane.getLongitude(), tabpane.getLatitude()) && tabpane.getLocation().isEmpty()) {
 		
 					try {
@@ -105,40 +115,38 @@ public class MainScene {
 					     * Results are mapped into a Data obj and getAll() is called.
 					     * This needs to be reworked so results are outputed into
 					     * the gui instead of console. The getters in Data will have to be used here.*/
-//						System.out.println(dateval.toString());
-					    results = getdata.sendGET(Double.parseDouble(tabpane.getLatitude()), Double.parseDouble(tabpane.getLongitude()), dateval.toString());
+					    results = getdata.sendGET(tabpane.getLatitude(), tabpane.getLongitude(), dateval.toString());
 					    System.out.println("Latitude: "+tabpane.getLatitude());
 					    System.out.println("Longitude: "+tabpane.getLongitude());
 					
 					    //Displays Output to Gui
-					    output.setText("");
-					    output.setText("Longitude: "+tabpane.getLongitude()+"\n"+"Latitude: "+tabpane.getLatitude()+"\n"+dateval+"\n"+results.displayOutPut());
+//					    output.setText("");
+//					    output.setText("Longitude: "+tabpane.getLongitude()+"\n"+"Latitude: "+tabpane.getLatitude()+"\n"+dateval+"\n"+results.displayOutPut());
 					    mainOutPane.add(mainoutput.Output(results.res()), 1, 0);
 					    setResults(results, table, compareTab, mainTab, tabpane);
 					} catch (Exception e1) {
 					    // TODO Auto-generated catch block
 					    e1.printStackTrace();
 					}
-		    } else if ((tabpane.getLongitude().isEmpty()&&tabpane.getLatitude().isEmpty())&&!tabpane.getLocation().isEmpty()) {
-		    	try {
-		    		results = getdata.sendGET(tabpane.getLocation(), dateval.toString());
-		    		mainoutput.clean();
-		    		output.setText("Location: "+tabpane.getLocation()+"\n"+dateval+"\n"+results.displayOutPut());
-		    		mainOutPane.add(mainoutput.Output(results.res()), 1, 0);
-		    		setResults(results, table, compareTab, mainTab, tabpane);
-		    	} catch (Exception e2) {
-//		    		tabpane.setLocError("Error");
-		    		e2.printStackTrace();
-		    	}
-		    }
-		        else {
-		        if (tabpane.getLongitude().isEmpty() || !isDouble(tabpane.getLongitude()) || Double.parseDouble(tabpane.getLongitude())>180 || Double.parseDouble(tabpane.getLongitude())<-180)
-		        	tabpane.setLonError("Please enter a valid longitude value");
-		        if (tabpane.getLatitude().isEmpty() || !isDouble(tabpane.getLatitude()) || Double.parseDouble(tabpane.getLatitude())>90 || Double.parseDouble(tabpane.getLatitude())<-90)
-		        	tabpane.setLatError("Please enter a valid latitude value");
-		        if (tabpane.getLocation().isEmpty())
-		        	tabpane.setLocError("Invalid location");
-		        }
+			    } else if ((tabpane.getLongitude().isEmpty()&&tabpane.getLatitude().isEmpty())&&!tabpane.getLocation().isEmpty()) {
+			    	try {
+			    		results = getdata.sendGET(tabpane.getLocation(), dateval.toString());
+			    		mainoutput.clean();
+//			    		output.setText("Location: "+tabpane.getLocation()+"\n"+dateval+"\n"+results.displayOutPut());
+			    		mainOutPane.add(mainoutput.Output(results.res()), 1, 0);
+			    		setResults(results, table, compareTab, mainTab, tabpane);
+			    	} catch (Exception e2) {
+			    		//tabpane.setLocError("Error");
+			    		e2.printStackTrace();
+			    	}
+			    } else {
+			        if (tabpane.getLongitude().isEmpty() || !isDouble(tabpane.getLongitude()) || Double.parseDouble(tabpane.getLongitude())>180 || Double.parseDouble(tabpane.getLongitude())<-180)
+			        	tabpane.setLonError("Please enter a valid longitude value");
+			        if (tabpane.getLatitude().isEmpty() || !isDouble(tabpane.getLatitude()) || Double.parseDouble(tabpane.getLatitude())>90 || Double.parseDouble(tabpane.getLatitude())<-90)
+			        	tabpane.setLatError("Please enter a valid latitude value");
+			        if (tabpane.getLocation().isEmpty())
+			        	tabpane.setLocError("Invalid location");
+			        }
 		    }
 		});
         return mainscene;
@@ -179,7 +187,7 @@ public class MainScene {
 		}
 	}
 	
-	static void setResults(Data data, Table table, Tab tab, JFXTabPane tabpane, TabInput tabinput) {
+	static void setResults(Data data, Table table, Tab tab, JFXTabPane tabpane, InputTab tabinput) {
 		table.setToTable(data);
 		tab.setContent(table.table());
 		tabpane.requestLayout();

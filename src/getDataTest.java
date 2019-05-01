@@ -30,8 +30,8 @@ class getDataTest {
 
 	@Test
 	void testSendGET() {
-		Double first = 54.34223;
-		Double second = 42.65343;
+		String first = "54.34223";
+		String second = "42.65343";
 		String third = "";
 		Results res;
 		try {

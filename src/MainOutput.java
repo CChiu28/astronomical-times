@@ -4,13 +4,15 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
+/*
+ * This class sets up the main results that displays the json data in the main results tab
+ */
 public class MainOutput {
-	TilePane layout;
-	TilePane layout2;
-	Label[] labels;
-	Label[] output = new Label[10];
+	private TilePane layout;
+	private TilePane layout2;
+	private Label[] labels;
+	private Label[] output = new Label[10];
 	public TilePane Labels() {
 		layout = new TilePane();
 		layout.setOrientation(Orientation.VERTICAL);
@@ -22,7 +24,7 @@ public class MainOutput {
 				new Label("Sunrise:"),
 				new Label("Sunset:"),
 				new Label("Solar Noon:"),
-				new Label("Day Length"),
+				new Label("Day Length:"),
 				new Label("Civil Twilight Begins:"),
 				new Label("Civil Twilight Ends:"),
 				new Label("Astronomical Twilight Begins:"),
@@ -30,9 +32,10 @@ public class MainOutput {
 				new Label("Nautical Twilight Begins:"),
 				new Label("Nautical Twilight Ends:")
 		};
-		for (int i=0; i<labels.length; i++) {
-			labels[i].setTextFill(Color.ALICEBLUE);
-			labels[i].setStyle("-fx-font-size: 18px; -fx-font-weight: bold");
+
+		for (Label label : labels) {
+			label.setTextFill(Color.BEIGE);
+			label.setStyle("-fx-font-size: 18px; -fx-font-weight: bold");
 		}
 		
 		ObservableList list = layout.getChildren();
@@ -45,7 +48,7 @@ public class MainOutput {
 		layout2 = new TilePane();
 		layout2.setOrientation(Orientation.VERTICAL);
 		layout2.setPrefRows(10);
-		layout2.setTileAlignment(Pos.CENTER);
+		layout2.setTileAlignment(Pos.CENTER_RIGHT);
 		layout2.setVgap(5);
 		
 		output[0].setText(res.getSunrise());
@@ -58,10 +61,10 @@ public class MainOutput {
 		output[7].setText(res.getAstronomical_twilight_end());
 		output[8].setText(res.getNautical_twilight_begin());
 		output[9].setText(res.getNautical_twilight_end());
-				
-		for (int i=0; i<output.length; i++) {
-			output[i].setStyle("-fx-font-size: 18px");
-			output[i].setTextFill(Color.GREEN);
+		
+		for(Label label : output) {
+			label.setStyle("-fx-font-size: 18px");
+			label.setTextFill(Color.BISQUE);
 		}
 		
 		ObservableList list = layout2.getChildren();

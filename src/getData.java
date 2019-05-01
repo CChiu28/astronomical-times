@@ -1,5 +1,6 @@
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -16,25 +17,32 @@ public class getData {
 	private final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssz";
 	private Data results = new Data();
 	
-	/** {@link #sendGET(double, double, String)}
+	/** {@link #sendGET(String, String, String)}
 	 * @param lat
 	 * @param lng
 	 * @param date
 	 * @return results
 	 * @throws Exception
-	 * This method currently takes 3 parameters (will be changed) to take in latitude and longitude and optional date.
+	 * This method currently takes 3 parameters to take in latitude and longitude and a date.
 	 * Gson is used to parse the data. It takes a BufferedReader from {@link #connectAPI(String)} to connect to the API
 	 * and maps it to a Data object. This Data object is returned.
 	 */
-    Data sendGET(double lat, double lng, String date) throws Exception {
+    Data sendGET(String lat, String lng, String date) throws Exception {
     	// This string will concatenate lat, lng, and date to the url
         String url = "https://api.sunrise-sunset.org/json?lat="+lat+"&lng="+lng+"&date="+date+"&formatted=0";
         System.out.println("Sending GET request to "+url);
         Data original = (Data) new Gson().fromJson(connectAPI(url), Data.class); // Gson parses the incoming JSON data and maps it to a Data obj.
-        results.setRes(setTZ(getTZ(Double.toString(lat),Double.toString(lng)), original));
+        results.setRes(setTZ(getTZ(lat,lng), original));
         return results;
     }
-    
+    /** {@link #sendGET(String, String)}
+     * @param location
+     * @param date
+     * @return results
+     * @throws Exception
+     * This method takes two Strings, one for location and one for Date. The location is used to get coordinates via the
+     * {@link #geoCode(String)} method and is passed to a Map. The coordinates are used to connect to the API to receive the times.
+     */
     Data sendGET(String location, String date) throws Exception {
     	Map<String,String> locate = geoCode(location);
 		String url = "https://api.sunrise-sunset.org/json?lat="+locate.get("lat")+"&lng="+locate.get("lon")+"&date="+date+"&formatted=0";
@@ -61,7 +69,6 @@ public class getData {
     	StringBuffer url = new StringBuffer();
     	String[] address = input.split(" ");
     	url.append("https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=");
-    	System.out.println(address.length);
     	if (address.length==0)
     		return null;
     	for (int i=0; i<address.length; i++) {
@@ -69,7 +76,7 @@ public class getData {
     		if (i<address.length-1)
     			url.append("+");
     	}
-    	System.out.println(url.toString());
+    	System.out.println("Getting geo-coordinates from "+url.toString());
     	BufferedReader in = connectAPI(url.toString());
     	/*
     	 * After connecting to API, a StringBuffer is used to take in
@@ -82,7 +89,6 @@ public class getData {
     		res.append(line);
     	}
     	in.close();
-//    	System.out.println(res.toString());
     	/**
     	 * The StringBuffer is parsed via {@link #parseGeo(StringBuffer)} and
     	 * a JsonObject is returned. We only get the necessary elements we need from
@@ -92,9 +98,6 @@ public class getData {
     	String lon = jo.getAsJsonPrimitive("lon").getAsString();
     	String lat = jo.getAsJsonPrimitive("lat").getAsString();
     	String display = jo.getAsJsonPrimitive("display_name").getAsString();
-    	System.out.println(lon);
-    	System.out.println(lat);
-    	System.out.println(display);
     	/**
     	 * A Map of <String,String> is created to take on the values from the JsonObject.
     	 * This map should be returned to {@link #sendGET}
@@ -132,7 +135,6 @@ public class getData {
      * It's private because it's not used outside this class.
      */
     private JsonObject parseGeo(StringBuffer res) {
-    	System.out.println(res);
     	JsonParser parser = new JsonParser();
     	JsonArray array = (JsonArray) parser.parse(res.toString());
     	JsonObject jo = new JsonObject();
@@ -150,25 +152,25 @@ public class getData {
      * This method takes the lat and lon coordinates and connects to an API that will return the
      * timezone of the respective coordinates.
      */
-    private String getTZ(String lat, String lon) throws Exception {
-    	URL url = new URL("http://api.geonames.org/timezoneJSON?lat="+lat+"&lng="+lon+"&username=chchiu1028");
-    	System.out.println(url.toString());
-    	BufferedReader reader = connectAPI(url.toString());
-    	String line;
-    	StringBuffer res = new StringBuffer();
-    	res.append("[");
-    	while ((line=reader.readLine())!=null) {
-    		res.append(line);
+    private String getTZ(String lat, String lon) {
+    	String tz = "UTC";
+    	try {
+	    	URL url = new URL("http://api.geonames.org/timezoneJSON?lat="+lat+"&lng="+lon+"&username=chchiu1028");
+	    	System.out.println("Getting timezones from "+url.toString());
+	    	BufferedReader reader = connectAPI(url.toString());
+	    	String line;
+	    	StringBuffer res = new StringBuffer();
+	    	res.append("[");
+	    	while ((line=reader.readLine())!=null) {
+	    		res.append(line);
+	    	}
+	    	res.append("]");
+	    	reader.close();
+	    	JsonObject jo = parseGeo(res);
+	    	tz = jo.getAsJsonPrimitive("timezoneId").getAsString();
+    	} catch (Exception e ) {
+    		System.out.println("No timezones available");
     	}
-    	res.append("]");
-    	reader.close();
-//    	System.out.println(res);
-    	JsonObject jo = parseGeo(res);
-//    	System.out.println(jo.getAsJsonPrimitive("timezoneId"));
-//    	System.out.println(jo.getAsJsonPrimitive("countryName"));
-//    	System.out.println(jo.getAsJsonPrimitive("lat"));
-//    	System.out.println(jo.getAsJsonPrimitive("lng"));
-    	String tz = jo.getAsJsonPrimitive("timezoneId").getAsString();
     	return tz;
     }
     
@@ -183,15 +185,17 @@ public class getData {
     private Results setTZ(String tz, Data data) throws Exception {
     	Results res = data.res();
     	// Parse the Strings from our results to LocalDateTime
-    	LocalDateTime sunrise = LocalDateTime.parse(res.getSunrise(),DateTimeFormatter.ofPattern(DATE_FORMAT));
-    	LocalDateTime sunset = LocalDateTime.parse(res.getSunset(),DateTimeFormatter.ofPattern(DATE_FORMAT));
-    	LocalDateTime solarnoon = LocalDateTime.parse(res.getSolar_noon(),DateTimeFormatter.ofPattern(DATE_FORMAT));
-    	LocalDateTime civiltwib = LocalDateTime.parse(res.getCivil_twilight_begin(),DateTimeFormatter.ofPattern(DATE_FORMAT));
-    	LocalDateTime civiltwie = LocalDateTime.parse(res.getCivil_twilight_end(),DateTimeFormatter.ofPattern(DATE_FORMAT));
-    	LocalDateTime nautwib = LocalDateTime.parse(res.getNautical_twilight_begin(),DateTimeFormatter.ofPattern(DATE_FORMAT));
-    	LocalDateTime nautwie = LocalDateTime.parse(res.getNautical_twilight_end(),DateTimeFormatter.ofPattern(DATE_FORMAT));
-    	LocalDateTime asttwib = LocalDateTime.parse(res.getAstronomical_twilight_begin(),DateTimeFormatter.ofPattern(DATE_FORMAT));
-    	LocalDateTime asttwie = LocalDateTime.parse(res.getAstronomical_twilight_end(),DateTimeFormatter.ofPattern(DATE_FORMAT));
+    	DateTimeFormatter format = DateTimeFormatter.ofPattern(DATE_FORMAT);
+    	
+    	LocalDateTime sunrise = LocalDateTime.parse(res.getSunrise(), format);
+    	LocalDateTime sunset = LocalDateTime.parse(res.getSunset(), format);
+    	LocalDateTime solarnoon = LocalDateTime.parse(res.getSolar_noon(), format);
+    	LocalDateTime civiltwib = LocalDateTime.parse(res.getCivil_twilight_begin(), format);
+    	LocalDateTime civiltwie = LocalDateTime.parse(res.getCivil_twilight_end(), format);
+    	LocalDateTime nautwib = LocalDateTime.parse(res.getNautical_twilight_begin(), format);
+    	LocalDateTime nautwie = LocalDateTime.parse(res.getNautical_twilight_end(), format);
+    	LocalDateTime asttwib = LocalDateTime.parse(res.getAstronomical_twilight_begin(), format);
+    	LocalDateTime asttwie = LocalDateTime.parse(res.getAstronomical_twilight_end(), format);
 
     	// Set origin timezone which is UTC to the LocalDateTime and pass to ZonedDateTime
     	ZoneId utc = ZoneId.of("UTC");
@@ -208,9 +212,9 @@ public class getData {
     	// Set new timezone with the String parameter that was passed here
     	// and set DateTimeFormatter to parse and format the time to look simpler
     	ZoneId zone = ZoneId.of(tz);
-    	DateTimeFormatter format = DateTimeFormatter.ofPattern("hh:mm:ss a z");
+    	format = DateTimeFormatter.ofPattern("hh:mm:ss a z");
 
-    	// Formats the ZonedDateTimes to a string and sets it back to the Results obj
+    	// Formats the ZonedDateTimes to a string using the DateTimeFormatter's pattern and sets it back to the Results obj
     	res.setSunrise(format.format(fromsunrise.withZoneSameInstant(zone)));
     	res.setSunset(format.format(fromsunset.withZoneSameInstant(zone)));
     	res.setSolar_noon(format.format(fromsolarnoon.withZoneSameInstant(zone)));
@@ -220,6 +224,11 @@ public class getData {
     	res.setNautical_twilight_end(format.format(fromnautwie.withZoneSameInstant(zone)));
     	res.setAstronomical_twilight_begin(format.format(fromasttwib.withZoneSameInstant(zone)));
     	res.setAstronomical_twilight_end(format.format(fromasttwie.withZoneSameInstant(zone)));
+    	
+    	// Format the day length from seconds to hours and round decimals to 2 places
+    	Double dayLength = Double.parseDouble(res.getDay_length())/3600;
+    	DecimalFormat df = new DecimalFormat("##.##");
+    	res.setDay_length(df.format(dayLength));
     	
     	return res;
     }
