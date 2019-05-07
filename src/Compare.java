@@ -1,19 +1,81 @@
+import java.time.LocalDate;
+
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXTextField;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 /*
  * This class is used to populate a table with the information received from the
  * SunriseSunset API
- * This class returns a TableView to MainScene
+ * It also allows the user to add different locations to the table
+ * This class returns a VBox to MainScene
  */
-public class Table {
+public class Compare {
 	private TableView<Results> view;
 	private Data data;
 	private ObservableList<Results> tableList;
+	private VBox vbox;
+	private HBox hbox;
+	private Label label;
+	private JFXTextField text;
+	private JFXButton button;
+	private JFXDatePicker date;
 	
-	public TableView<Results> table() {
+	// This method sets up the layout for the Compare tab
+	// Includes all necessary textfields, datepicker, button, and table
+	public VBox compare() {
+		vbox = new VBox();
+		hbox = new HBox();
+		text = new JFXTextField();
+		text.setPromptText("Location");
+		button = new JFXButton("Compare");
+		date = new JFXDatePicker();
+		date.setPromptText("Select a Date");
+		date.setEditable(false);
+		label = new Label("Enter another city to compare: ");
+		label.setTextFill(Color.BEIGE);
+		label.setStyle("-fx-font-size: 14px; -fx-font-weight: bold");
+		
+		hbox.getChildren().addAll(label, text, button, date);
+		
+		vbox.getChildren().addAll(hbox, this.table());
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				LocalDate val = LocalDate.now();
+				getData getdata = new getData();
+				if (date.getValue()!=null) {
+					val = date.getValue();
+				}
+				System.out.println(val.toString());
+				if (!text.toString().isEmpty()) {
+					System.out.println(text.getText());
+					try {
+						data = getdata.sendGET(text.getText(), val.toString());
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				addToTable(data);
+			}
+		});
+		return vbox;
+	}
+	
+	// Set up general table and columns
+	private TableView<Results> table() {
 		view = new TableView<Results>();
 		view.setItems(tableList);
 		view.setEditable(false);
@@ -53,9 +115,12 @@ public class Table {
 	public void setToTable(Data results) {
 		data = results;
 		tableList = FXCollections.observableArrayList(data.res());
+//		view.getItems().add(data.res());
 	}
 	
-	public void addToTable() {
-		
+	// Adds new data to the table
+	private void addToTable(Data res) {
+		data = res;
+		tableList.add(res.res());
 	}
 }

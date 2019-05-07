@@ -53,7 +53,7 @@ public class MainScene {
 		
 		// Initialize all other layout sections
 		InputTab tabpane = new InputTab();
-		Table table = new Table();
+		Compare table = new Compare();
 		About about = new About();
 		MainOutput mainoutput = new MainOutput();
 		
@@ -187,9 +187,9 @@ public class MainScene {
 		}
 	}
 	
-	static void setResults(Data data, Table table, Tab tab, JFXTabPane tabpane, InputTab tabinput) {
+	static void setResults(Data data, Compare table, Tab tab, JFXTabPane tabpane, InputTab tabinput) {
 		table.setToTable(data);
-		tab.setContent(table.table());
+		tab.setContent(table.compare());
 		tabpane.requestLayout();
 		tabpane.setVisible(true);
 		tabinput.setLocation("");
