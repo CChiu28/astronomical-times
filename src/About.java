@@ -12,7 +12,7 @@ public class About {
 	private Label link2;
 	private Label link3;
 	private Label link4;
-	
+	// Returns a VBox pane to MainScene
 	public VBox about() {
 		aboutTab = new VBox(20);
 		aboutTab.setAlignment(Pos.TOP_CENTER);

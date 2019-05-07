@@ -1,17 +1,8 @@
 import java.io.FileNotFoundException;
 import javafx.application.Application;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.TabPane.TabClosingPolicy;
-//import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.text.Text;
-import javafx.scene.paint.*;
 import javafx.scene.layout.*;
 
 
@@ -31,7 +22,7 @@ public class gui extends Application {
         TitleScene title = new TitleScene();
         
         // Set the title scene
-        titleLayout.getChildren().addAll(title.Title(window));
+        titleLayout.getChildren().add(title.Title(window));
         titleLayout.setAlignment(Pos.CENTER);
 
         titleScene = new Scene(titleLayout);

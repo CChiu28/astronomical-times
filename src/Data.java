@@ -17,32 +17,32 @@ public class Data {
 		this.results = res;
 	}
 	//Tester function to see results
-	void getAll() {
-		System.out.println("Sunrise: "+results.getSunrise());
-		System.out.println("Sunset: "+results.getSunset());
-		System.out.println("Solar noon: "+results.getSolar_noon());
-		System.out.println("Day length: "+results.getDay_length()+" hours");
-		System.out.println("Civil twilight begins: "+results.getCivil_twilight_begin());
-		System.out.println("Civil twilight ends: "+results.getCivil_twilight_end());
-		System.out.println("Nautical twilight begins: "+results.getNautical_twilight_begin());
-		System.out.println("Nautical twilight ends: "+results.getNautical_twilight_end());
-		System.out.println("Astronomical twilight begins: "+results.getAstronomical_twilight_begin());
-		System.out.println("Astronomical twilight ends: "+results.getAstronomical_twilight_end());
-	}
+//	void getAll() {
+//		System.out.println("Sunrise: "+results.getSunrise());
+//		System.out.println("Sunset: "+results.getSunset());
+//		System.out.println("Solar noon: "+results.getSolar_noon());
+//		System.out.println("Day length: "+results.getDay_length()+" hours");
+//		System.out.println("Civil twilight begins: "+results.getCivil_twilight_begin());
+//		System.out.println("Civil twilight ends: "+results.getCivil_twilight_end());
+//		System.out.println("Nautical twilight begins: "+results.getNautical_twilight_begin());
+//		System.out.println("Nautical twilight ends: "+results.getNautical_twilight_end());
+//		System.out.println("Astronomical twilight begins: "+results.getAstronomical_twilight_begin());
+//		System.out.println("Astronomical twilight ends: "+results.getAstronomical_twilight_end());
+//	}
 
-	String displayOutPut(){
-
-		String text = "Sunrise: "+results.getSunrise() +
-		"\nSunset: "+results.getSunset() +
-		"\nSolar noon: "+results.getSolar_noon() +
-		"\nDay length: "+results.getDay_length()+" hours" +
-		"\nCivil twilight begins: "+results.getCivil_twilight_begin() +
-		"\nCivil twilight ends: "+results.getCivil_twilight_end() +
-		"\nNautical twilight begins: "+results.getNautical_twilight_begin() +
-		"\nNautical twilight ends: "+results.getNautical_twilight_end() +
-		"\nAstronomical twilight begins: "+results.getAstronomical_twilight_begin() +
-		"\nAstronomical twilight ends: "+results.getAstronomical_twilight_end();
-
-		return text;
-	}
+//	String displayOutPut(){
+//
+//		String text = "Sunrise: "+results.getSunrise() +
+//		"\nSunset: "+results.getSunset() +
+//		"\nSolar noon: "+results.getSolar_noon() +
+//		"\nDay length: "+results.getDay_length()+" hours" +
+//		"\nCivil twilight begins: "+results.getCivil_twilight_begin() +
+//		"\nCivil twilight ends: "+results.getCivil_twilight_end() +
+//		"\nNautical twilight begins: "+results.getNautical_twilight_begin() +
+//		"\nNautical twilight ends: "+results.getNautical_twilight_end() +
+//		"\nAstronomical twilight begins: "+results.getAstronomical_twilight_begin() +
+//		"\nAstronomical twilight ends: "+results.getAstronomical_twilight_end();
+//
+//		return text;
+//	}
 }

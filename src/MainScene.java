@@ -81,7 +81,7 @@ public class MainScene {
 		mainOutput.setContent(mainOutPane);
 		aboutTab.setContent(about.about());
 		
-		// Set layout for the input Tabs
+		// Set layout for the user input Tabs
 		submitLayout.setAlignment(Pos.CENTER);
 		submitLayout.getChildren().addAll(tabpane.tabpane(),datepicker,submit);
 		submitLayout.setPadding(new Insets(0, 300, 0, 300));

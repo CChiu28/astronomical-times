@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 
 /*
  * This class sets up the main results that displays the json data in the main results tab
+ * This has two methods that returns a TilePane to MainScene
  */
 public class MainOutput {
 	private TilePane layout;

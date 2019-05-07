@@ -6,6 +6,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 /*
  * This class is used to populate a table with the information received from the
  * SunriseSunset API
+ * This class returns a TableView to MainScene
  */
 public class Table {
 	private TableView<Results> view;
