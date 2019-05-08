@@ -24,7 +24,7 @@ import javafx.scene.text.Text;
  * InputTab: Sets up the user input section of the app
  * About: Sets up the About tab in the results
  * MainOutput: Sets up the main results tab to display the API's data
- * Table: ?
+ * Compare: Sets up the table for multiple locaiton comparisons
  */
 public class MainScene {
 	//TabPane mainTab;
