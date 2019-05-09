@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  */
 public class TitleScene {
 	private VBox titleScene;
-	public VBox Title(Stage stage) {
+	public VBox Title(final Stage stage) {
 		titleScene = new VBox(20);
 		
 		Label title = new Label("Astronomical Times");

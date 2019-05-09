@@ -38,7 +38,7 @@ public class MainScene {
 		
 		// Create tabs for the results section
 		Tab mainOutput = new Tab("Output");
-		Tab compareTab = new Tab("Compare");
+		final Tab compareTab = new Tab("Compare");
 		Tab helpTab = new Tab("Definitions");
 		Tab aboutTab = new Tab("About");
 		mainTab.getTabs().addAll(mainOutput,compareTab, helpTab, aboutTab);
@@ -49,20 +49,20 @@ public class MainScene {
 		VBox mainBox = new VBox(10);
 		VBox submitLayout = new VBox(10);
 		
-		GridPane mainOutPane = new GridPane();
+		final GridPane mainOutPane = new GridPane();
 		
 		// Initialize all other layout sections
-		InputTab tabpane = new InputTab();
-		Compare table = new Compare();
+		final InputTab tabpane = new InputTab();
+		final Compare table = new Compare();
 		About about = new About();
-		MainOutput mainoutput = new MainOutput();
+		final MainOutput mainoutput = new MainOutput();
 		
 		final TextField date = new TextField();
 		date.setPromptText("Date");
 		date.setPrefColumnCount(20);
 		date.getText();
 		//DatePicker datepicker = new DatePicker();
-		JFXDatePicker datepicker = new JFXDatePicker();
+		final JFXDatePicker datepicker = new JFXDatePicker();
 		datepicker.setPromptText("Pick a date");
 		datepicker.setEditable(false);
 		
@@ -96,7 +96,6 @@ public class MainScene {
 		 * Contains all the work when button is pressed.
 		 */
 		submit.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
 		    public void handle(ActionEvent e) {
 		    	LocalDate dateval = LocalDate.now();
 		    	getData getdata = new getData();
