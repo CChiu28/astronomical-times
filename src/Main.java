@@ -1,8 +1,28 @@
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Main {
-
+public class Main extends Application {
+	Stage mainStage;
+	Scene mainScene;
 	public static void main(String[] args) {
-		gui.execute(args);
+//		gui.main(args);
+		Application.launch(args);
+	}
+	
+	@Override
+	public void start(Stage stage) throws Exception {
+		mainStage = stage;
+		mainStage.setTitle("Astronomical Times");
+		mainStage.setHeight(800);
+		mainStage.setWidth(1280);
+		
+//		FXMLLoader loader = new FXMLLoader();
+		mainScene = FXMLLoader.load(getClass().getResource("./MainLayout.fxml"));
+		
+		mainStage.setScene(mainScene);
+		mainStage.show();
 	}
 }
 

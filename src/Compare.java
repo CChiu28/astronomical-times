@@ -33,46 +33,46 @@ public class Compare {
 	
 	// This method sets up the layout for the Compare tab
 	// Includes all necessary textfields, datepicker, button, and table
-	public VBox compare() {
-		vbox = new VBox();
-		hbox = new HBox();
-		text = new JFXTextField();
-		text.setPromptText("Location");
-		button = new JFXButton("Compare");
-		date = new JFXDatePicker();
-		date.setPromptText("Select a Date");
-		date.setEditable(false);
-		label = new Label("Enter another city to compare: ");
-		label.setTextFill(Color.BEIGE);
-		label.setStyle("-fx-font-size: 14px; -fx-font-weight: bold");
-		
-		hbox.getChildren().addAll(label, text, button, date);
-		
-		vbox.getChildren().addAll(hbox, this.table());
-		
-		button.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				LocalDate val = LocalDate.now();
-				getData getdata = new getData();
-				if (date.getValue()!=null) {
-					val = date.getValue();
-				}
-				System.out.println(val.toString());
-				if (!text.toString().isEmpty()) {
-					System.out.println(text.getText());
-					try {
-						data = getdata.sendGET(text.getText(), val.toString());
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-				addToTable(data);
-			}
-		});
-		return vbox;
-	}
+//	public VBox compare() {
+//		vbox = new VBox();
+//		hbox = new HBox();
+//		text = new JFXTextField();
+//		text.setPromptText("Location");
+//		button = new JFXButton("Compare");
+//		date = new JFXDatePicker();
+//		date.setPromptText("Select a Date");
+//		date.setEditable(false);
+//		label = new Label("Enter another city to compare: ");
+//		label.setTextFill(Color.BEIGE);
+//		label.setStyle("-fx-font-size: 14px; -fx-font-weight: bold");
+//		
+//		hbox.getChildren().addAll(label, text, button, date);
+//		
+//		vbox.getChildren().addAll(hbox, this.table());
+//		
+//		button.setOnAction(new EventHandler<ActionEvent>() {
+//			@Override
+//			public void handle(ActionEvent e) {
+//				LocalDate val = LocalDate.now();
+//				getData getdata = new getData();
+//				if (date.getValue()!=null) {
+//					val = date.getValue();
+//				}
+//				System.out.println(val.toString());
+//				if (!text.toString().isEmpty()) {
+//					System.out.println(text.getText());
+//					try {
+//						data = getdata.sendGET(text.getText(), val.toString());
+//					} catch (Exception e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
+//				}
+//				addToTable(data);
+//			}
+//		});
+//		return vbox;
+//	}
 	
 	// Set up general table and columns
 	private TableView<Results> table() {
