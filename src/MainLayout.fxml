@@ -2,11 +2,10 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Scene?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -15,105 +14,118 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Arc?>
-<?import javafx.stage.Stage?>
 
-<Stage height="800.0" title="Astronomical Times" width="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <scene>
-      <Scene fx:id="MainScene" stylesheets="@displayStyle.css">
-         <root>
-            <VBox alignment="CENTER" prefHeight="800.0" prefWidth="1280.0">
-               <children>
-                  <JFXTabPane fx:id="InputLayout" prefHeight="120.0" prefWidth="880.0" tabClosingPolicy="UNAVAILABLE">
-                     <VBox.margin>
-                        <Insets left="200.0" right="200.0" top="20.0" />
-                     </VBox.margin>
-                     <tabs>
-                        <Tab fx:id="InputLocationTab" text="Location">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="174.0" prefWidth="880.0">
-                                 <children>
-                                    <JFXTextField layoutX="130.0" layoutY="14.0" prefHeight="26.0" prefWidth="620.0" promptText="Enter a location" />
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </Tab>
-                        <Tab fx:id="InputCoordTab" text="Coordinates">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="880.0">
-                                 <children>
-                                    <JFXTextField layoutX="130.0" layoutY="14.0" prefWidth="620.0" promptText="Enter latitude" />
-                                    <JFXTextField layoutX="130.0" layoutY="50.0" prefHeight="26.0" prefWidth="620.0" promptText="Enter longitude" />
-                                 </children>
-                              </AnchorPane>
-                          </content>
-                        </Tab>
-                     </tabs>
-                  </JFXTabPane>
-                  <JFXDatePicker editable="false" promptText="Select a date">
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="5.0" />
-                     </VBox.margin>
-                  </JFXDatePicker>
-                  <JFXButton buttonType="RAISED" defaultButton="true" minHeight="20.0" prefHeight="30.0" prefWidth="59.0" ripplerFill="#221c79" text="Submit">
-                     <padding>
-                        <Insets bottom="5.0" top="5.0" />
-                     </padding>
-                  </JFXButton>
-                  <JFXTabPane fx:id="ResultsTab" prefHeight="510.0" prefWidth="1240.0" tabClosingPolicy="UNAVAILABLE">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                     </VBox.margin>
-                     <tabs>
-                        <Tab text="Results">
-                           <content>
-                              <Pane prefHeight="200.0" prefWidth="200.0">
-                                 <children>
-                                    <Arc fx:id="astroArc" fill="#34314f" layoutX="345.0" layoutY="223.0" length="280.0" radiusX="150.0" radiusY="150.0" startAngle="-50.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
-                                    <Arc fx:id="nauArc" fill="#692db7" layoutX="345.0" layoutY="223.0" length="246.0" radiusX="150.0" radiusY="150.0" startAngle="-33.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
-                                    <Arc fx:id="civilArc" fill="#8158fc" layoutX="345.0" layoutY="223.0" length="212.0" radiusX="150.0" radiusY="150.0" startAngle="-16.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
-                                    <Arc fx:id="sunArc" fill="#ffc15e" layoutX="345.0" layoutY="223.0" length="180.0" radiusX="150.0" radiusY="150.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
-                                    <JFXListView layoutX="856.0" layoutY="36.0" />
-                                 </children>
-                              </Pane>
-                           </content></Tab>
-                        <Tab text="Compare">
-                           <content>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
-                                 <children>
-                                    <HBox alignment="CENTER" prefHeight="50.0" prefWidth="1240.0">
-                                       <children>
-                                          <JFXTextField prefWidth="200.0" />
-                                          <JFXDatePicker />
-                                          <JFXButton />
-                                       </children>
-                                    </HBox>
-                                    <TableView prefHeight="400.0" prefWidth="1240.0">
-                                      <columns>
-                                        <TableColumn prefWidth="75.0" text="C1" />
-                                        <TableColumn prefWidth="75.0" text="C2" />
-                                      </columns>
-                                       <VBox.margin>
-                                          <Insets left="20.0" right="20.0" />
-                                       </VBox.margin>
-                                    </TableView>
-                                 </children>
-                              </VBox>
-                           </content>
-                        </Tab>
-                        <Tab text="Definitions">
-                          <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                          </content>
-                        </Tab>
-                        <Tab text="About">
-                           <content>
-                              <VBox prefHeight="200.0" prefWidth="100.0" />
-                           </content>
-                        </Tab>
-                     </tabs></JFXTabPane>
-               </children>
-            </VBox>
-         </root>
-      </Scene>
-   </scene>
-</Stage>
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@displayStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <JFXTabPane fx:id="inputTab" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab fx:id="locTab" text="Location">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <JFXTextField fx:id="locationField" alignment="CENTER" layoutX="175.0" layoutY="31.0" prefHeight="26.0" prefWidth="400.0" promptText="Enter a Location" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="coordTab" text="Coordinates">
+               <content>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <JFXTextField fx:id="lngField" alignment="CENTER" layoutX="175.0" layoutY="47.0" prefWidth="400.0" promptText="Enter longitude" />
+                        <JFXTextField fx:id="latField" alignment="CENTER" layoutX="175.0" layoutY="14.0" prefWidth="400.0" promptText="Enter latitude" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+         <VBox.margin>
+            <Insets bottom="10.0" left="200.0" right="200.0" top="10.0" />
+         </VBox.margin>
+      </JFXTabPane>
+      <JFXDatePicker fx:id="datepicker" editable="false" promptText="Select a date">
+         <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </VBox.margin>
+      </JFXDatePicker>
+      <JFXButton fx:id="inputBtn" onAction="#handleButtonAction" text="Submit">
+         <VBox.margin>
+            <Insets bottom="30.0" top="10.0" />
+         </VBox.margin>
+      </JFXButton>
+      <JFXTabPane fx:id="resultsTabPane" minHeight="450.0" prefHeight="500.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Results">
+               <content>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Arc fx:id="astArc" fill="#34314f" layoutX="640.0" layoutY="250.0" length="280.0" radiusX="200.0" radiusY="200.0" startAngle="-50.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Arc fx:id="nauArc" fill="#692db7" layoutX="640.0" layoutY="250.0" length="246.0" radiusX="200.0" radiusY="200.0" startAngle="-33.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Arc fx:id="civilArc" fill="#8158fc" layoutX="640.0" layoutY="250.0" length="212.0" radiusX="200.0" radiusY="200.0" startAngle="-16.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Arc fx:id="sunArc" fill="#ffc15e" layoutX="640.0" layoutY="250.0" length="180.0" radiusX="200.0" radiusY="200.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Label layoutX="68.0" layoutY="240.0" text="Sunrise:" />
+                        <Label layoutX="33.0" layoutY="295.0" text="Civil Twilight Begins" />
+                        <Label layoutX="14.0" layoutY="349.0" text="Nautical Twilight Begins" />
+                        <Label layoutX="1113.0" layoutY="240.0" text="Sunset" />
+                        <Label layoutX="1115.0" layoutY="295.0" text="Civil Twilight ends" />
+                        <Label layoutX="114.0" layoutY="393.0" text="Astronomical Twilight begins" />
+                        <Label layoutX="1090.0" layoutY="349.0" text="Nautical Twilight ends" />
+                        <Label layoutX="1051.0" layoutY="393.0" text="Astronomical Twilight ends" />
+                        <Label fx:id="sunriseTime" layoutX="267.0" layoutY="240.0" text="Label" />
+                        <Label fx:id="civilBTime" layoutX="282.0" layoutY="295.0" text="Label" />
+                        <Label fx:id="nauBTime" layoutX="317.0" layoutY="349.0" text="Label" />
+                        <Label fx:id="astBTime" layoutX="365.0" layoutY="393.0" text="Label" />
+                        <Label fx:id="sunsetTime" layoutX="962.0" layoutY="240.0" text="Label" />
+                        <Label fx:id="civilETime" layoutX="941.0" layoutY="295.0" text="Label" />
+                        <Label fx:id="nauETime" layoutX="920.0" layoutY="349.0" text="Label" />
+                        <Label fx:id="astETime" layoutX="887.0" layoutY="393.0" text="Label" />
+                     </children>
+                  </Pane>
+               </content>
+            </Tab>
+            <Tab text="Compare">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="50.0" prefWidth="1280.0">
+                           <children>
+                              <JFXTextField alignment="CENTER" prefWidth="300.0" promptText="Enter a location to compare">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </JFXTextField>
+                              <JFXDatePicker editable="false" promptText="Select a date">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </JFXDatePicker>
+                              <JFXButton text="Compare" />
+                           </children>
+                        </HBox>
+                        <TableView prefHeight="409.0" prefWidth="1280.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                           <VBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </VBox.margin>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+            <Tab text="Definitions">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="About">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
+   </children>
+</VBox>

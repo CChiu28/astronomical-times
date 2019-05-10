@@ -1,14 +1,19 @@
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTabPane;
+import com.jfoenix.controls.JFXTextField;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -26,7 +31,90 @@ import javafx.scene.text.Text;
  * MainOutput: Sets up the main results tab to display the API's data
  * Compare: Sets up the table for multiple locaiton comparisons
  */
-public class MainScene {
+public class Controller {
+	Data results;
+	Results res = new Results();
+	getData getdata;
+	LocalDate dateval;
+	
+	@FXML
+	private JFXTabPane resultsTabPane;
+	
+	@FXML
+	private JFXTextField locationField, latField, lngField;
+	
+	@FXML
+	private JFXDatePicker datepicker;
+	
+	@FXML
+	private JFXButton inputBtn;
+	
+	@FXML
+	private Label sunriseTime,sunsetTime,civilBTime,civilETime,nauBTime,nauETime,astBTime,astETime;
+	private Label[] arr = new Label[] {sunriseTime,sunsetTime,civilBTime,civilETime,nauBTime,nauETime,astBTime,astETime};
+	
+	@FXML
+	private void handleButtonAction(ActionEvent e) {
+		if (e.getSource()==inputBtn) {
+			submitLoc();
+		}
+	}
+	
+    public void submitLoc() {
+    	System.out.println(locationField.getText());
+    	System.out.println(latField.getText());
+    	System.out.println(lngField.getText());
+    	
+    	getdata = new getData();
+    	dateval = LocalDate.now();
+    	if (datepicker.getValue()!=null) {
+			dateval = datepicker.getValue();
+		}
+        if (inputValidate(lngField.getText(), latField.getText()) && locationField.getText().isEmpty()) {
+
+			try {
+			    /* Changes the scene to resultScene.
+			     * Takes the inputs from gui and converts into doubles.
+			     * These values are then passed into the getData obj to connect to API.
+			     * Results are mapped into a Data obj and getAll() is called.
+			     * This needs to be reworked so results are outputed into
+			     * the gui instead of console. The getters in Data will have to be used here.*/
+			    results = getdata.sendGET(latField.getText(), lngField.getText(), dateval.toString());
+			    System.out.println("Latitude: "+latField.getText());
+			    System.out.println("Longitude: "+lngField.getText());
+			
+			    //Displays Output to Gui
+//			    mainOutPane.add(mainoutput.Output(results.res()), 1, 0);
+//			    setResults(results, table, compareTab, mainTab, tabpane);
+			    clean();
+			    setResults();
+			} catch (Exception e1) {
+			    // TODO Auto-generated catch block
+			    e1.printStackTrace();
+			}
+	    } else if ((lngField.getText().isEmpty()&&latField.getText().isEmpty())&&!locationField.getText().isEmpty()) {
+	    	try {
+	    		results = getdata.sendGET(locationField.getText(), dateval.toString());
+	    		clean();
+//	    		output.setText("Location: "+tabpane.getLocation()+"\n"+dateval+"\n"+results.displayOutPut());
+//	    		mainOutPane.add(mainoutput.Output(results.res()), 1, 0);
+//	    		setResults(results, table, compareTab, mainTab, tabpane);
+	    		setResults();
+	    	} catch (Exception e2) {
+	    		//tabpane.setLocError("Error");
+	    		e2.printStackTrace();
+	    	}
+	    } else {
+	        if (lngField.getText().isEmpty() || !isDouble(lngField.getText()) || Double.parseDouble(lngField.getText())>180 || Double.parseDouble(lngField.getText())<-180)
+//	        	tabpane.setLonError("Please enter a valid longitude value");
+	        if (latField.getText().isEmpty() || !isDouble(latField.getText()) || Double.parseDouble(latField.getText())>90 || Double.parseDouble(latField.getText())<-90)
+//	        	tabpane.setLatError("Please enter a valid latitude value");
+	        if (locationField.getText().isEmpty())
+	        	System.out.println("stuff");
+//	        	tabpane.setLocError("Invalid location");
+	        }
+    }
+
 //	//TabPane mainTab;
 //	private JFXTabPane mainTab;
 //	private Scene mainscene;
@@ -161,32 +249,57 @@ public class MainScene {
 //	 * if they fail as Doubles via the {@link #isDouble(String)} method, 
 //	 * and if they exceed the longitude and latitude boundaries (-90 to 90, -180 to 180)
 //	 */
-//	static boolean inputValidate(String lon, String lat) {
-//		if (lon.isEmpty() || lat.isEmpty())
-//			return false;
-//		if (!isDouble(lon) || !isDouble(lat))
-//			return false;
-//		if (Double.parseDouble(lon)>180 || Double.parseDouble(lon)<-180)
-//			return false;
-//		if (Double.parseDouble(lat)>90 || Double.parseDouble(lat)<-90)
-//			return false;
-//		return true;
-//	}
-//	
-//	/** {@link #isDouble(String)}
-//	 * @param str
-//	 * @return boolean
-//	 * This method checks if the longitude and latitude fields are able to be parsed as Doubles
-//	 */
-//	static boolean isDouble(String str) {
-//		try {
-//			Double.parseDouble(str);
-//			return true;
-//		} catch (NumberFormatException e) {
-//			return false;
-//		}
-//	}
-//	
+	static boolean inputValidate(String lon, String lat) {
+		if (lon.isEmpty() || lat.isEmpty())
+			return false;
+		if (!isDouble(lon) || !isDouble(lat))
+			return false;
+		if (Double.parseDouble(lon)>180 || Double.parseDouble(lon)<-180)
+			return false;
+		if (Double.parseDouble(lat)>90 || Double.parseDouble(lat)<-90)
+			return false;
+		return true;
+	}
+	
+	/** {@link #isDouble(String)}
+	 * @param str
+	 * @return boolean
+	 * This method checks if the longitude and latitude fields are able to be parsed as Doubles
+	 */
+	static boolean isDouble(String str) {
+		try {
+			Double.parseDouble(str);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
+	}
+	
+	private void clean() {
+		for (int i=0; i<arr.length; i++) {
+			arr[i] = new Label("");
+		}
+	}
+	
+	void setResults() {
+		res = results.res();
+		locationField.setText("");
+		latField.setText("");
+		lngField.setText("");
+		sunriseTime.setText(res.getSunrise());
+		sunsetTime.setText(res.getSunset());
+		civilBTime.setText(res.getCivil_twilight_begin());
+		civilETime.setText(res.getCivil_twilight_end());
+		nauBTime.setText(res.getNautical_twilight_begin());
+		nauETime.setText(res.getNautical_twilight_end());
+		astBTime.setText(res.getAstronomical_twilight_begin());
+		astETime.setText(res.getAstronomical_twilight_end());
+		resultsTabPane.requestLayout();
+	}
+	
+	public void Initialize() {
+		
+	}
 //	static void setResults(Data data, Compare table, Tab tab, JFXTabPane tabpane, InputTab tabinput) {
 //		table.setToTable(data);
 //		tab.setContent(table.compare());

@@ -1,11 +1,12 @@
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 	Stage mainStage;
-	Scene mainScene;
+	Parent mainScene;
 	public static void main(String[] args) {
 //		gui.main(args);
 		Application.launch(args);
@@ -21,7 +22,7 @@ public class Main extends Application {
 //		FXMLLoader loader = new FXMLLoader();
 		mainScene = FXMLLoader.load(getClass().getResource("./MainLayout.fxml"));
 		
-		mainStage.setScene(mainScene);
+		mainStage.setScene(new Scene(mainScene));
 		mainStage.show();
 	}
 }
