@@ -75,7 +75,7 @@ public class Compare {
 //	}
 	
 	// Set up general table and columns
-	private TableView<Results> table() {
+	TableView<Results> table() {
 		view = new TableView<Results>();
 		view.setItems(tableList);
 		view.setEditable(false);
@@ -112,15 +112,19 @@ public class Compare {
 	}
 	
 	// Retrieve data from Results class
-	public void setToTable(Data results) {
+	public ObservableList<Results> setToTable(Data results) {
 		data = results;
 		tableList = FXCollections.observableArrayList(data.res());
-//		view.getItems().add(data.res());
+		return tableList;
 	}
 	
 	// Adds new data to the table
-	private void addToTable(Data res) {
+	void addToTable(Data res, TableView<Results> table) {
 		data = res;
 		tableList.add(res.res());
+	}
+	
+	public ObservableList<Results> getTable() {
+		return tableList;
 	}
 }

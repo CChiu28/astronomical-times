@@ -1,13 +1,19 @@
 import java.lang.reflect.Array;
+import java.net.URL;
 import java.time.LocalDate;
+import java.util.ResourceBundle;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,6 +24,9 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TabPane.TabClosingPolicy;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -33,21 +42,28 @@ import javafx.scene.text.Text;
  */
 public class Controller {
 	Data results;
-	Results res = new Results();
+	Results res;
 	getData getdata;
 	LocalDate dateval;
+	Compare table;
+	ObservableList<Results> tableList;
 	
 	@FXML
 	private JFXTabPane resultsTabPane;
 	
 	@FXML
-	private JFXTextField locationField, latField, lngField;
+	private JFXTextField locationField, latField, lngField, compareLocation;
 	
 	@FXML
-	private JFXDatePicker datepicker;
+	private JFXDatePicker datepicker, compareDate;
 	
 	@FXML
-	private JFXButton inputBtn;
+	private JFXButton inputBtn, compareBtn;
+	
+	@FXML
+	private TableView<Results> compareTable;
+	@FXML 
+	private TableColumn<Results, String> sunriseCol, sunsetCol, civilBCol, nauBCol, astBCol, civilECol, nauECol, astECol, dayLengthCol, solNoonCol;
 	
 	@FXML
 	private Label sunriseTime,sunsetTime,civilBTime,civilETime,nauBTime,nauETime,astBTime,astETime;
@@ -55,8 +71,12 @@ public class Controller {
 	
 	@FXML
 	private void handleButtonAction(ActionEvent e) {
+		System.out.println(e);
 		if (e.getSource()==inputBtn) {
 			submitLoc();
+		}
+		if (e.getSource()==compareBtn) {
+			addToTable();
 		}
 	}
 	
@@ -65,7 +85,7 @@ public class Controller {
     	System.out.println(latField.getText());
     	System.out.println(lngField.getText());
     	
-    	getdata = new getData();
+//    	getdata = new getData();
     	dateval = LocalDate.now();
     	if (datepicker.getValue()!=null) {
 			dateval = datepicker.getValue();
@@ -295,10 +315,48 @@ public class Controller {
 		astBTime.setText(res.getAstronomical_twilight_begin());
 		astETime.setText(res.getAstronomical_twilight_end());
 		resultsTabPane.requestLayout();
+		tableList = FXCollections.observableArrayList(results.res());
+		compareTable.setItems(tableList);
 	}
 	
-	public void Initialize() {
-		
+	private void setColumns() {
+		sunriseCol.setCellValueFactory(new PropertyValueFactory<Results, String>("Sunrise"));
+		sunsetCol.setCellValueFactory(new PropertyValueFactory<Results, String>("Sunset"));
+		solNoonCol.setCellValueFactory(new PropertyValueFactory<Results, String>("solar_noon"));
+		dayLengthCol.setCellValueFactory(new PropertyValueFactory<Results, String>("day_length"));
+		civilBCol.setCellValueFactory(new PropertyValueFactory<Results, String>("civil_twilight_begin"));
+		civilECol.setCellValueFactory(new PropertyValueFactory<Results, String>("civil_twilight_end"));
+		nauBCol.setCellValueFactory(new PropertyValueFactory<Results, String>("nautical_twilight_begin"));
+		nauECol.setCellValueFactory(new PropertyValueFactory<Results, String>("nautical_twilight_end"));
+		astBCol.setCellValueFactory(new PropertyValueFactory<Results, String>("astronomical_twilight_begin"));
+		astECol.setCellValueFactory(new PropertyValueFactory<Results, String>("astronomical_twilight_end"));
+	}
+	
+	private void addToTable() {
+		System.out.println(res);
+		LocalDate val = LocalDate.now();
+		if (compareDate.getValue()!=null) {
+			val = compareDate.getValue();
+		}
+		System.out.println(val.toString());
+		if (!compareLocation.toString().isEmpty()) {
+			System.out.println(compareLocation.getText());
+			try {
+				results = getdata.sendGET(compareLocation.getText(), val.toString());
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		compareTable.getItems().add(results.res());
+	}
+	@FXML
+	private void initialize() {
+		table = new Compare();
+		res = new Results();
+		getdata = new getData();
+//		compareTable.setItems(table.getTable());
+		setColumns();
 	}
 //	static void setResults(Data data, Compare table, Tab tab, JFXTabPane tabpane, InputTab tabinput) {
 //		table.setToTable(data);
@@ -312,4 +370,5 @@ public class Controller {
 //		tabinput.setLonError("");
 //		tabinput.setLocError("");
 //	}
+
 }

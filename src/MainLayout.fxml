@@ -89,23 +89,31 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="50.0" prefWidth="1280.0">
                            <children>
-                              <JFXTextField alignment="CENTER" prefWidth="300.0" promptText="Enter a location to compare">
+                              <JFXTextField fx:id="compareLocation" alignment="CENTER" prefWidth="300.0" promptText="Enter a location to compare">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </JFXTextField>
-                              <JFXDatePicker editable="false" promptText="Select a date">
+                              <JFXDatePicker fx:id="compareDate" editable="false" promptText="Select a date">
                                  <HBox.margin>
                                     <Insets right="20.0" />
                                  </HBox.margin>
                               </JFXDatePicker>
-                              <JFXButton text="Compare" />
+                              <JFXButton fx:id="compareBtn" onAction="#handleButtonAction" text="Compare" />
                            </children>
                         </HBox>
-                        <TableView prefHeight="409.0" prefWidth="1280.0">
+                        <TableView fx:id="compareTable" prefHeight="409.0" prefWidth="1280.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
+                            <TableColumn fx:id="sunriseCol" editable="false" prefWidth="75.0" sortable="false" text="Sunrise" />
+                            <TableColumn fx:id="sunsetCol" editable="false" prefWidth="75.0" sortable="false" text="Sunset" />
+                              <TableColumn fx:id="civilBCol" editable="false" prefWidth="75.0" sortable="false" text="Civil Twilight begins" />
+                              <TableColumn fx:id="nauBCol" editable="false" prefWidth="75.0" sortable="false" text="Nautical Twilight begins" />
+                              <TableColumn fx:id="astBCol" editable="false" prefWidth="75.0" sortable="false" text="Astronomical Twilight begins" />
+                              <TableColumn fx:id="civilECol" editable="false" prefWidth="75.0" sortable="false" text="Civil Twilight ends" />
+                              <TableColumn fx:id="nauECol" editable="false" prefWidth="75.0" sortable="false" text="Nautical Twilight ends" />
+                              <TableColumn fx:id="astECol" editable="false" prefWidth="75.0" sortable="false" text="Astronomical Twilight ends" />
+                              <TableColumn fx:id="dayLengthCol" editable="false" prefWidth="75.0" sortable="false" text="Day Length" />
+                              <TableColumn fx:id="solNoonCol" editable="false" prefWidth="75.0" sortable="false" text="Solar Noon" />
                           </columns>
                            <VBox.margin>
                               <Insets left="20.0" right="20.0" />

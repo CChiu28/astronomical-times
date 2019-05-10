@@ -16,13 +16,11 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 		mainStage = stage;
 		mainStage.setTitle("Astronomical Times");
-		mainStage.setHeight(800);
-		mainStage.setWidth(1280);
 		
 //		FXMLLoader loader = new FXMLLoader();
 		mainScene = FXMLLoader.load(getClass().getResource("./MainLayout.fxml"));
 		
-		mainStage.setScene(new Scene(mainScene));
+		mainStage.setScene(new Scene(mainScene, 1280, 800));
 		mainStage.show();
 	}
 }
