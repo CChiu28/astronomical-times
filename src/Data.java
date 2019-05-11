@@ -12,7 +12,7 @@ public class Data {
 	public Results res() {
 		return this.results;
 	}
-	
+
 	public void setRes(Results res) {
 		this.results = res;
 	}

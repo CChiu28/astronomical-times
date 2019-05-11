@@ -1,5 +1,5 @@
+
 import java.time.LocalDate;
-import java.util.Scanner;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
@@ -31,64 +31,57 @@ public class Compare {
 	private JFXTextField text;
 	private JFXButton button;
 	private JFXDatePicker date;
-	
+
 	// This method sets up the layout for the Compare tab
 	// Includes all necessary textfields, datepicker, button, and table
-	public VBox compare() {
-		vbox = new VBox();
-		hbox = new HBox();
-		text = new JFXTextField();
-		text.setPromptText("Location");
-		button = new JFXButton("Compare");
-		date = new JFXDatePicker();
-		date.setPromptText("Select a Date");
-		date.setEditable(false);
-		label = new Label("Enter another city to compare: ");
-		label.setTextFill(Color.BEIGE);
-		label.setStyle("-fx-font-size: 14px; -fx-font-weight: bold");
-		
-		hbox.getChildren().addAll(label, text, button, date);
-		
-		vbox.getChildren().addAll(hbox, this.table());
-		
-		button.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent e) {
-				LocalDate val = LocalDate.now();
-				getData getdata = new getData();
-				if (date.getValue()!=null) {
-					val = date.getValue();
-				}
-				System.out.println(val.toString());
-				if (!text.toString().isEmpty()) {
-					System.out.println(text.getText());
-					try {
-						data = getdata.sendGET(text.getText(), val.toString());
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}
-				addToTable(data);
-			}
-		});
-		return vbox;
-	}
-	
-	// Set up general table and columns
-	private TableView<Results> table() {
-		
-		//String inData;
-	    //Scanner scan = new Scanner( System.in );
+//	public VBox compare() {
+//		vbox = new VBox();
+//		hbox = new HBox();
+//		text = new JFXTextField();
+//		text.setPromptText("Location");
+//		button = new JFXButton("Compare");
+//		date = new JFXDatePicker();
+//		date.setPromptText("Select a Date");
+//		date.setEditable(false);
+//		label = new Label("Enter another city to compare: ");
+//		label.setTextFill(Color.BEIGE);
+//		label.setStyle("-fx-font-size: 14px; -fx-font-weight: bold");
+//
+//		hbox.getChildren().addAll(label, text, button, date);
+//
+//		vbox.getChildren().addAll(hbox, this.table());
+//
+//		button.setOnAction(new EventHandler<ActionEvent>() {
+//			@Override
+//			public void handle(ActionEvent e) {
+//				LocalDate val = LocalDate.now();
+//				getData getdata = new getData();
+//				if (date.getValue()!=null) {
+//					val = date.getValue();
+//				}
+//				System.out.println(val.toString());
+//				if (!text.toString().isEmpty()) {
+//					System.out.println(text.getText());
+//					try {
+//						data = getdata.sendGET(text.getText(), val.toString());
+//					} catch (Exception e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
+//				}
+//				addToTable(data);
+//			}
+//		});
+//		return vbox;
+//	}
 
-	    //System.out.println("Enter the data:");
-	    //inData = scan.nextLine();
-		
+	// Set up general table and columns
+	TableView<Results> table() {
 		view = new TableView<Results>();
 		view.setItems(tableList);
 		view.setEditable(false);
-		
+
 		// Create table columns
-		TableColumn<Results, String> locationCol = new TableColumn<Results, String>("Location");
 		TableColumn<Results, String> sunriseCol = new TableColumn<Results, String>("Sunrise");
 		TableColumn<Results, String> sunsetCol = new TableColumn<Results, String>("Sunset");
 		TableColumn<Results, String> solCol = new TableColumn<Results, String>("Solar Noon");
@@ -99,9 +92,8 @@ public class Compare {
 		TableColumn<Results, String> nauendCol = new TableColumn<Results, String>("Naughtical Twilight Ends");
 		TableColumn<Results, String> astbeginCol = new TableColumn<Results, String>("Astronomical Twilight Begins");
 		TableColumn<Results, String> astendCol = new TableColumn<Results, String>("Astronomoical Twilight Ends");
-		
+
 		// Set columns to read the specific values in Results class
-		//locationCol.setCellValueFactory(new PropertyValueFactory<Results, String>("sunrise"));
 		sunriseCol.setCellValueFactory(new PropertyValueFactory<Results, String>("sunrise"));
 		sunsetCol.setCellValueFactory(new PropertyValueFactory<Results, String>("Sunset"));
 		solCol.setCellValueFactory(new PropertyValueFactory<Results, String>("solar_noon"));
@@ -112,24 +104,28 @@ public class Compare {
 		nauendCol.setCellValueFactory(new PropertyValueFactory<Results, String>("nautical_twilight_end"));
 		astbeginCol.setCellValueFactory(new PropertyValueFactory<Results, String>("astronomical_twilight_begin"));
 		astendCol.setCellValueFactory(new PropertyValueFactory<Results, String>("astronomical_twilight_end"));
-		
+
 		// Add columns to table
-		view.getColumns().addAll(locationCol, sunriseCol, sunsetCol, solCol, dayCol, twibeginCol, twiendCol, naubeginCol, nauendCol, astbeginCol, astendCol);
-		
+		view.getColumns().addAll(sunriseCol, sunsetCol, solCol, dayCol, twibeginCol, twiendCol, naubeginCol, nauendCol, astbeginCol, astendCol);
+
 //		view.getItems().add(data.res());
 		return view;
 	}
-	
+
 	// Retrieve data from Results class
-	public void setToTable(Data results) {
+	public ObservableList<Results> setToTable(Data results) {
 		data = results;
 		tableList = FXCollections.observableArrayList(data.res());
-//		view.getItems().add(data.res());
+		return tableList;
 	}
-	
+
 	// Adds new data to the table
-	private void addToTable(Data res) {
+	void addToTable(Data res, TableView<Results> table) {
 		data = res;
 		tableList.add(res.res());
+	}
+
+	public ObservableList<Results> getTable() {
+		return tableList;
 	}
 }
