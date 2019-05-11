@@ -20,7 +20,7 @@ public class Main extends Application {
 //		FXMLLoader loader = new FXMLLoader();
 		mainScene = FXMLLoader.load(getClass().getResource("./MainLayout.fxml"));
 		
-		mainStage.setScene(new Scene(mainScene, 1280, 800));
+		mainStage.setScene(new Scene(mainScene, 1400, 800));
 		mainStage.show();
 	}
 }

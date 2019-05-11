@@ -1,5 +1,5 @@
 .root{
-	-fx-background-image: url("space.jpg");
+	-fx-background-image: url("bg.jpg");
 	-fx-background-size: cover;
 	-fx-font-family:"Futura";
 }
@@ -69,4 +69,24 @@
 
 .jfx-date-picker .month-year-pane {
 	-fx-background-color: #515151;
+}
+
+.titled-pane > *.content {
+	-fx-background-color: black;
+	-fx-box-border: white;
+}
+
+.jfx-list-view {
+	-fx-background-color: transparent;
+}
+
+.jfx-list-view .list-cell:selected {
+	-fx-background-color: #515151;
+	-fx-opacity: 0.9;
+}
+
+.jfx-list-view .list-cell {
+	-fx-text-fill: white;
+	-fx-background-color: transparent;
+	-fx-cell-size: 40px;
 }

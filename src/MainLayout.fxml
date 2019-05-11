@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -15,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Arc?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" stylesheets="@displayStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1400.0" stylesheets="@displayStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <children>
       <JFXTabPane fx:id="inputTab" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="125.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
@@ -53,32 +54,37 @@
             <Insets bottom="30.0" top="10.0" />
          </VBox.margin>
       </JFXButton>
-      <JFXTabPane fx:id="resultsTabPane" minHeight="450.0" prefHeight="500.0" prefWidth="1280.0" tabClosingPolicy="UNAVAILABLE">
+      <JFXTabPane fx:id="resultsTabPane" minHeight="450.0" prefHeight="500.0" prefWidth="1300.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="Results">
                <content>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Arc fx:id="astArc" fill="#34314f" layoutX="640.0" layoutY="250.0" length="280.0" radiusX="200.0" radiusY="200.0" startAngle="-50.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
-                        <Arc fx:id="nauArc" fill="#692db7" layoutX="640.0" layoutY="250.0" length="246.0" radiusX="200.0" radiusY="200.0" startAngle="-33.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
-                        <Arc fx:id="civilArc" fill="#8158fc" layoutX="640.0" layoutY="250.0" length="212.0" radiusX="200.0" radiusY="200.0" startAngle="-16.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
-                        <Arc fx:id="sunArc" fill="#ffc15e" layoutX="640.0" layoutY="250.0" length="180.0" radiusX="200.0" radiusY="200.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
-                        <Label layoutX="68.0" layoutY="240.0" text="Sunrise:" />
-                        <Label layoutX="33.0" layoutY="295.0" text="Civil Twilight Begins" />
-                        <Label layoutX="14.0" layoutY="349.0" text="Nautical Twilight Begins" />
-                        <Label layoutX="1113.0" layoutY="240.0" text="Sunset" />
-                        <Label layoutX="1115.0" layoutY="295.0" text="Civil Twilight ends" />
+                        <Arc fx:id="astArc" fill="#34314f" layoutX="680.0" layoutY="250.0" length="280.0" radiusX="200.0" radiusY="200.0" startAngle="-50.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Arc fx:id="nauArc" fill="#692db7" layoutX="680.0" layoutY="250.0" length="246.0" radiusX="200.0" radiusY="200.0" startAngle="-33.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Arc fx:id="civilArc" fill="#8158fc" layoutX="680.0" layoutY="250.0" length="212.0" radiusX="200.0" radiusY="200.0" startAngle="-16.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Arc fx:id="sunArc" fill="#ffc15e" layoutX="680.0" layoutY="250.0" length="180.0" radiusX="200.0" radiusY="200.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Label layoutX="207.0" layoutY="240.0" text="Sunrise:" />
+                        <Label layoutX="128.0" layoutY="295.0" text="Civil Twilight Begins" />
+                        <Label layoutX="112.0" layoutY="349.0" text="Nautical Twilight Begins" />
+                        <Label layoutX="1045.0" layoutY="240.0" text="Sunset" />
+                        <Label layoutX="1021.0" layoutY="295.0" text="Civil Twilight ends" />
                         <Label layoutX="114.0" layoutY="393.0" text="Astronomical Twilight begins" />
-                        <Label layoutX="1090.0" layoutY="349.0" text="Nautical Twilight ends" />
-                        <Label layoutX="1051.0" layoutY="393.0" text="Astronomical Twilight ends" />
-                        <Label fx:id="sunriseTime" layoutX="267.0" layoutY="240.0" text="Label" />
-                        <Label fx:id="civilBTime" layoutX="282.0" layoutY="295.0" text="Label" />
-                        <Label fx:id="nauBTime" layoutX="317.0" layoutY="349.0" text="Label" />
-                        <Label fx:id="astBTime" layoutX="365.0" layoutY="393.0" text="Label" />
-                        <Label fx:id="sunsetTime" layoutX="962.0" layoutY="240.0" text="Label" />
-                        <Label fx:id="civilETime" layoutX="941.0" layoutY="295.0" text="Label" />
-                        <Label fx:id="nauETime" layoutX="920.0" layoutY="349.0" text="Label" />
-                        <Label fx:id="astETime" layoutX="887.0" layoutY="393.0" text="Label" />
+                        <Label layoutX="1004.0" layoutY="349.0" text="Nautical Twilight ends" />
+                        <Label layoutX="985.0" layoutY="393.0" text="Astronomical Twilight ends" />
+                        <Label fx:id="sunriseTime" layoutX="329.0" layoutY="240.0" text="Label" />
+                        <Label fx:id="civilBTime" layoutX="350.0" layoutY="295.0" text="Label" />
+                        <Label fx:id="nauBTime" layoutX="371.0" layoutY="345.0" text="Label" />
+                        <Label fx:id="astBTime" layoutX="392.0" layoutY="393.0" text="Label" />
+                        <Label fx:id="sunsetTime" layoutX="893.0" layoutY="237.0" text="Label" />
+                        <Label fx:id="civilETime" layoutX="880.0" layoutY="292.0" text="Label" />
+                        <Label fx:id="nauETime" layoutX="859.0" layoutY="349.0" text="Label" />
+                        <Label fx:id="astETime" layoutX="838.0" layoutY="393.0" text="Label" />
+                        <Label layoutX="917.0" layoutY="23.0" text="Solar Noon" />
+                        <Label fx:id="solTime" layoutX="1051.0" layoutY="23.0" text="Label" />
+                        <Label layoutX="917.0" layoutY="62.0" text="Day Length" />
+                        <Label fx:id="dayLengthTime" layoutX="1051.0" layoutY="62.0" text="Label" />
+                        <JFXListView fx:id="resultLoc" layoutX="129.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0" />
                      </children>
                   </Pane>
                </content>
@@ -102,26 +108,44 @@
                               <JFXButton fx:id="compareBtn" onAction="#handleButtonAction" text="Compare" />
                            </children>
                         </HBox>
-                        <TableView fx:id="compareTable" prefHeight="409.0" prefWidth="1280.0">
-                          <columns>
-                            <TableColumn fx:id="sunriseCol" editable="false" prefWidth="75.0" sortable="false" text="Sunrise" />
-                            <TableColumn fx:id="sunsetCol" editable="false" prefWidth="75.0" sortable="false" text="Sunset" />
-                              <TableColumn fx:id="civilBCol" editable="false" prefWidth="75.0" sortable="false" text="Civil Twilight begins" />
-                              <TableColumn fx:id="nauBCol" editable="false" prefWidth="75.0" sortable="false" text="Nautical Twilight begins" />
-                              <TableColumn fx:id="astBCol" editable="false" prefWidth="75.0" sortable="false" text="Astronomical Twilight begins" />
-                              <TableColumn fx:id="civilECol" editable="false" prefWidth="75.0" sortable="false" text="Civil Twilight ends" />
-                              <TableColumn fx:id="nauECol" editable="false" prefWidth="75.0" sortable="false" text="Nautical Twilight ends" />
-                              <TableColumn fx:id="astECol" editable="false" prefWidth="75.0" sortable="false" text="Astronomical Twilight ends" />
-                              <TableColumn fx:id="dayLengthCol" editable="false" prefWidth="75.0" sortable="false" text="Day Length" />
-                              <TableColumn fx:id="solNoonCol" editable="false" prefWidth="75.0" sortable="false" text="Solar Noon" />
-                          </columns>
+                        <HBox prefHeight="409.0" prefWidth="1300.0">
                            <VBox.margin>
                               <Insets left="20.0" right="20.0" />
                            </VBox.margin>
-                        </TableView>
+                           <children>
+                              <TableView fx:id="locListView" prefHeight="200.0" prefWidth="200.0">
+                                <columns>
+                                  <TableColumn fx:id="locCol" editable="false" prefWidth="129.0" resizable="false" sortable="false" text="Locations" />
+                                </columns>
+                              </TableView>
+                              <TableView fx:id="compareTable" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="409.0" prefWidth="1200.0">
+                                <columns>
+                                  <TableColumn fx:id="sunriseCol" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Sunrise" />
+                                  <TableColumn fx:id="sunsetCol" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Sunset" />
+                                    <TableColumn fx:id="civilBCol" editable="false" minWidth="0.0" prefWidth="120.0" resizable="false" sortable="false" text="Civil Twilight begins" />
+                                    <TableColumn fx:id="nauBCol" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Nautical Twilight begins" />
+                                    <TableColumn fx:id="astBCol" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Astronomical Twilight begins" />
+                                    <TableColumn fx:id="civilECol" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Civil Twilight ends" />
+                                    <TableColumn fx:id="nauECol" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Nautical Twilight ends" />
+                                    <TableColumn fx:id="astECol" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Astronomical Twilight ends" />
+                                    <TableColumn fx:id="dayLengthCol" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Day Length" />
+                                    <TableColumn fx:id="solNoonCol" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Solar Noon" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
                </content>
+            </Tab>
+            <Tab text="Forecast">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="1280.0">
+                     <children>
+                        <JFXListView fx:id="forecastList" layoutX="70.0" layoutY="7.0" orientation="HORIZONTAL" prefHeight="450.0" prefWidth="1200.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
             </Tab>
             <Tab text="Definitions">
               <content>
@@ -134,6 +158,9 @@
               </content>
             </Tab>
          </tabs>
+         <padding>
+            <Insets left="15.0" right="15.0" />
+         </padding>
       </JFXTabPane>
    </children>
 </VBox>

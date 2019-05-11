@@ -1,5 +1,7 @@
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -16,6 +18,9 @@ import java.io.InputStreamReader;
 public class getData {
 	private final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssz";
 	private Data results = new Data();
+	private Map<String, String> result = new HashMap<String, String>();
+	private String displayName = "";
+	private final Charset charset = StandardCharsets.UTF_8;
 	
 	/** {@link #sendGET(String, String, String)}
 	 * @param lat
@@ -52,6 +57,10 @@ public class getData {
 		return results;
     }
     
+    public Map<String,String> getLocationName() {
+//    	String locName = this.result.get("displayname");
+    	return this.result;
+    }
     
     /** {@link #geoCode(String)}
      * @param input
@@ -95,17 +104,17 @@ public class getData {
     	 * the JsonObject which are the latitude and longitude coordinates.
     	 */
     	JsonObject jo = parseGeo(res);
-    	String lon = jo.getAsJsonPrimitive("lon").getAsString();
-    	String lat = jo.getAsJsonPrimitive("lat").getAsString();
-    	String display = jo.getAsJsonPrimitive("display_name").getAsString();
+//    	String lon = jo.getAsJsonPrimitive("lon").getAsString();
+//    	String lat = jo.getAsJsonPrimitive("lat").getAsString();
+    	displayName = jo.getAsJsonPrimitive("display_name").getAsString();
     	/**
     	 * A Map of <String,String> is created to take on the values from the JsonObject.
     	 * This map should be returned to {@link #sendGET}
     	 */
-    	Map<String,String> result = new HashMap<String,String>();
-    	result.put("lon", lon);
-    	result.put("lat", lat);
-    	result.put("displayname", display);
+//    	result = new HashMap<String,String>();
+    	result.put("lon", jo.getAsJsonPrimitive("lon").getAsString());
+    	result.put("lat", jo.getAsJsonPrimitive("lat").getAsString());
+    	result.put("displayname", displayName);
     	return result;
     }
     
@@ -122,7 +131,7 @@ public class getData {
     private BufferedReader connectAPI(String url) throws Exception {
     	URL obj = new URL(url);
     	HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-    	BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+    	BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream(), charset));
     	return reader;
     }
     
@@ -231,5 +240,17 @@ public class getData {
     	res.setDay_length(df.format(dayLength));
     	
     	return res;
+    }
+    
+    public String getDisplayName() {
+    	return displayName;
+    }
+    
+    public String getLat() {
+    	return result.get("lat");
+    }
+    
+    public String getLng() {
+    	return result.get("lon");
     }
 }

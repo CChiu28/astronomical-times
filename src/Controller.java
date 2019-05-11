@@ -1,12 +1,15 @@
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeView;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,9 +23,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TableColumn;
@@ -46,7 +51,14 @@ public class Controller {
 	getData getdata;
 	LocalDate dateval;
 	Compare table;
+	ForecastTab forecast;
 	ObservableList<Results> tableList;
+	ObservableList<TitledPane> list;
+	ObservableList<getData> locList;
+	ObservableList<String> resloc;
+	
+	final int inputIsLocation = 1;
+	final int inputIsCoord = 2;
 	
 	@FXML
 	private JFXTabPane resultsTabPane;
@@ -61,13 +73,22 @@ public class Controller {
 	private JFXButton inputBtn, compareBtn;
 	
 	@FXML
+	private JFXListView<String> resultLoc;
+	
+	@FXML
 	private TableView<Results> compareTable;
 	@FXML 
 	private TableColumn<Results, String> sunriseCol, sunsetCol, civilBCol, nauBCol, astBCol, civilECol, nauECol, astECol, dayLengthCol, solNoonCol;
+	@FXML
+	private TableColumn<getData, String> locCol;
+	@FXML
+	private JFXListView<TitledPane> forecastList;
+	@FXML
+	private TableView<getData> locListView;
 	
 	@FXML
-	private Label sunriseTime,sunsetTime,civilBTime,civilETime,nauBTime,nauETime,astBTime,astETime;
-	private Label[] arr = new Label[] {sunriseTime,sunsetTime,civilBTime,civilETime,nauBTime,nauETime,astBTime,astETime};
+	private Label sunriseTime,sunsetTime,civilBTime,civilETime,nauBTime,nauETime,astBTime,astETime, solTime, dayLengthTime;
+	private Label[] arr = new Label[] {sunriseTime,sunsetTime,civilBTime,civilETime,nauBTime,nauETime,astBTime,astETime, solTime, dayLengthTime};
 	
 	@FXML
 	private void handleButtonAction(ActionEvent e) {
@@ -102,12 +123,9 @@ public class Controller {
 			    results = getdata.sendGET(latField.getText(), lngField.getText(), dateval.toString());
 			    System.out.println("Latitude: "+latField.getText());
 			    System.out.println("Longitude: "+lngField.getText());
-			
-			    //Displays Output to Gui
-//			    mainOutPane.add(mainoutput.Output(results.res()), 1, 0);
-//			    setResults(results, table, compareTab, mainTab, tabpane);
+
 			    clean();
-			    setResults();
+			    setResults(inputIsCoord);
 			} catch (Exception e1) {
 			    // TODO Auto-generated catch block
 			    e1.printStackTrace();
@@ -116,10 +134,7 @@ public class Controller {
 	    	try {
 	    		results = getdata.sendGET(locationField.getText(), dateval.toString());
 	    		clean();
-//	    		output.setText("Location: "+tabpane.getLocation()+"\n"+dateval+"\n"+results.displayOutPut());
-//	    		mainOutPane.add(mainoutput.Output(results.res()), 1, 0);
-//	    		setResults(results, table, compareTab, mainTab, tabpane);
-	    		setResults();
+	    		setResults(inputIsLocation);
 	    	} catch (Exception e2) {
 	    		//tabpane.setLocError("Error");
 	    		e2.printStackTrace();
@@ -134,6 +149,27 @@ public class Controller {
 //	        	tabpane.setLocError("Invalid location");
 	        }
     }
+    
+	private void addToTable() {
+		getdata = new getData();
+		System.out.println(res);
+		LocalDate val = LocalDate.now();
+		if (compareDate.getValue()!=null) {
+			val = compareDate.getValue();
+		}
+		System.out.println(val.toString());
+		if (!compareLocation.toString().isEmpty()) {
+			System.out.println(compareLocation.getText());
+			try {
+				results = getdata.sendGET(compareLocation.getText(), val.toString());
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		tableList.add(results.res());
+		locList.add(getdata);
+	}
 
 //	//TabPane mainTab;
 //	private JFXTabPane mainTab;
@@ -299,13 +335,19 @@ public class Controller {
 		for (int i=0; i<arr.length; i++) {
 			arr[i] = new Label("");
 		}
+		tableList.clear();
+		list.clear();
+		locList.clear();
+		resloc.clear();
 	}
 	
-	void setResults() {
+	void setResults(int inputCheck) {
 		res = results.res();
-		locationField.setText("");
-		latField.setText("");
-		lngField.setText("");
+		resloc.add(getdata.getDisplayName());
+		resloc.add("Lat:"+getdata.getLat());
+		resloc.add("Lng:"+getdata.getLng());
+		solTime.setText(res.getSolar_noon());
+		dayLengthTime.setText(res.getDay_length());
 		sunriseTime.setText(res.getSunrise());
 		sunsetTime.setText(res.getSunset());
 		civilBTime.setText(res.getCivil_twilight_begin());
@@ -314,12 +356,25 @@ public class Controller {
 		nauETime.setText(res.getNautical_twilight_end());
 		astBTime.setText(res.getAstronomical_twilight_begin());
 		astETime.setText(res.getAstronomical_twilight_end());
+//		tableList = FXCollections.observableArrayList(results.res());
+//		ObservableList<TitledPane> list = FXCollections.observableArrayList(getCast(results,dateval.toString()));
+//		compareTable.setItems(tableList);
+//		compareTable.getItems().add(res);
+		tableList.add(res);
+		locList.add(getdata);
+//		System.out.println(getdata.getLocationName().get("displayname"));
+//		forecastList.getItems().add(new Label("working"));
+//		list.add(getCast(results, dateval.toString()));
+		forecast.setCell(list,results, locationField.getText(), latField.getText(), lngField.getText(), dateval, inputCheck);
+		locationField.setText("");
+		latField.setText("");
+		lngField.setText("");
+		
 		resultsTabPane.requestLayout();
-		tableList = FXCollections.observableArrayList(results.res());
-		compareTable.setItems(tableList);
 	}
 	
 	private void setColumns() {
+		locCol.setCellValueFactory(new PropertyValueFactory<getData, String>("displayName"));
 		sunriseCol.setCellValueFactory(new PropertyValueFactory<Results, String>("Sunrise"));
 		sunsetCol.setCellValueFactory(new PropertyValueFactory<Results, String>("Sunset"));
 		solNoonCol.setCellValueFactory(new PropertyValueFactory<Results, String>("solar_noon"));
@@ -332,43 +387,23 @@ public class Controller {
 		astECol.setCellValueFactory(new PropertyValueFactory<Results, String>("astronomical_twilight_end"));
 	}
 	
-	private void addToTable() {
-		System.out.println(res);
-		LocalDate val = LocalDate.now();
-		if (compareDate.getValue()!=null) {
-			val = compareDate.getValue();
-		}
-		System.out.println(val.toString());
-		if (!compareLocation.toString().isEmpty()) {
-			System.out.println(compareLocation.getText());
-			try {
-				results = getdata.sendGET(compareLocation.getText(), val.toString());
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-		compareTable.getItems().add(results.res());
-	}
+	
 	@FXML
 	private void initialize() {
 		table = new Compare();
+		forecast = new ForecastTab();
 		res = new Results();
 		getdata = new getData();
-//		compareTable.setItems(table.getTable());
 		setColumns();
+		tableList = FXCollections.observableArrayList();
+		compareTable.setItems(tableList);
+		list = FXCollections.observableArrayList();
+		forecastList.setItems(list);
+		locList = FXCollections.observableArrayList();
+		locListView.setItems(locList);
+		resloc = FXCollections.observableArrayList();
+		resultLoc.setItems(resloc);
 	}
-//	static void setResults(Data data, Compare table, Tab tab, JFXTabPane tabpane, InputTab tabinput) {
-//		table.setToTable(data);
-//		tab.setContent(table.compare());
-//		tabpane.requestLayout();
-//		tabpane.setVisible(true);
-//		tabinput.setLocation("");
-//		tabinput.setLongitude("");
-//		tabinput.setLatitude("");
-//		tabinput.setLatError("");
-//		tabinput.setLonError("");
-//		tabinput.setLocError("");
-//	}
+
 
 }
