@@ -32,12 +32,21 @@ public class getData {
 	 * Gson is used to parse the data. It takes a BufferedReader from {@link #connectAPI(String)} to connect to the API
 	 * and maps it to a Data object. This Data object is returned.
 	 */
-    Data sendGET(String lat, String lng, String date) throws Exception {
+    Data sendGET(String lat, String lng, String loc, String date, int check) throws Exception {
     	// This string will concatenate lat, lng, and date to the url
-        String url = "https://api.sunrise-sunset.org/json?lat="+lat+"&lng="+lng+"&date="+date+"&formatted=0";
+    	String url = "";
+    	Map<String, String> locate = new HashMap<String,String>();
+    	if (check==1)
+    		url = "https://api.sunrise-sunset.org/json?lat="+lat+"&lng="+lng+"&date="+date+"&formatted=0";
+    	else {
+    		locate = geoCode(loc);
+    		url = "https://api.sunrise-sunset.org/json?lat="+locate.get("lat")+"&lng="+locate.get("lon")+"&date="+date+"&formatted=0";
+    	}
         System.out.println("Sending GET request to "+url);
         Data original = (Data) new Gson().fromJson(connectAPI(url), Data.class); // Gson parses the incoming JSON data and maps it to a Data obj.
-        results.setRes(setTZ(getTZ(lat,lng), original));
+        if (check==1)
+        	results.setRes(setTZ(getTZ(lat,lng), original));
+        else results.setRes(setTZ(getTZ(locate.get("lat"),locate.get("lon")), original));
         return results;
     }
     /** {@link #sendGET(String, String)}
@@ -48,14 +57,14 @@ public class getData {
      * This method takes two Strings, one for location and one for Date. The location is used to get coordinates via the
      * {@link #geoCode(String)} method and is passed to a Map. The coordinates are used to connect to the API to receive the times.
      */
-    Data sendGET(String location, String date) throws Exception {
-    	Map<String,String> locate = geoCode(location);
-		String url = "https://api.sunrise-sunset.org/json?lat="+locate.get("lat")+"&lng="+locate.get("lon")+"&date="+date+"&formatted=0";
-		System.out.println("Sending GET request to "+url);
-		Data original = (Data) new Gson().fromJson(connectAPI(url), Data.class); // Gson parses the incoming JSON data and maps it to a Data obj.
-		results.setRes(setTZ(getTZ(locate.get("lat"),locate.get("lon")), original));
-		return results;
-    }
+//    Data sendGET(String location, String date) throws Exception {
+//    	Map<String,String> locate = geoCode(location);
+//		String url = "https://api.sunrise-sunset.org/json?lat="+locate.get("lat")+"&lng="+locate.get("lon")+"&date="+date+"&formatted=0";
+//		System.out.println("Sending GET request to "+url);
+//		Data original = (Data) new Gson().fromJson(connectAPI(url), Data.class); // Gson parses the incoming JSON data and maps it to a Data obj.
+//		results.setRes(setTZ(getTZ(locate.get("lat"),locate.get("lon")), original));
+//		return results;
+//    }
     
     public Map<String,String> getLocationName() {
 //    	String locName = this.result.get("displayname");

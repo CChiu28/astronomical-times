@@ -73,6 +73,7 @@
 
 .titled-pane > *.content {
 	-fx-background-color: black;
+	-fx-opacity: 0.7;
 	-fx-box-border: white;
 }
 

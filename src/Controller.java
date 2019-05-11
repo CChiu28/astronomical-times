@@ -57,8 +57,8 @@ public class Controller {
 	ObservableList<getData> locList;
 	ObservableList<String> resloc;
 	
-	final int inputIsLocation = 1;
-	final int inputIsCoord = 2;
+	final int inputIsLocation = 0;
+	final int inputIsCoord = 1;
 	
 	@FXML
 	private JFXTabPane resultsTabPane;
@@ -120,7 +120,7 @@ public class Controller {
 			     * Results are mapped into a Data obj and getAll() is called.
 			     * This needs to be reworked so results are outputed into
 			     * the gui instead of console. The getters in Data will have to be used here.*/
-			    results = getdata.sendGET(latField.getText(), lngField.getText(), dateval.toString());
+			    results = getdata.sendGET(latField.getText(), lngField.getText(), locationField.getText(), dateval.toString(), inputIsCoord);
 			    System.out.println("Latitude: "+latField.getText());
 			    System.out.println("Longitude: "+lngField.getText());
 
@@ -132,7 +132,7 @@ public class Controller {
 			}
 	    } else if ((lngField.getText().isEmpty()&&latField.getText().isEmpty())&&!locationField.getText().isEmpty()) {
 	    	try {
-	    		results = getdata.sendGET(locationField.getText(), dateval.toString());
+	    		results = getdata.sendGET(latField.getText(), lngField.getText(), locationField.getText(), dateval.toString(), inputIsLocation);
 	    		clean();
 	    		setResults(inputIsLocation);
 	    	} catch (Exception e2) {
@@ -161,7 +161,7 @@ public class Controller {
 		if (!compareLocation.toString().isEmpty()) {
 			System.out.println(compareLocation.getText());
 			try {
-				results = getdata.sendGET(compareLocation.getText(), val.toString());
+				results = getdata.sendGET(latField.getText(), lngField.getText(), compareLocation.getText(), val.toString(), inputIsLocation);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -347,7 +347,7 @@ public class Controller {
 		resloc.add("Lat:"+getdata.getLat());
 		resloc.add("Lng:"+getdata.getLng());
 		solTime.setText(res.getSolar_noon());
-		dayLengthTime.setText(res.getDay_length());
+		dayLengthTime.setText(res.getDay_length()+" hours");
 		sunriseTime.setText(res.getSunrise());
 		sunsetTime.setText(res.getSunset());
 		civilBTime.setText(res.getCivil_twilight_begin());
@@ -365,7 +365,7 @@ public class Controller {
 //		System.out.println(getdata.getLocationName().get("displayname"));
 //		forecastList.getItems().add(new Label("working"));
 //		list.add(getCast(results, dateval.toString()));
-		forecast.setCell(list,results, locationField.getText(), latField.getText(), lngField.getText(), dateval, inputCheck);
+		forecast.setCell(getdata, list,results, locationField.getText(), latField.getText(), lngField.getText(), dateval, inputCheck);
 		locationField.setText("");
 		latField.setText("");
 		lngField.setText("");

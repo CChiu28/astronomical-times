@@ -13,27 +13,19 @@ import javafx.scene.layout.VBox;
 public class ForecastTab {
 	Data info;
 	getData getdata = new getData();
+	String headerName = "";
 	
-	public void setCell(ObservableList<TitledPane> list, Data data, String location, String lat, String lng, LocalDate date, int check) {
+	public void setCell(getData get, ObservableList<TitledPane> list, Data data, String location, String lat, String lng, LocalDate date, int check) {
 		JFXListView<TitledPane> tmp = new JFXListView<TitledPane>();
 		info = data;
-		TitledPane header = setHeader();
+		TitledPane header = setHeader(get);
 		list.add(header);
 		try {
-			if (check==1) {
-				for (int i=0; i<5; i++) {
-					list.add(getCast(info,date.toString()));
-					date = date.plusDays(1);
-					info = getdata.sendGET(location, date.toString());
-					System.out.println(date.toString());
-				}
-			} else if (check==2) {
-				for (int i=0; i<5; i++) {
-					list.add(getCast(info,date.toString()));
-					date = date.plusDays(1);
-					info = getdata.sendGET(lat, lng, date.toString());
-					System.out.println(date.toString());
-				}
+			for (int i=0; i<5; i++) {
+				list.add(getCast(info,date.toString()));
+				date = date.plusDays(1);
+				info = getdata.sendGET(lat, lng, location, date.toString(), check);
+				System.out.println(date.toString());
 			}
 		} catch(Exception e) {
 			System.out.println(e);
@@ -62,7 +54,7 @@ public class ForecastTab {
 		return node;
 	}
 	
-	private TitledPane setHeader() {
+	private TitledPane setHeader(getData get) {
 		VBox box = new VBox(5);
 		
 		Label sunrise = new Label("Sunrise");
@@ -78,7 +70,7 @@ public class ForecastTab {
 		
 		box.getChildren().addAll(sunrise,sunset,solNoon,dayLength,civilBegin,nauBegin,astBegin,civilEnd,nauEnd,astEnd);
 		
-		TitledPane node = new TitledPane("Headertest", box);
+		TitledPane node = new TitledPane(get.getDisplayName(), box);
 		node.setCollapsible(false);
 		
 		return node;
