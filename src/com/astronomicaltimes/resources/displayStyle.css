@@ -1,0 +1,122 @@
+.root{
+	-fx-background-image: url("bg.jpg");
+	-fx-background-size: cover;
+	-fx-font-family:"Futura";
+}
+
+.jfx-button{
+	-jfx-button-type: RAISED;
+	-fx-font-size:12px;
+	-fx-font-family:"Futura";
+	-fx-font-weight: bold;
+	-fx-background-color: linear-gradient(#07082b, #ada2c1);
+	-fx-text-fill: #ffffff;
+	-fx-border-color: #ffffff;
+	-fx-border-radius: 2px;
+	-fx-border-width: 1px;
+}
+
+.jfx-button:hover{
+	-fx-background-color: linear-gradient(#ada2c1, #8e1227);
+	-fx-text-fill: #07082b;
+	-fx-border-color: #07082b;
+	-fx-border-radius: 2px;
+	-fx-border-width: 1px;
+}
+
+.jfx-tab-pane .tab-header-background {
+	-fx-background-color: transparent;
+}
+
+.jfx-tab-pane .headers-region {
+	-fx-background-color: transparent;
+}
+
+.jfx-tab-pane .tab:selected  {
+	-fx-background-color: #515151;
+	-fx-opacity: 0.5;
+}
+
+.jfx-tab-pane .tab-selected-line {
+	-fx-background-color: WHITE;
+}
+
+.label {
+	-fx-font-size: 18px;
+	//-fx-text-fill: white;
+}
+.error-label {
+	-fx-text-fill: red;
+	-fx-font-size: 14px;
+}
+
+.jfx-text-field{
+    -fx-background-color: transparent;
+    -fx-background-radius: 0, 0, 0, 0;
+    -fx-padding: 0.166667em;
+    //-fx-text-box-border: white;
+    //-fx-border-width: 1px;
+    //-fx-border-color: white;
+    -fx-text-inner-color: white;
+    -fx-prompt-text-fill: #C0C0C0;
+}
+
+.jfx-text-field:hover{
+    -fx-background-color: transparent;
+    -fx-background-radius: 0, 0, 0, 0;
+    -fx-padding: 0.166667em;
+}
+
+.jfx-text-field:focused{
+    -fx-background-color: transparent;
+    -fx-background-radius: 0, 0, 0, 0;
+    -fx-padding: 0.166667em;
+    }
+
+
+.jfx-date-picker .month-year-pane {
+	-fx-background-color: #515151;
+}
+
+.titled-pane > *.content {
+	-fx-background-color: black;
+	-fx-opacity: 0.7;
+	-fx-box-border: white;
+}
+
+.jfx-list-view {
+	-fx-background-color: transparent;
+	-fx-text-fill: white;
+}
+
+.jfx-list-view .list-cell:selected {
+	-fx-background-color: #515151;
+	-fx-opacity: 0.9;
+	-fx-text-fill: white;
+}
+
+.jfx-list-view .list-cell {
+	-fx-text-fill: white;
+	-fx-background-color: transparent;
+	-fx-cell-size: 40px;
+}
+
+.table-view {
+	-fx-background-color: transparent;
+}
+.table-view .column-header {
+	-fx-background-color: linear-gradient(#131313 0%, #424141 100%);
+}
+
+.table-view .column-header-background .label {
+	-fx-text-fill: white;
+	-fx-font-size: 12px;
+	}
+.table-view .table-cell {
+	-fx-text-fill: white;
+}
+
+.table-row-cell {
+	-fx-background-color: black;
+	-fx-opacity: 0.7;
+}

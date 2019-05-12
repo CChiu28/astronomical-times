@@ -1,50 +1,28 @@
+package com.astronomicaltimes;
 
-import java.lang.reflect.Array;
-import java.net.URL;
 import java.time.LocalDate;
-import java.util.Map;
-import java.util.ResourceBundle;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeView;
-
+import com.jfoenix.validation.RequiredFieldValidator;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.TabPane.TabClosingPolicy;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+
 
 /*
- * This class sets up the main overall Scene layout of the app.
- * It initializes and sets to different layouts multiple classes:
- * InputTab: Sets up the user input section of the app
- * About: Sets up the About tab in the results
- * MainOutput: Sets up the main results tab to display the API's data
- * Compare: Sets up the table for multiple locaiton comparisons
+ * This is the Controller file that links all the FXML components with Java.
  */
 public class Controller {
 	Data results;
@@ -57,15 +35,20 @@ public class Controller {
 	ObservableList<TitledPane> list;
 	ObservableList<getData> locList;
 	ObservableList<String> resloc;
+	About about = new About();
+	Definitions def = new Definitions();
 	
 	final int inputIsLocation = 0;
 	final int inputIsCoord = 1;
 	
 	@FXML
 	private JFXTabPane resultsTabPane;
+	@FXML
+	private Tab aboutTab, defTab;
 	
 	@FXML
 	private JFXTextField locationField, latField, lngField, compareLocation;
+	private RequiredFieldValidator validator;
 	
 	@FXML
 	private JFXDatePicker datepicker, compareDate;
@@ -80,6 +63,8 @@ public class Controller {
 	private TableView<Results> compareTable;
 	@FXML 
 	private TableColumn<Results, String> sunriseCol, sunsetCol, civilBCol, nauBCol, astBCol, civilECol, nauECol, astECol, dayLengthCol, solNoonCol;
+	private TableColumn<Results, String>[] tableArr = (TableColumn<Results,String>[]) new TableColumn[] {sunriseCol, sunsetCol, civilBCol, nauBCol, astBCol, civilECol, nauECol, astECol, dayLengthCol, solNoonCol};;
+	 
 	@FXML
 	private TableColumn<getData, String> locCol;
 	@FXML
@@ -103,11 +88,6 @@ public class Controller {
 	}
 	
     public void submitLoc() {
-    	System.out.println(locationField.getText());
-    	System.out.println(latField.getText());
-    	System.out.println(lngField.getText());
-    	
-//    	getdata = new getData();
     	dateval = LocalDate.now();
     	if (datepicker.getValue()!=null) {
 			dateval = datepicker.getValue();
@@ -127,6 +107,7 @@ public class Controller {
 
 			    clean();
 			    setResults(inputIsCoord);
+			    resultsTabPane.setVisible(true);
 			} catch (Exception e1) {
 			    // TODO Auto-generated catch block
 			    e1.printStackTrace();
@@ -136,9 +117,11 @@ public class Controller {
 	    		results = getdata.sendGET(latField.getText(), lngField.getText(), locationField.getText(), dateval.toString(), inputIsLocation);
 	    		clean();
 	    		setResults(inputIsLocation);
+	    		resultsTabPane.setVisible(true);
 	    	} catch (Exception e2) {
 	    		//tabpane.setLocError("Error");
-	    		e2.printStackTrace();
+//	    		locationField.clear();
+//	    		locationField.validate();
 	    	}
 	    } else {
 	        if (lngField.getText().isEmpty() || !isDouble(lngField.getText()) || Double.parseDouble(lngField.getText())>180 || Double.parseDouble(lngField.getText())<-180)
@@ -147,7 +130,6 @@ public class Controller {
 //	        	tabpane.setLatError("Please enter a valid latitude value");
 	        if (locationField.getText().isEmpty())
 	        	System.out.println("stuff");
-//	        	tabpane.setLocError("Invalid location");
 	        }
     }
     
@@ -168,144 +150,19 @@ public class Controller {
 				e1.printStackTrace();
 			}
 		}
-		tableList.add(results.res());
+		tableList.add(results.getRes());
 		locList.add(getdata);
 	}
 
-//	//TabPane mainTab;
-//	private JFXTabPane mainTab;
-//	private Scene mainscene;
-//	public Scene mainScene() {
-//		//mainTab = new TabPane();
-//		mainTab = new JFXTabPane();
-//		mainTab.setVisible(false);
-//		mainTab.setTabClosingPolicy(TabClosingPolicy.UNAVAILABLE);
-//		
-//		// Create tabs for the results section
-//		Tab mainOutput = new Tab("Output");
-//		Tab compareTab = new Tab("Compare");
-//		Tab helpTab = new Tab("Definitions");
-//		Tab aboutTab = new Tab("About");
-//		mainTab.getTabs().addAll(mainOutput,compareTab, helpTab, aboutTab);
-//		
-//		// Layouts for the main scene
-//		// mainBox: contains the layout for all other layout panes
-//		// submitLayout: contains the user input section
-//		VBox mainBox = new VBox(10);
-//		VBox submitLayout = new VBox(10);
-//		
-//		GridPane mainOutPane = new GridPane();
-//		
-//		// Initialize all other layout sections
-//		InputTab tabpane = new InputTab();
-//		Compare table = new Compare();
-//		About about = new About();
-//		MainOutput mainoutput = new MainOutput();
-//		
-//		final TextField date = new TextField();
-//		date.setPromptText("Date");
-//		date.setPrefColumnCount(20);
-//		date.getText();
-//		//DatePicker datepicker = new DatePicker();
-//		JFXDatePicker datepicker = new JFXDatePicker();
-//		datepicker.setPromptText("Pick a date");
-//		datepicker.setEditable(false);
-//		
-//		//SUBMIT BUTTON
-//		
-//		final JFXButton submit = new JFXButton ("Submit");
-//		GridPane.setConstraints(submit, 5, 18);
-//		
-//		//OUTPUT TEXT
-//		/*
-//		final Text output = new Text();
-//		output.setFill(Color.WHITE);
-//		mainOutPane.add(mainoutput.Labels(), 0, 0);*/
-//		
-//		// Set content for Main output and About tabs
-//		mainOutput.setContent(mainOutPane);
-//		aboutTab.setContent(about.about());
-//		
-//		// Set layout for the user input Tabs
-//		submitLayout.setAlignment(Pos.CENTER);
-//		submitLayout.getChildren().addAll(tabpane.tabpane(),datepicker,submit);
-//		submitLayout.setPadding(new Insets(0, 300, 0, 300));
-//		
-//		// Set input layout and output layout to main layout
-//		mainBox.getChildren().addAll(submitLayout,mainTab);
-//		
-//		mainscene = new Scene(mainBox);
-//		mainscene.getStylesheets().add("displayStyle.css");
-//        
-//		/* This is the event handler for the submit button.
-//		 * Contains all the work when button is pressed.
-//		 */
-//		submit.setOnAction(new EventHandler<ActionEvent>() {
-//		    @Override
-//		    public void handle(ActionEvent e) {
-//		    	LocalDate dateval = LocalDate.now();
-//		    	getData getdata = new getData();
-//		    	Data results;
-//		    	if (datepicker.getValue()!=null) {
-//					dateval = datepicker.getValue();
-//				}
-//		    	mainOutPane.getChildren().clear();
-//		    	mainOutPane.add(mainoutput.Labels(), 0, 0);
-//		        if (inputValidate(tabpane.getLongitude(), tabpane.getLatitude()) && tabpane.getLocation().isEmpty()) {
-//		
-//					try {
-//					    /* Changes the scene to resultScene.
-//					     * Takes the inputs from gui and converts into doubles.
-//					     * These values are then passed into the getData obj to connect to API.
-//					     * Results are mapped into a Data obj and getAll() is called.
-//					     * This needs to be reworked so results are outputed into
-//					     * the gui instead of console. The getters in Data will have to be used here.*/
-//					    results = getdata.sendGET(tabpane.getLatitude(), tabpane.getLongitude(), dateval.toString());
-//					    System.out.println("Latitude: "+tabpane.getLatitude());
-//					    System.out.println("Longitude: "+tabpane.getLongitude());
-//					
-//					    //Displays Output to Gui
-////					    output.setText("");
-////					    output.setText("Longitude: "+tabpane.getLongitude()+"\n"+"Latitude: "+tabpane.getLatitude()+"\n"+dateval+"\n"+results.displayOutPut());
-//					    mainOutPane.add(mainoutput.Output(results.res()), 1, 0);
-//					    setResults(results, table, compareTab, mainTab, tabpane);
-//					} catch (Exception e1) {
-//					    // TODO Auto-generated catch block
-//					    e1.printStackTrace();
-//					}
-//			    } else if ((tabpane.getLongitude().isEmpty()&&tabpane.getLatitude().isEmpty())&&!tabpane.getLocation().isEmpty()) {
-//			    	try {
-//			    		results = getdata.sendGET(tabpane.getLocation(), dateval.toString());
-//			    		mainoutput.clean();
-////			    		output.setText("Location: "+tabpane.getLocation()+"\n"+dateval+"\n"+results.displayOutPut());
-//			    		mainOutPane.add(mainoutput.Output(results.res()), 1, 0);
-//			    		setResults(results, table, compareTab, mainTab, tabpane);
-//			    	} catch (Exception e2) {
-//			    		//tabpane.setLocError("Error");
-//			    		e2.printStackTrace();
-//			    	}
-//			    } else {
-//			        if (tabpane.getLongitude().isEmpty() || !isDouble(tabpane.getLongitude()) || Double.parseDouble(tabpane.getLongitude())>180 || Double.parseDouble(tabpane.getLongitude())<-180)
-//			        	tabpane.setLonError("Please enter a valid longitude value");
-//			        if (tabpane.getLatitude().isEmpty() || !isDouble(tabpane.getLatitude()) || Double.parseDouble(tabpane.getLatitude())>90 || Double.parseDouble(tabpane.getLatitude())<-90)
-//			        	tabpane.setLatError("Please enter a valid latitude value");
-//			        if (tabpane.getLocation().isEmpty())
-//			        	tabpane.setLocError("Invalid location");
-//			        }
-//		    }
-//		});
-//        return mainscene;
-//	}
-//	
-//	/** {@link #inputValidate(String, String)}
-//	 * @param lon, lat
-//	 * @return boolean
-//	 * This method is used as input validation for the longitude and latitude fields
-//	 * It contains a series of checks that will return false if they pass.
-//	 * These checks include checking if the longitude and latitude strings are empty,
-//	 * if they fail as Doubles via the {@link #isDouble(String)} method, 
-//	 * and if they exceed the longitude and latitude boundaries (-90 to 90, -180 to 180)
-//	 */
+	/** {@link #inputValidate(String, String)}
+	 * @param lon, lat
+	 * @return boolean
+	 * This method is used as input validation for the longitude and latitude fields
+	 * It contains a series of checks that will return false if they pass.
+	 * These checks include checking if the longitude and latitude strings are empty,
+	 * if they fail as Doubles via the {@link #isDouble(String)} method, 
+	 * and if they exceed the longitude and latitude boundaries (-90 to 90, -180 to 180)
+	 */
 	static boolean inputValidate(String lon, String lat) {
 		if (lon.isEmpty() || lat.isEmpty())
 			return false;
@@ -343,10 +200,10 @@ public class Controller {
 	}
 	
 	void setResults(int inputCheck) {
-		res = results.res();
+		res = results.getRes();
 		resloc.add(getdata.getDisplayName());
-		resloc.add("Lat:"+getdata.getLat());
-		resloc.add("Lng:"+getdata.getLng());
+		resloc.add("Lat: "+getdata.getLat());
+		resloc.add("Lng: "+getdata.getLng());
 		solTime.setText(res.getSolar_noon());
 		dayLengthTime.setText(res.getDay_length()+" hours");
 		sunriseTime.setText(res.getSunrise());
@@ -357,15 +214,8 @@ public class Controller {
 		nauETime.setText(res.getNautical_twilight_end());
 		astBTime.setText(res.getAstronomical_twilight_begin());
 		astETime.setText(res.getAstronomical_twilight_end());
-//		tableList = FXCollections.observableArrayList(results.res());
-//		ObservableList<TitledPane> list = FXCollections.observableArrayList(getCast(results,dateval.toString()));
-//		compareTable.setItems(tableList);
-//		compareTable.getItems().add(res);
 		tableList.add(res);
 		locList.add(getdata);
-//		System.out.println(getdata.getLocationName().get("displayname"));
-//		forecastList.getItems().add(new Label("working"));
-//		list.add(getCast(results, dateval.toString()));
 		forecast.setCell(getdata, list,results, locationField.getText(), latField.getText(), lngField.getText(), dateval, inputCheck);
 		locationField.setText("");
 		latField.setText("");
@@ -404,6 +254,45 @@ public class Controller {
 		locListView.setItems(locList);
 		resloc = FXCollections.observableArrayList();
 		resultLoc.setItems(resloc);
+		validator = new RequiredFieldValidator();
+		validator.setMessage("Invalid input");
+		locationField.getValidators().add(validator);
+		latField.getValidators().add(validator);
+		lngField.getValidators().add(validator);
+		
+		locationField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(
+				ObservableValue<? extends Boolean> arg0,
+				Boolean oldPropetyValue, Boolean newPropertyValue) {
+				if (!newPropertyValue) {
+					locationField.validate();
+				}
+			}
+		});
+		latField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(
+				ObservableValue<? extends Boolean> arg0,
+				Boolean oldPropetyValue, Boolean newPropertyValue) {
+				if (!newPropertyValue) {
+					latField.validate();
+				}
+			}
+		});
+		lngField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(
+				ObservableValue<? extends Boolean> arg0,
+				Boolean oldPropetyValue, Boolean newPropertyValue) {
+				if (!newPropertyValue) {
+					lngField.validate();
+				}
+			}
+		});
+		
+		aboutTab.setContent(about.about());
+		defTab.setContent(def.setDef());
 	}
 
 

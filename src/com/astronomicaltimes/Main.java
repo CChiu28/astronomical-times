@@ -1,3 +1,4 @@
+package com.astronomicaltimes;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +10,6 @@ public class Main extends Application {
 	Stage mainStage;
 	Parent mainScene;
 	public static void main(String[] args) {
-//		gui.main(args);
 		Application.launch(args);
 	}
 
@@ -18,8 +18,7 @@ public class Main extends Application {
 		mainStage = stage;
 		mainStage.setTitle("Astronomical Times");
 
-//		FXMLLoader loader = new FXMLLoader();
-		mainScene = FXMLLoader.load(getClass().getResource("./MainLayout.fxml"));
+		mainScene = FXMLLoader.load(getClass().getResource("./resources/MainLayout.fxml"));
 
 		mainStage.setScene(new Scene(mainScene, 1400, 800));
 		mainStage.show();

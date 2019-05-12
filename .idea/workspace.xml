@@ -2,29 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="22d02bde-5bee-48f3-b242-dda7330874cd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_mac_11_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_base_mac_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_mac_11_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_controls_mac_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_mac_11_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openjfx_javafx_graphics_mac_12.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/3171.iml" beforeDir="false" afterPath="$PROJECT_DIR$/3171.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/About.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/About.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Compare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Compare.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ForecastTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ForecastTab.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/InputTab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/InputTab.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MainOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainOutput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Results.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Results.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TitleScene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TitleScene.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/getData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/getData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/About.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Compare.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Data.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ForecastTab.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/InputTab.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MainLayout.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/astronomicaltimes/resources/MainLayout.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MainOutput.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MainScene.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MainSceneTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Results.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TitleScene.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bg.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/astronomicaltimes/resources/bg.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/displayStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/astronomicaltimes/resources/displayStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/getData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/getDataTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resultsStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/astronomicaltimes/resources/resultsStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/space.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/astronomicaltimes/resources/space.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/titleStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/astronomicaltimes/resources/titleStyle.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,30 +39,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Main.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/astronomicaltimes/ForecastTab.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="21" column="81" lean-forward="true" selection-start-line="21" selection-start-column="81" selection-end-line="21" selection-end-column="81" />
+            <state relative-caret-position="200">
+              <caret line="21" column="68" selection-start-line="21" selection-start-column="68" selection-end-line="21" selection-end-column="68" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/MainLayout.fxml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="18" column="70" selection-start-line="18" selection-start-column="70" selection-end-line="18" selection-end-column="70" />
-            </state>
-          </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gui.java">
+        <entry file="file://$PROJECT_DIR$/src/com/astronomicaltimes/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="420">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
+              <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/astronomicaltimes/Controller.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="380">
+              <caret line="62" column="9" lean-forward="true" selection-start-line="62" selection-start-column="9" selection-end-line="62" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -97,6 +97,7 @@
         <option value="$PROJECT_DIR$/src/Data.java" />
         <option value="$PROJECT_DIR$/src/titleStyle.css" />
         <option value="$PROJECT_DIR$/src/gui.java" />
+        <option value="$PROJECT_DIR$/src/MainScene.java" />
         <option value="$PROJECT_DIR$/src/Main.java" />
       </list>
     </option>
@@ -119,9 +120,10 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="width" value="3440" />
-    <option name="height" value="1440" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-9" />
+    <option name="width" value="1738" />
+    <option name="height" value="1399" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -131,6 +133,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -151,14 +155,25 @@
             <path>
               <item name="3171" type="b2602c69:ProjectViewProjectNode" />
               <item name="3171" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="astronomicaltimes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="3171" type="b2602c69:ProjectViewProjectNode" />
+              <item name="3171" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="astronomicaltimes" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="3171" type="b2602c69:ProjectViewProjectNode" />
+              <item name="3171" type="462c0819:PsiDirectoryNode" />
               <item name="target" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -187,7 +202,7 @@
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+      <option name="MAIN_CLASS_NAME" value="com.astronomicaltimes.Main" />
       <module name="3171" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -237,9 +252,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="2766" height="1126" extended-state="6" />
+    <frame x="-7" y="0" width="1390" height="1119" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1286031" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20225564" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -248,13 +263,13 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.33702213" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33941236" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32891566" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32808155" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.3272543" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49928468" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5007153" side_tool="true" weight="0.32891566" />
@@ -351,13 +366,7 @@
     <entry file="file://$PROJECT_DIR$/3171.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Data.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="34" column="77" selection-start-line="34" selection-start-column="77" selection-end-line="34" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Data.java" />
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="276">
@@ -365,19 +374,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/displayStyle.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/titleStyle.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resultsStyle.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/displayStyle.css" />
+    <entry file="file://$PROJECT_DIR$/src/titleStyle.css" />
+    <entry file="file://$PROJECT_DIR$/src/resultsStyle.css" />
     <entry file="file://$PROJECT_DIR$/StyleSheets/resultsStyle.css" />
     <entry file="file://$PROJECT_DIR$/StyleSheets/titleStyle.css" />
     <entry file="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/11.0.2/javafx-base-11.0.2-mac.jar!/javafx/event/EventHandler.class" />
@@ -389,25 +388,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/MainLayout.fxml" />
+    <entry file="file://$PROJECT_DIR$/src/Main.java" />
+    <entry file="file://$PROJECT_DIR$/src/MainScene.java" />
+    <entry file="file://$PROJECT_DIR$/src/gui.java" />
+    <entry file="file://$PROJECT_DIR$/src/Compare.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/astronomicaltimes/ForecastTab.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="21" column="81" lean-forward="true" selection-start-line="21" selection-start-column="81" selection-end-line="21" selection-end-column="81" />
+        <state relative-caret-position="200">
+          <caret line="21" column="68" selection-start-line="21" selection-start-column="68" selection-end-line="21" selection-end-column="68" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/MainLayout.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="18" column="70" selection-start-line="18" selection-start-column="70" selection-end-line="18" selection-end-column="70" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui.java">
+    <entry file="file://$PROJECT_DIR$/src/com/astronomicaltimes/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
+          <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/astronomicaltimes/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="62" column="9" lean-forward="true" selection-start-line="62" selection-start-column="9" selection-end-line="62" selection-end-column="9" />
         </state>
       </provider>
     </entry>

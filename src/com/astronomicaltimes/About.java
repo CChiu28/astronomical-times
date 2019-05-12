@@ -1,3 +1,4 @@
+package com.astronomicaltimes;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -24,10 +25,10 @@ public class About {
 		link4 = new Label("JFoenix - Java component library");
 		
 		about.setTextFill(Color.WHITE);
-		link1.setTextFill(Color.ANTIQUEWHITE);
-		link2.setTextFill(Color.ANTIQUEWHITE);
-		link3.setTextFill(Color.ANTIQUEWHITE);
-		link4.setTextFill(Color.ANTIQUEWHITE);
+		link1.setTextFill(Color.SKYBLUE);
+		link2.setTextFill(Color.SKYBLUE);
+		link3.setTextFill(Color.SKYBLUE);
+		link4.setTextFill(Color.SKYBLUE);
 		
 		aboutTab.getChildren().addAll(about,link1,link2, link3, link4);
 		return aboutTab;
