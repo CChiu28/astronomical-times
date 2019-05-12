@@ -25,21 +25,21 @@ import javafx.scene.control.TableView;
  * This is the Controller file that links all the FXML components with Java.
  */
 public class Controller {
-	Data results;
-	Results res;
-	getData getdata;
-	LocalDate dateval;
-	Compare table;
-	ForecastTab forecast;
-	ObservableList<Results> tableList;
-	ObservableList<TitledPane> list;
-	ObservableList<getData> locList;
-	ObservableList<String> resloc;
-	About about = new About();
-	Definitions def = new Definitions();
+	private Data results;
+	private Results res = new Results();
+	private getData getdata;
+	private LocalDate dateval;
+	private Compare table;
+	private ForecastTab forecast;
+	private ObservableList<Results> tableList;
+	private ObservableList<TitledPane> list;
+	private ObservableList<getData> locList;
+	private ObservableList<String> resloc;
+	private final About about = new About();
+	private final Definitions def = new Definitions();
 	
-	final int inputIsLocation = 0;
-	final int inputIsCoord = 1;
+	private final int inputIsLocation = 0;
+	private final int inputIsCoord = 1;
 	
 	@FXML
 	private JFXTabPane resultsTabPane;

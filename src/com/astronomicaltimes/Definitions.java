@@ -8,8 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 public class Definitions {
+	private final HBox box = new HBox();
 	public HBox setDef() {
-		HBox box = new HBox(5);
 		box.setAlignment(Pos.CENTER);
 
 		ImageView imgView;
