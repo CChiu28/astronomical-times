@@ -116,10 +116,10 @@
                         <Label layoutX="985.0" layoutY="393.0" text="Astronomical Twilight ends" textFill="SLATEBLUE" />
                         <Label fx:id="sunriseTime" layoutX="329.0" layoutY="240.0" textFill="WHITE" />
                         <Label fx:id="civilBTime" layoutX="350.0" layoutY="295.0" textFill="WHITE" />
-                        <Label fx:id="nauBTime" layoutX="371.0" layoutY="345.0" textFill="WHITE" />
+                        <Label fx:id="nauBTime" layoutX="371.0" layoutY="349.0" textFill="WHITE" />
                         <Label fx:id="astBTime" layoutX="392.0" layoutY="393.0" textFill="WHITE" />
-                        <Label fx:id="sunsetTime" layoutX="893.0" layoutY="237.0" textFill="WHITE" />
-                        <Label fx:id="civilETime" layoutX="880.0" layoutY="292.0" textFill="WHITE" />
+                        <Label fx:id="sunsetTime" layoutX="893.0" layoutY="240.0" textFill="WHITE" />
+                        <Label fx:id="civilETime" layoutX="880.0" layoutY="295.0" textFill="WHITE" />
                         <Label fx:id="nauETime" layoutX="859.0" layoutY="349.0" textFill="WHITE" />
                         <Label fx:id="astETime" layoutX="838.0" layoutY="393.0" textFill="WHITE" />
                         <Label layoutX="917.0" layoutY="23.0" text="Solar Noon" textFill="SKYBLUE" />
