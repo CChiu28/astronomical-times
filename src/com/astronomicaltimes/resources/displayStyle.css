@@ -23,7 +23,9 @@
 	-fx-border-radius: 2px;
 	-fx-border-width: 1px;
 }
-
+.jfx-tab-pane {
+	//-fx-background-color: black;
+}
 .jfx-tab-pane .tab-header-background {
 	-fx-background-color: transparent;
 }
@@ -120,3 +122,7 @@
 	-fx-background-color: black;
 	-fx-opacity: 0.7;
 }
+
+.text-area {
+	-fx-background-color: black;
+	}

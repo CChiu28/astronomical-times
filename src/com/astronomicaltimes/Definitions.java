@@ -37,7 +37,7 @@ public class Definitions {
 				+ "Solar Noon: Also known as high noon, this is the instance when the sun is at the highest point in the sky "
 				+ "given the location's local meridian. It usually doesn't occur at 12:00. The poles also do not experience "
 				+ "solar noon because they do not have a meridian the sun crosses.\n\n");
-		def.setStyle("-fx-text-fill: #0061ff");
+		def.setStyle("-fx-text-fill: white");
 		box.getChildren().addAll(def, imgView);
 		box.setMargin(def, new Insets(30,10,25,10));
 		

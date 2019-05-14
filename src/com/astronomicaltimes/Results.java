@@ -16,6 +16,44 @@ public class Results {
 	private String astronomical_twilight_begin;
 	private String astronomical_twilight_end;
 	
+	public void setVal(String s, String set) {
+		switch(s) {
+		case "sunrise":
+			this.sunrise = set; break;
+		case "sunset":
+			this.sunset = set; break;
+		case "solarNoon":
+			this.solar_noon = set; break;
+		case "dayLength":
+			this.day_length = set; break;
+		case "civilBTime":
+			this.civil_twilight_begin = set; break;
+		case "civilETime":
+			this.civil_twilight_end = set; break;
+		case "nauBTime":
+			this.nautical_twilight_begin = set; break;
+		case "nauETime":
+			this.nautical_twilight_end = set; break;
+		case "astBTime":
+			this.astronomical_twilight_begin = set; break;
+		case "astETime":
+			this.astronomical_twilight_end = set; break;
+		}
+	}
+	
+	public void copy(Results res) {
+		this.sunrise = res.getSunrise();
+		this.sunset = res.getSunset();
+		this.solar_noon = res.getSolar_noon();
+		this.day_length = res.getDay_length();
+		this.civil_twilight_begin = res.getCivil_twilight_begin();
+		this.civil_twilight_end = res.getCivil_twilight_end();
+		this.nautical_twilight_begin = res.getNautical_twilight_begin();
+		this.nautical_twilight_end = res.getNautical_twilight_end();
+		this.astronomical_twilight_begin = res.getAstronomical_twilight_begin();
+		this.astronomical_twilight_end = res.getAstronomical_twilight_end();
+	}
+	
 	public String getSunrise() {
 		return sunrise;
 	}
@@ -45,35 +83,5 @@ public class Results {
 	}
 	public String getAstronomical_twilight_end() {
 		return astronomical_twilight_end;
-	}
-	public void setSunrise(String sunrise) {
-		this.sunrise = sunrise;
-	}
-	public void setSunset(String sunset) {
-		this.sunset = sunset;
-	}
-	public void setSolar_noon(String solar_noon) {
-		this.solar_noon = solar_noon;
-	}
-	public void setDay_length(String day_length) {
-		this.day_length = day_length;
-	}
-	public void setCivil_twilight_begin(String civil_twilight_begin) {
-		this.civil_twilight_begin = civil_twilight_begin;
-	}
-	public void setCivil_twilight_end(String civil_twilight_end) {
-		this.civil_twilight_end = civil_twilight_end;
-	}
-	public void setNautical_twilight_begin(String nautical_twilight_begin) {
-		this.nautical_twilight_begin = nautical_twilight_begin;
-	}
-	public void setNautical_twilight_end(String nautical_twilight_end) {
-		this.nautical_twilight_end = nautical_twilight_end;
-	}
-	public void setAstronomical_twilight_begin(String astronomical_twilight_begin) {
-		this.astronomical_twilight_begin = astronomical_twilight_begin;
-	}
-	public void setAstronomical_twilight_end(String astronomical_twilight_end) {
-		this.astronomical_twilight_end = astronomical_twilight_end;
 	}
 }

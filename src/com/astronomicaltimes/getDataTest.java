@@ -10,11 +10,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class getDataTest {
-	static getData testData;
+	static GetData testData;
 	static Data results;
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		testData = new getData();
+		testData = new GetData();
 	}
 
 	@AfterAll

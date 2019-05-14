@@ -7,6 +7,8 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTabPane;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
+import com.sun.prism.paint.Color;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -27,19 +29,23 @@ import javafx.scene.control.TableView;
 public class Controller {
 	private Data results;
 	private Results res = new Results();
-	private getData getdata;
+	private GetData getdata;
 	private LocalDate dateval;
 	private Compare table;
 	private ForecastTab forecast;
 	private ObservableList<Results> tableList;
 	private ObservableList<TitledPane> list;
-	private ObservableList<getData> locList;
+	private ObservableList<GetData> locList;
 	private ObservableList<String> resloc;
 	private final About about = new About();
 	private final Definitions def = new Definitions();
 	
 	private final int inputIsLocation = 0;
 	private final int inputIsCoord = 1;
+	private final int maxLatitude = 90;
+	private final int minLatitude = -90;
+	private final int maxLongitude = 180;
+	private final int minLongitude = -180;
 	
 	@FXML
 	private JFXTabPane resultsTabPane;
@@ -66,11 +72,11 @@ public class Controller {
 	private TableColumn<Results, String>[] tableArr = (TableColumn<Results,String>[]) new TableColumn[] {sunriseCol, sunsetCol, civilBCol, nauBCol, astBCol, civilECol, nauECol, astECol, dayLengthCol, solNoonCol};;
 	 
 	@FXML
-	private TableColumn<getData, String> locCol;
+	private TableColumn<GetData, String> locCol;
 	@FXML
 	private JFXListView<TitledPane> forecastList;
 	@FXML
-	private TableView<getData> locListView;
+	private TableView<GetData> locListView;
 	
 	@FXML
 	private Label sunriseTime,sunsetTime,civilBTime,civilETime,nauBTime,nauETime,astBTime,astETime, solTime, dayLengthTime;
@@ -120,38 +126,52 @@ public class Controller {
 	    		resultsTabPane.setVisible(true);
 	    	} catch (Exception e2) {
 	    		//tabpane.setLocError("Error");
-//	    		locationField.clear();
-//	    		locationField.validate();
+	    		locationField.clear();
+	    		locationField.validate();
+	    		e2.printStackTrace();
 	    	}
 	    } else {
-	        if (lngField.getText().isEmpty() || !isDouble(lngField.getText()) || Double.parseDouble(lngField.getText())>180 || Double.parseDouble(lngField.getText())<-180)
-//	        	tabpane.setLonError("Please enter a valid longitude value");
-	        if (latField.getText().isEmpty() || !isDouble(latField.getText()) || Double.parseDouble(latField.getText())>90 || Double.parseDouble(latField.getText())<-90)
-//	        	tabpane.setLatError("Please enter a valid latitude value");
+	        if (checkCoordInput(lngField, maxLongitude, minLongitude))
+	        	lngField.clear();
+	        	lngField.validate();
+	        if (checkCoordInput(latField, maxLatitude, minLatitude))
+	        	latField.clear();
+	        	latField.validate();
 	        if (locationField.getText().isEmpty())
 	        	System.out.println("stuff");
 	        }
     }
     
+    boolean checkCoordInput(JFXTextField coord, int max, int min) {
+    	if (coord.getText().isEmpty())
+    		return true;
+    	if (!isDouble(coord.getText()))
+    		return true;
+    	if (Double.parseDouble(coord.getText())>max)
+    		return true;
+    	if (Double.parseDouble(coord.getText())<min)
+    		return true;
+    	return false;
+    }
+    
 	private void addToTable() {
-		getdata = new getData();
-		System.out.println(res);
+		getdata = new GetData();
 		LocalDate val = LocalDate.now();
 		if (compareDate.getValue()!=null) {
 			val = compareDate.getValue();
 		}
-		System.out.println(val.toString());
 		if (!compareLocation.toString().isEmpty()) {
-			System.out.println(compareLocation.getText());
 			try {
 				results = getdata.sendGET(latField.getText(), lngField.getText(), compareLocation.getText(), val.toString(), inputIsLocation);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			tableList.add(results.getRes());
+			locList.add(getdata);
 		}
-		tableList.add(results.getRes());
-		locList.add(getdata);
+//		tableList.add(results.getRes());
+//		locList.add(getdata);
 	}
 
 	/** {@link #inputValidate(String, String)}
@@ -163,14 +183,14 @@ public class Controller {
 	 * if they fail as Doubles via the {@link #isDouble(String)} method, 
 	 * and if they exceed the longitude and latitude boundaries (-90 to 90, -180 to 180)
 	 */
-	static boolean inputValidate(String lon, String lat) {
+	boolean inputValidate(String lon, String lat) {
 		if (lon.isEmpty() || lat.isEmpty())
 			return false;
 		if (!isDouble(lon) || !isDouble(lat))
 			return false;
-		if (Double.parseDouble(lon)>180 || Double.parseDouble(lon)<-180)
+		if (Double.parseDouble(lon)>maxLongitude || Double.parseDouble(lon)<minLongitude)
 			return false;
-		if (Double.parseDouble(lat)>90 || Double.parseDouble(lat)<-90)
+		if (Double.parseDouble(lat)>maxLatitude || Double.parseDouble(lat)<minLatitude)
 			return false;
 		return true;
 	}
@@ -180,7 +200,7 @@ public class Controller {
 	 * @return boolean
 	 * This method checks if the longitude and latitude fields are able to be parsed as Doubles
 	 */
-	static boolean isDouble(String str) {
+	boolean isDouble(String str) {
 		try {
 			Double.parseDouble(str);
 			return true;
@@ -204,6 +224,7 @@ public class Controller {
 		resloc.add(getdata.getDisplayName());
 		resloc.add("Lat: "+getdata.getLat());
 		resloc.add("Lng: "+getdata.getLng());
+		resloc.add(dateval.toString());
 		solTime.setText(res.getSolar_noon());
 		dayLengthTime.setText(res.getDay_length()+" hours");
 		sunriseTime.setText(res.getSunrise());
@@ -225,7 +246,7 @@ public class Controller {
 	}
 	
 	private void setColumns() {
-		locCol.setCellValueFactory(new PropertyValueFactory<getData, String>("displayName"));
+		locCol.setCellValueFactory(new PropertyValueFactory<GetData, String>("displayName"));
 		sunriseCol.setCellValueFactory(new PropertyValueFactory<Results, String>("Sunrise"));
 		sunsetCol.setCellValueFactory(new PropertyValueFactory<Results, String>("Sunset"));
 		solNoonCol.setCellValueFactory(new PropertyValueFactory<Results, String>("solar_noon"));
@@ -238,14 +259,27 @@ public class Controller {
 		astECol.setCellValueFactory(new PropertyValueFactory<Results, String>("astronomical_twilight_end"));
 	}
 	
+	private void setValidator(JFXTextField field) {
+		field.focusedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(
+				ObservableValue<? extends Boolean> arg0,
+				Boolean oldPropertyValue, Boolean newPropertyValue) {
+					if (!newPropertyValue) {
+						field.validate();
+					}
+			}
+		});
+	}
 	
 	@FXML
 	private void initialize() {
 		table = new Compare();
 		forecast = new ForecastTab();
 		res = new Results();
-		getdata = new getData();
+		getdata = new GetData();
 		setColumns();
+		resultsTabPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)");
 		tableList = FXCollections.observableArrayList();
 		compareTable.setItems(tableList);
 		list = FXCollections.observableArrayList();
@@ -259,37 +293,10 @@ public class Controller {
 		locationField.getValidators().add(validator);
 		latField.getValidators().add(validator);
 		lngField.getValidators().add(validator);
-		
-		locationField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(
-				ObservableValue<? extends Boolean> arg0,
-				Boolean oldPropetyValue, Boolean newPropertyValue) {
-				if (!newPropertyValue) {
-					locationField.validate();
-				}
-			}
-		});
-		latField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(
-				ObservableValue<? extends Boolean> arg0,
-				Boolean oldPropetyValue, Boolean newPropertyValue) {
-				if (!newPropertyValue) {
-					latField.validate();
-				}
-			}
-		});
-		lngField.focusedProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(
-				ObservableValue<? extends Boolean> arg0,
-				Boolean oldPropetyValue, Boolean newPropertyValue) {
-				if (!newPropertyValue) {
-					lngField.validate();
-				}
-			}
-		});
+		setValidator(locationField);
+		setValidator(latField);
+		setValidator(lngField);
+
 		
 		aboutTab.setContent(about.about());
 		defTab.setContent(def.setDef());

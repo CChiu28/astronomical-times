@@ -15,14 +15,16 @@ import java.util.*;
 import com.google.gson.*;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class getData {
+public class GetData {
 	private final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssz";
 	private Data results = new Data();
 	private Map<String, String> result = new HashMap<String, String>();
 	private String displayName = "";
 	private final Charset charset = StandardCharsets.UTF_8;
+	private final int secondsInHour = 3600;
 
 	/**
 	 * @param lat
@@ -32,16 +34,18 @@ public class getData {
 	 * @param check
 	 * @return results
 	 * @throws Exception
-	 * This method takes in three Strings from the user input and an int flag that checks
+	 * This method takes in four Strings from the user input and an int flag that checks
 	 * whether the input was from the location Tab or the coordinates Tab
 	 */
     Data sendGET(String lat, String lng, String loc, String date, int check) throws Exception {
     	String url = "";
     	Map<String, String> locate = new HashMap<String,String>();
-    	if (check==1)
+    	if (check==1) {
     		url = "https://api.sunrise-sunset.org/json?lat="+lat+"&lng="+lng+"&date="+date+"&formatted=0";
-    	else {
-    		locate = geoCode(loc);
+    		result.put("lat", lat);
+    		result.put("lon", lng);
+    	} else {
+    		locate = geoCode(loc, lat, lng, check);
     		url = "https://api.sunrise-sunset.org/json?lat="+locate.get("lat")+"&lng="+locate.get("lon")+"&date="+date+"&formatted=0";
     	}
         Data original = (Data) new Gson().fromJson(connectAPI(url), Data.class); // Gson parses the incoming JSON data and maps it to a Data obj.
@@ -53,19 +57,15 @@ public class getData {
 
     /** {@link #geoCode(String)}
      * @param input
-     * @return results
+     * @return result
      * @throws Exception
      * This method takes input from the gui and geocodes it to retrieve the
      * accompanying latitude and longitude coordinates. A map with the accompanying
-     * coordinates is returned.
+     * coordinates and location name is returned.
      */
-    private Map<String, String> geoCode(String input) throws Exception {
-    	/**
-    	 * This parses the gui input and concatenates it to a String.
-    	 * This is passed to {@link #connectAPI(String)} to connect to the API.
-    	 */
+    private Map<String, String> geoCode(String loc, String lat, String lng, int check) throws Exception {
     	StringBuffer url = new StringBuffer();
-    	String[] address = input.split(" ");
+    	String[] address = loc.split(" ");
     	url.append("https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=");
     	if (address.length==0)
     		return null;
@@ -75,34 +75,23 @@ public class getData {
     			url.append("+");
     	}
     	BufferedReader in = connectAPI(url.toString());
-    	/*
-    	 * After connecting to API, a StringBuffer is used to take in
-    	 * the streamed data from the BufferedReader. This StringBuffer
-    	 * will be parsed.
-    	 */
-    	String line;
     	StringBuffer res = new StringBuffer();
-    	while ((line=in.readLine())!=null) {
-    		res.append(line);
-    	}
+    	readFromBuffer(in, res);
     	in.close();
-    	/**
-    	 * The StringBuffer is parsed via {@link #parseGeo(StringBuffer)} and
-    	 * a JsonObject is returned. We only get the necessary elements we need from
-    	 * the JsonObject which are the latitude and longitude coordinates.
-    	 */
     	JsonObject jo = parseGeo(res);
-    	displayName = jo.getAsJsonPrimitive("display_name").getAsString();
-    	/**
-    	 * A Map of <String,String> is created to take on the values from the JsonObject.
-    	 * This map should be returned to {@link #sendGET}
-    	 */
+//    	displayName = jo.getAsJsonPrimitive("display_name").getAsString();
     	result.put("lon", jo.getAsJsonPrimitive("lon").getAsString());
     	result.put("lat", jo.getAsJsonPrimitive("lat").getAsString());
     	result.put("displayname", displayName);
     	return result;
     }
 
+    private void readFromBuffer(BufferedReader reader, StringBuffer res) throws IOException {
+    	String line;
+    	while ((line=reader.readLine())!= null)
+    		res.append(line);
+    	reader.close();
+    }
     /** {@link #connectAPI(String)}
      * @param url
      * @return reader
@@ -141,7 +130,7 @@ public class getData {
     /** {@link #getTZ(String, String)}
      * @param lat
      * @param lon
-     * @return String
+     * @return tz
      * This method takes the lat and lon coordinates and connects to an API that will return the
      * timezone of the respective coordinates.
      */
@@ -153,29 +142,29 @@ public class getData {
 	    	String line;
 	    	StringBuffer res = new StringBuffer();
 	    	res.append("[");
-	    	while ((line=reader.readLine())!=null) {
-	    		res.append(line);
-	    	}
+	    	readFromBuffer(reader, res);
 	    	res.append("]");
 	    	reader.close();
 	    	JsonObject jo = parseGeo(res);
 	    	tz = jo.getAsJsonPrimitive("timezoneId").getAsString();
     	} catch (Exception e ) {
     		System.out.println("No timezones available");
+    		e.printStackTrace();
     	}
     	return tz;
     }
 
     /** {@link #setTZ(String, Data)
      * @param tz
-     * @param data
-     * @return Data
+     * @param original
+     * @return res
      * @throws Exception
      * This method takes the Data obj and the timezone and formats the time to its correct timezone.
      * The new times are passed to a new Data obj that is returned.
      */
-    private Results setTZ(String tz, Data data) throws Exception {
-    	Results res = data.getRes();
+    private Results setTZ(String tz, Data original) throws Exception {
+    	Results res = original.getRes();
+
     	// Parse the Strings from our results to LocalDateTime
     	DateTimeFormatter format = DateTimeFormatter.ofPattern(DATE_FORMAT);
 
@@ -205,28 +194,28 @@ public class getData {
     	// and set DateTimeFormatter to parse and format the time to look simpler
     	ZoneId zone = ZoneId.of(tz);
     	format = DateTimeFormatter.ofPattern("hh:mm:ss a z");
-
+    	
     	// Formats the ZonedDateTimes to a string using the DateTimeFormatter's pattern and sets it back to the Results obj
-    	res.setSunrise(format.format(fromsunrise.withZoneSameInstant(zone)));
-    	res.setSunset(format.format(fromsunset.withZoneSameInstant(zone)));
-    	res.setSolar_noon(format.format(fromsolarnoon.withZoneSameInstant(zone)));
-    	res.setCivil_twilight_begin(format.format(fromciviltwib.withZoneSameInstant(zone)));
-    	res.setCivil_twilight_end(format.format(fromciviltwie.withZoneSameInstant(zone)));
-    	res.setNautical_twilight_begin(format.format(fromnautwib.withZoneSameInstant(zone)));
-    	res.setNautical_twilight_end(format.format(fromnautwie.withZoneSameInstant(zone)));
-    	res.setAstronomical_twilight_begin(format.format(fromasttwib.withZoneSameInstant(zone)));
-    	res.setAstronomical_twilight_end(format.format(fromasttwie.withZoneSameInstant(zone)));
+    	res.setVal("sunrise", format.format(fromsunrise.withZoneSameInstant(zone)));
+    	res.setVal("sunset", format.format(fromsunset.withZoneSameInstant(zone)));
+    	res.setVal("solarNoon", format.format(fromsolarnoon.withZoneSameInstant(zone)));
+    	res.setVal("civilBTime", format.format(fromciviltwib.withZoneSameInstant(zone)));
+    	res.setVal("civilETime", format.format(fromciviltwie.withZoneSameInstant(zone)));
+    	res.setVal("nauBTime", format.format(fromnautwib.withZoneSameInstant(zone)));
+    	res.setVal("nauETime", format.format(fromnautwie.withZoneSameInstant(zone)));
+    	res.setVal("astBTime", format.format(fromasttwib.withZoneSameInstant(zone)));
+    	res.setVal("astETime", format.format(fromasttwie.withZoneSameInstant(zone)));
 
     	// Format the day length from seconds to hours and round decimals to 2 places
-    	Double dayLength = Double.parseDouble(res.getDay_length())/3600;
+    	Double dayLength = Double.parseDouble(res.getDay_length())/secondsInHour;
     	DecimalFormat df = new DecimalFormat("##.##");
-    	res.setDay_length(df.format(dayLength));
+    	res.setVal("dayLength", df.format(dayLength));
 
     	return res;
     }
 
     public String getDisplayName() {
-    	return displayName;
+    	return result.get("displayname");
     }
 
     public String getLat() {

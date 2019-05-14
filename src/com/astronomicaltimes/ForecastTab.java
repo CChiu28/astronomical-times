@@ -13,11 +13,11 @@ import javafx.scene.paint.Color;
  */
 public class ForecastTab {
 	private Data info;
-	private getData getdata = new getData();
+	private GetData getdata = new GetData();
 	private final int NUM_OF_DAYS = 5;
 	
-	// This method creates several TitledPane to add to the ListView
-	public void setCell(getData get, ObservableList<TitledPane> list, Data data, String location, String lat, String lng, LocalDate date, int check) {
+	// This method creates NUM_OF_DAYS of TitledPane to add to the ListView
+	public void setCell(GetData get, ObservableList<TitledPane> list, Data data, String location, String lat, String lng, LocalDate date, int check) {
 		info = data;
 		TitledPane header = setHeader(get);
 		list.add(header);
@@ -59,7 +59,7 @@ public class ForecastTab {
 	}
 	
 	// This method sets up the header TitledPane
-	private TitledPane setHeader(getData get) {
+	private TitledPane setHeader(GetData get) {
 		VBox box = new VBox(5);
 		
 		Label sunrise = new Label("Sunrise");
