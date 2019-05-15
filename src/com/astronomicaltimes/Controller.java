@@ -31,9 +31,9 @@ public class Controller {
 	private Results res = new Results();
 	private GetData getdata;
 	private LocalDate dateval;
-	private Compare table;
+	private Compare compare;
 	private ForecastTab forecast;
-	private ObservableList<Results> tableList;
+	private ObservableList<TitledPane> tableList;
 	private ObservableList<TitledPane> list;
 	private ObservableList<GetData> locList;
 	private ObservableList<String> resloc;
@@ -66,17 +66,7 @@ public class Controller {
 	private JFXListView<String> resultLoc;
 	
 	@FXML
-	private TableView<Results> compareTable;
-	@FXML 
-	private TableColumn<Results, String> sunriseCol, sunsetCol, civilBCol, nauBCol, astBCol, civilECol, nauECol, astECol, dayLengthCol, solNoonCol;
-	private TableColumn<Results, String>[] tableArr = (TableColumn<Results,String>[]) new TableColumn[] {sunriseCol, sunsetCol, civilBCol, nauBCol, astBCol, civilECol, nauECol, astECol, dayLengthCol, solNoonCol};;
-	 
-	@FXML
-	private TableColumn<GetData, String> locCol;
-	@FXML
-	private JFXListView<TitledPane> forecastList;
-	@FXML
-	private TableView<GetData> locListView;
+	private JFXListView<TitledPane> compareList, forecastList;
 	
 	@FXML
 	private Label sunriseTime,sunsetTime,civilBTime,civilETime,nauBTime,nauETime,astBTime,astETime, solTime, dayLengthTime;
@@ -95,6 +85,7 @@ public class Controller {
 	
     public void submitLoc() {
     	dateval = LocalDate.now();
+    	getdata = new GetData();
     	if (datepicker.getValue()!=null) {
 			dateval = datepicker.getValue();
 		}
@@ -125,7 +116,6 @@ public class Controller {
 	    		setResults(inputIsLocation);
 	    		resultsTabPane.setVisible(true);
 	    	} catch (Exception e2) {
-	    		//tabpane.setLocError("Error");
 	    		locationField.clear();
 	    		locationField.validate();
 	    		e2.printStackTrace();
@@ -167,11 +157,9 @@ public class Controller {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			tableList.add(results.getRes());
+			tableList.add(compare.setInfo(getdata.getDisplayName(), results.getRes()));
 			locList.add(getdata);
 		}
-//		tableList.add(results.getRes());
-//		locList.add(getdata);
 	}
 
 	/** {@link #inputValidate(String, String)}
@@ -214,6 +202,7 @@ public class Controller {
 			arr[i] = new Label("");
 		}
 		tableList.clear();
+		tableList.add(compare.setHeader());
 		list.clear();
 		locList.clear();
 		resloc.clear();
@@ -235,7 +224,7 @@ public class Controller {
 		nauETime.setText(res.getNautical_twilight_end());
 		astBTime.setText(res.getAstronomical_twilight_begin());
 		astETime.setText(res.getAstronomical_twilight_end());
-		tableList.add(res);
+		tableList.add(compare.setInfo(getdata.getDisplayName(), res));
 		locList.add(getdata);
 		forecast.setCell(getdata, list,results, locationField.getText(), latField.getText(), lngField.getText(), dateval, inputCheck);
 		locationField.setText("");
@@ -245,19 +234,6 @@ public class Controller {
 		resultsTabPane.requestLayout();
 	}
 	
-	private void setColumns() {
-		locCol.setCellValueFactory(new PropertyValueFactory<GetData, String>("displayName"));
-		sunriseCol.setCellValueFactory(new PropertyValueFactory<Results, String>("Sunrise"));
-		sunsetCol.setCellValueFactory(new PropertyValueFactory<Results, String>("Sunset"));
-		solNoonCol.setCellValueFactory(new PropertyValueFactory<Results, String>("solar_noon"));
-		dayLengthCol.setCellValueFactory(new PropertyValueFactory<Results, String>("day_length"));
-		civilBCol.setCellValueFactory(new PropertyValueFactory<Results, String>("civil_twilight_begin"));
-		civilECol.setCellValueFactory(new PropertyValueFactory<Results, String>("civil_twilight_end"));
-		nauBCol.setCellValueFactory(new PropertyValueFactory<Results, String>("nautical_twilight_begin"));
-		nauECol.setCellValueFactory(new PropertyValueFactory<Results, String>("nautical_twilight_end"));
-		astBCol.setCellValueFactory(new PropertyValueFactory<Results, String>("astronomical_twilight_begin"));
-		astECol.setCellValueFactory(new PropertyValueFactory<Results, String>("astronomical_twilight_end"));
-	}
 	
 	private void setValidator(JFXTextField field) {
 		field.focusedProperty().addListener(new ChangeListener<Boolean>() {
@@ -274,18 +250,16 @@ public class Controller {
 	
 	@FXML
 	private void initialize() {
-		table = new Compare();
+		compare = new Compare();
 		forecast = new ForecastTab();
 		res = new Results();
 		getdata = new GetData();
-		setColumns();
 		resultsTabPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)");
 		tableList = FXCollections.observableArrayList();
-		compareTable.setItems(tableList);
+		compareList.setItems(tableList);
 		list = FXCollections.observableArrayList();
 		forecastList.setItems(list);
 		locList = FXCollections.observableArrayList();
-		locListView.setItems(locList);
 		resloc = FXCollections.observableArrayList();
 		resultLoc.setItems(resloc);
 		validator = new RequiredFieldValidator();
@@ -297,7 +271,7 @@ public class Controller {
 		setValidator(latField);
 		setValidator(lngField);
 
-		
+		tableList.add(compare.setHeader());
 		aboutTab.setContent(about.about());
 		defTab.setContent(def.setDef());
 	}
