@@ -79,10 +79,9 @@ public class GetData {
     	readFromBuffer(in, res);
     	in.close();
     	JsonObject jo = parseGeo(res);
-//    	displayName = jo.getAsJsonPrimitive("display_name").getAsString();
     	result.put("lon", jo.getAsJsonPrimitive("lon").getAsString());
     	result.put("lat", jo.getAsJsonPrimitive("lat").getAsString());
-    	result.put("displayname", displayName);
+    	result.put("displayname", jo.getAsJsonPrimitive("display_name").getAsString());
     	return result;
     }
 
