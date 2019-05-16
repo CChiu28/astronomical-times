@@ -31,9 +31,9 @@ public class Definitions {
 				+ "it possible to navigate at sea, hence the name nautical twilight. Nautical dusk marks the beginning of astronomical twilight "
 				+ "and nautical dawn is preceded by astronomical twilight.\n\n"
 				+ "Civil Twilight: This period of twilight marks the sun's geometric center at most 6 degrees below the horizon. "
-				+ "It marks the period of time just before the sunrise and immediately after sunset. "
+				+ "It marks the period of time just before the sunrise and immediately after sunset."
 				+ "The sky is colored yellow and orange at this point, and only the brightest stars and planets such as Venus and Jupiter are visible. "
-				+ "Civil dawn is preceded by nautical twilight while civil dusk marks the beginning of nautical twilight.\n\n"
+				+ "Civil Dawn is preceded by nautical twilight while civil dusk marks the beginning of nautical twilight.\n\n"
 				+ "Solar Noon: Also known as high noon, this is the instance when the sun is at the highest point in the sky "
 				+ "given the location's local meridian. It usually doesn't occur at 12:00. The poles also do not experience "
 				+ "solar noon because they do not have a meridian the sun crosses.\n\n");
