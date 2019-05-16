@@ -1,7 +1,5 @@
 package com.astronomicaltimes;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -14,29 +12,16 @@ import javafx.scene.paint.Color;
  * This class returns a VBox to MainScene
  */
 public class Compare {
-	private Data data;
-	private ObservableList<Results> tableList;
-
-	// Retrieve data from Results class
-	public ObservableList<Results> setToTable(Data results) {
-		data = results;
-		tableList = FXCollections.observableArrayList(data.getRes());
-		return tableList;
-	}
-
-
-	public ObservableList<Results> getTable() {
-		return tableList;
-	}
 	
+	// This method sets a header TitledPane
 	public TitledPane setHeader() {
 		VBox box = new VBox(5);
 		box.setAlignment(Pos.CENTER_RIGHT);
 				
-		Label sunrise = new Label("Sunrise");
-		Label sunset = new Label("Sunset");
-		Label solNoon = new Label("Solar Noon");
-		Label dayLength = new Label("Day Length");
+		final Label sunrise = new Label("Sunrise");
+		final Label sunset = new Label("Sunset");
+		final Label solNoon = new Label("Solar Noon");
+		final Label dayLength = new Label("Day Length");
 		Label civilBegin = new Label("Civil Twilight Begins");
 		Label nauBegin = new Label("Nautical Twilight Begins");
 		Label astBegin = new Label("Astronomical Twilight Begins");
@@ -55,8 +40,8 @@ public class Compare {
 		return node;
 	}
 	
+	// This method is calls to add a new entry to the Compare List
 	public TitledPane setInfo(String head, Results res) {
-//		TitledPane node = new TitledPane(head);
 		VBox box = new VBox(5);
 		box.setAlignment(Pos.CENTER);
 		
@@ -80,6 +65,8 @@ public class Compare {
 		
 		return node;
 	}
+	
+	// This method sets up styling for the Labels
 	private void setLabelStyle(Label[] arr ) {
 		for (Label label : arr) {
 			label.setTextFill(Color.WHITE);

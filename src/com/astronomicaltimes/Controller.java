@@ -33,7 +33,7 @@ public class Controller {
 	private LocalDate dateval;
 	private Compare compare;
 	private ForecastTab forecast;
-	private ObservableList<TitledPane> tableList;
+	private ObservableList<TitledPane> comparisonList;
 	private ObservableList<TitledPane> list;
 	private ObservableList<GetData> locList;
 	private ObservableList<String> resloc;
@@ -121,10 +121,10 @@ public class Controller {
 	    		e2.printStackTrace();
 	    	}
 	    } else {
-	        if (checkCoordInput(lngField, maxLongitude, minLongitude))
+	        if (checkCoordInput(lngField.getText(), maxLongitude, minLongitude))
 	        	lngField.clear();
 	        	lngField.validate();
-	        if (checkCoordInput(latField, maxLatitude, minLatitude))
+	        if (checkCoordInput(latField.getText(), maxLatitude, minLatitude))
 	        	latField.clear();
 	        	latField.validate();
 	        if (locationField.getText().isEmpty())
@@ -132,18 +132,29 @@ public class Controller {
 	        }
     }
     
-    boolean checkCoordInput(JFXTextField coord, int max, int min) {
-    	if (coord.getText().isEmpty())
+    /** {@link #checkCoordInput(String, int, int)}
+     * @param coord
+     * @param max
+     * @param min
+     * @return boolean
+     * This method checks one coordinate for valid input.
+     */
+    boolean checkCoordInput(String coord, int max, int min) {
+    	if (coord.isEmpty())
     		return true;
-    	if (!isDouble(coord.getText()))
+    	if (!isDouble(coord))
     		return true;
-    	if (Double.parseDouble(coord.getText())>max)
+    	if (Double.parseDouble(coord)>max)
     		return true;
-    	if (Double.parseDouble(coord.getText())<min)
+    	if (Double.parseDouble(coord)<min)
     		return true;
     	return false;
     }
     
+    /** {@link #addToTable()}
+     * This method is for the Compare button. It takes the input from {@link #compareLocation}
+     * and adds a new entry to the comparison list
+     */
 	private void addToTable() {
 		getdata = new GetData();
 		LocalDate val = LocalDate.now();
@@ -157,7 +168,7 @@ public class Controller {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			tableList.add(compare.setInfo(getdata.getDisplayName(), results.getRes()));
+			comparisonList.add(compare.setInfo(getdata.getDisplayName(), results.getRes()));
 			locList.add(getdata);
 		}
 	}
@@ -166,19 +177,13 @@ public class Controller {
 	 * @param lon, lat
 	 * @return boolean
 	 * This method is used as input validation for the longitude and latitude fields
-	 * It contains a series of checks that will return false if they pass.
-	 * These checks include checking if the longitude and latitude strings are empty,
-	 * if they fail as Doubles via the {@link #isDouble(String)} method, 
-	 * and if they exceed the longitude and latitude boundaries (-90 to 90, -180 to 180)
+	 * It calls {@link #checkCoordInput(String, int, int)} to ensure that each coordinate
+	 * is correct
 	 */
 	boolean inputValidate(String lon, String lat) {
-		if (lon.isEmpty() || lat.isEmpty())
+		if (checkCoordInput(lon, maxLongitude, minLongitude))
 			return false;
-		if (!isDouble(lon) || !isDouble(lat))
-			return false;
-		if (Double.parseDouble(lon)>maxLongitude || Double.parseDouble(lon)<minLongitude)
-			return false;
-		if (Double.parseDouble(lat)>maxLatitude || Double.parseDouble(lat)<minLatitude)
+		if (checkCoordInput(lat, maxLatitude, minLatitude))
 			return false;
 		return true;
 	}
@@ -197,17 +202,26 @@ public class Controller {
 		}
 	}
 	
+	/** {@link #clean()}
+	 * This method is called when the submit button is clicked.
+	 * It clears all the lists of its old entries.
+	 */
 	private void clean() {
 		for (int i=0; i<arr.length; i++) {
 			arr[i] = new Label("");
 		}
-		tableList.clear();
-		tableList.add(compare.setHeader());
+		comparisonList.clear();
+		comparisonList.add(compare.setHeader());
 		list.clear();
 		locList.clear();
 		resloc.clear();
 	}
 	
+	/** {@link #setResults(int)}
+	 * @param inputCheck
+	 * This method is called when all inputs are validated. It adds to the lists
+	 * and sets all variables to their correct output.
+	 */
 	void setResults(int inputCheck) {
 		res = results.getRes();
 		resloc.add(getdata.getDisplayName());
@@ -224,7 +238,7 @@ public class Controller {
 		nauETime.setText(res.getNautical_twilight_end());
 		astBTime.setText(res.getAstronomical_twilight_begin());
 		astETime.setText(res.getAstronomical_twilight_end());
-		tableList.add(compare.setInfo(getdata.getDisplayName(), res));
+		comparisonList.add(compare.setInfo(getdata.getDisplayName(), res));
 		locList.add(getdata);
 		forecast.setCell(getdata, list,results, locationField.getText(), latField.getText(), lngField.getText(), dateval, inputCheck);
 		locationField.setText("");
@@ -234,7 +248,10 @@ public class Controller {
 		resultsTabPane.requestLayout();
 	}
 	
-	
+	/** {@link #setValidator(JFXTextField)}
+	 * @param field
+	 * This method takes a JFXTextField and adds the error validator to it
+	 */
 	private void setValidator(JFXTextField field) {
 		field.focusedProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
@@ -255,8 +272,8 @@ public class Controller {
 		res = new Results();
 		getdata = new GetData();
 		resultsTabPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5)");
-		tableList = FXCollections.observableArrayList();
-		compareList.setItems(tableList);
+		comparisonList = FXCollections.observableArrayList();
+		compareList.setItems(comparisonList);
 		list = FXCollections.observableArrayList();
 		forecastList.setItems(list);
 		locList = FXCollections.observableArrayList();
@@ -271,7 +288,7 @@ public class Controller {
 		setValidator(latField);
 		setValidator(lngField);
 
-		tableList.add(compare.setHeader());
+		comparisonList.add(compare.setHeader());
 		aboutTab.setContent(about.about());
 		defTab.setContent(def.setDef());
 	}
