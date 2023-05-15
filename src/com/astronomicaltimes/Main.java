@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class Main extends Application {
 	Stage mainStage;
 	Parent mainScene;
@@ -18,7 +20,7 @@ public class Main extends Application {
 		mainStage = stage;
 		mainStage.setTitle("Astronomical Times");
 
-		mainScene = FXMLLoader.load(getClass().getResource("./resources/MainLayout.fxml"));
+		mainScene = FXMLLoader.load(getClass().getResource("/MainLayout.fxml"));
 
 		mainStage.setScene(new Scene(mainScene, 1400, 800));
 		mainStage.show();

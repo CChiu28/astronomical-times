@@ -13,7 +13,7 @@ public class Definitions {
 		box.setAlignment(Pos.CENTER);
 
 		ImageView imgView;
-		Image img = new Image(Definitions.class.getResourceAsStream("resources/twiligh-phases.png"));
+		Image img = new Image(Definitions.class.getResourceAsStream("/twiligh-phases.png"));
 		imgView = new ImageView(img);
 		
 		JFXTextArea def = new JFXTextArea();
